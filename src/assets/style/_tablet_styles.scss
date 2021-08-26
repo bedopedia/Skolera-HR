@@ -1,0 +1,12 @@
+.container {
+    max-width: none;
+}
+.sidebar-active {
+    overflow: hidden;
+    .main-content {
+        filter: blur(2px)
+    }
+}
+.close-modal-icon {
+    display: none !important;
+}

@@ -1,0 +1,83 @@
+@import 'blocks';
+
+.full-calendar {
+    /deep/ {
+        .cal-month-view .cal-event {
+            height: auto;
+            width: auto;
+            background: transparent;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .cal-month-view .cal-events {
+            margin: 0;
+        }
+
+        .cal-month-view .cal-cell-top {
+            min-height: auto;
+        }
+
+        .cal-month-view .cal-days .cal-cell-row {
+            border-color: #eee;
+        }
+
+        .cal-month-view .cal-header .cal-cell {
+            padding: 16px 12px;
+            font-weight: 400;
+            border: 1px solid #eee;
+            border-bottom-color: #f2f5ff;
+            border-left: 0 !important;
+        }
+
+        .cal-month-view .cal-days {
+            border: 0;
+        }
+
+        .cal-month-view .cal-header .cal-cell:last-child {
+            border-right-color: transparent;
+        }
+
+        .cal-month-view .cal-day-cell {
+            min-height: 100px;
+            border: 1px solid #eee;
+            border-right-color: #eee !important;
+            border-top-color: transparent !important;
+            border-bottom-color: transparent !important;
+            border-left: 0 !important;
+        }
+
+        .cal-month-view .cal-day-cell:last-child {
+            border-right-color: transparent;
+        }
+
+        .cal-month-view .cal-day-cell.cal-today {
+            background: transparent;
+        }
+
+        .ng-star-inserted {
+            position: relative;
+        }
+
+        .cal-month-view .cal-cell-top {
+            width: 100%;
+            position: absolute;
+            left: 0;
+        }
+
+        .cal-month-view .cal-cell-row .cal-cell:hover,
+        .cal-month-view .cal-cell.cal-has-events.cal-open,
+        .cal-month-view .cal-cell-row:hover {
+            background: rgba(0, 0, 0, 0.02)
+        }
+    }
+
+    .out-of-month {
+        opacity: 0.4;
+    }
+
+    .cal-events {
+        height: 100px;
+        @extend %flex-centered;
+    }
+}

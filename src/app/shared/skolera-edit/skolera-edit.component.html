@@ -1,0 +1,18 @@
+<div class="complex-skolera-modal">
+        <div class="modal-wrapper">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="component-title">{{data.title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="s-control" [(ngModel)]="editInput">
+                    </div>
+                    <div class="bg-white text-right">
+                        <button class="s-btn btn-secondary mr-3" (click)="closeModal(null)">Cancel</button>
+                        <button class="s-btn btn-primary" (click)="closeModal(true)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
