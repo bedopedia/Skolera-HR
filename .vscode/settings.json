@@ -1,0 +1,8 @@
+{
+  "editor.tabSize": 4,
+  "editor.tabSize": 4,
+  "editor.detectIndentation": false,
+  "beautify.config":{
+    "indent_size": 4
+  }
+}

@@ -1,44 +1,53 @@
-<div class="container">
-    <div class="pt-10 mt-8"></div>
-    <div class="ptb-10 plr-6 content-shadow bg-white mb-6">
-        <div class="ptb-3"></div>
-        <div class="max-500 max-center">
-            <h2 class="section-title mb-6 border-bottom pb-1">
-                <i class="fa fa-caret-right mr-3"></i>
-                Login
-            </h2>
-            <form #loginForm="ngForm" (ngSubmit)="login()">
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="form-group inline-form-group mb-0"
-                            [class.has-error]="loginForm.submitted && email.invalid">
-                            <label for="">E-mail <sup class="text-error">*</sup></label>
-                            <input class="s-control" type="text"  placeholder="username" [(ngModel)]="user.username" name="username" (keyup.enter)="onSubmit()" autocomplete="username" #username="ngModel" required>
+<div class="login-page">
+    <login-background class="login-background"></login-background>
+    <div class="login-form-container">
+        <div class="login-form">
+            <img class="whitelabel" src="assets/images/hod-whitelabel.svg" alt="">
+            <div class="login-logo text-center mb-3">
+                <img src="{{globals.currentSchool.avatar_url}}" default="assets/images/skolera-logo.svg">
+            </div>
+            <p class="login-slogan mb-3">
+                Actor-based Unified Learning Platform
+            </p>
+            <p *ngIf="loginError" class="text-center text-error mt-3 mb-3">
+                {{errorMessage}}
+            </p>
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                <div class="form-group mb-6" [class.has-error]="(username.invalid && username.dirty) ||(loginForm.submitted && username.invalid)">
+                    <label class="login-label">Username</label>
+                    <input class="login-input" type="text"  placeholder="username" [(ngModel)]="user.username" name="username" (keyup.enter)="onSubmit()" autocomplete="username" #username="ngModel" required>
                   
-                               
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="form-group inline-form-group mb-0"
-                            [class.has-error]="loginForm.submitted && password.invalid">
-                            <label for="">Password <sup class="text-error">*</sup></label>
-                            <input class="s-control" [type]="'password'"  name="password" placeholder="Password" [(ngModel)]="user.password" (keyup.enter)="onSubmit()" autocomplete="password" #password="ngModel" required>
-                                   
-                        </div>
-                    </div>
+                    <span class="text-error size-small mt-2 validator">
+                        Username is required.
+                    </span>
                 </div>
-                <div class="alert-error mt-6" *ngIf="invalidCredentials">
-                    Invalid email or password.
+                
+                <div class="form-group mb-6" [class.has-error]="(password.invalid && password.dirty) || (loginForm.submitted && password.invalid)">
+                    <label class="login-label">Password</label>
+                    <div class="flex flex-middle">
+                        <input class="login-input" [type]="show ? 'text' : 'password'"  name="password" placeholder="Password" [(ngModel)]="user.password" (keyup.enter)="onSubmit()" autocomplete="password" #password="ngModel" required>
+                        <img class="eye-icon" src="assets/images/admin-mask.svg" *ngIf="!show" (click)="show = true">
+                        <img class="eye-icon" src="assets/images/mask-copy.svg"  *ngIf="show"  (click)="show = false">
+                    </div>
+                    
+                    <span class="text-error size-small mt-2 validator">
+                        Password is required.
+                    </span>
                 </div>
-                <div class="border-bottom mtb-6"></div>
-                <div class="btns-container flex flex-center">
-                    <button [disabled]="isSubmitting" type="submit" class="s-btn btn-lg btn-primary max-200 btn-block mobile-width-100">
-                        <span class="fa fa-spinner loading-icon" *ngIf="isSubmitting"></span>
-                        <span *ngIf="!isSubmitting">Login</span>
+                <!-- <div class="form-group google-recaptcha">
+                    <ngx-invisible-recaptcha #captchaElem [siteKey]="siteKey" (reset)="invisibleReset()" (ready)="invisibleReady(captchaElem)" (load)="invisibleLoad()" (success)="invisibleSuccess($event)" [useGlobalDomain]="false" [(ngModel)]="loginRecaptcha" name="hidden-recaptcha">
+                    </ngx-invisible-recaptcha>
+                </div> -->
+                <div class="form-group pt-5">
+                    <button class="login-btn" type="submit">
+                        Login
                     </button>
                 </div>
             </form>
         </div>
+        <p class="made-with-love text-center mt-5">
+            Made with <i class="fa fa-heart"></i> by
+            <img src="assets/images/skolera-logo-long.svg" alt="">
+        </p>
     </div>
 </div>
-

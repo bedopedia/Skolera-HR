@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
 
 const routes: Routes = [
-  {
-    path: '', component: EmployeesListComponent
-   }
+    {
+        path: '', component: EmployeesListComponent
+    },
 ];
 
 @NgModule({

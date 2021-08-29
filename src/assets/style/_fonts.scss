@@ -1,7 +1,5 @@
 // !--- Lato Font Family ---!
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
-@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 
 .weight-bold {
     font-weight: 700;
@@ -70,6 +68,9 @@ h6 {
 
 .size-tiny {
     font-size: 0.75rem;
+}
+.size-small-tiny {
+    font-size: 0.65rem;
 }
 
 h1,

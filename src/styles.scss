@@ -1,13 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
+
 @import 'initializer';
 body,
 html {
     padding: 0;
     margin: 0;
     font-size: $fontSize;
-    background-color: $siteBackground;
 }
 
 * {
@@ -17,6 +15,7 @@ html {
     word-break: break-word;
     white-space: initial;
 }
+
 
 input,
 textarea,
@@ -40,15 +39,32 @@ a:hover {
 }
 
 @import 'grid_system';
-@import 'global_options';
+
+body[dir=ltr] {
+    $start: left;
+    $end: right;
+    @import 'global_options';
+}
+
+body[dir=rtl] {
+    $end: left;
+    $start: right;
+    @import 'global_options';
+}
+
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import 'alerts';
+@import 'icons';
 @import 'buttons';
 @import 'checkboxes';
 @import 'controls';
 @import 'fonts';
+@import 'scrollbar';
 @import 'global_styles';
-// @import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import 'custom-actor';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
 @media (min-width: 992px){
     @import 'desktop_styles';
@@ -60,4 +76,8 @@ a:hover {
 
 @media (max-width: 767px){
     @import 'mobile_styles';
+}
+
+@media print {
+    @import 'print';
 }

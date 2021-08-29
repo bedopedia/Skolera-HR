@@ -43,7 +43,8 @@ $select: #007ee5;
 }
 
 .bg-success {
-    background-color: $success !important
+    background-color: $success !important;
+    background: $success !important
 }
 
 .bg-warning {
@@ -72,21 +73,23 @@ $select: #007ee5;
 .text-gray-light {
     color: #d8dde6;
 }
-
 .text-white {
     color: #fff
 }
-
 .text-offwhite {
     color: #f8f8f8
 }
 
-.text-success {
-    color: $success
+.text-black {
+    color: #000;
 }
 
 .bg-black {
     background-color: #4e5665
+}
+
+.bg-transparent {
+    background: transparent !important;
 }
 
 .bg-gray-dark {
@@ -105,16 +108,15 @@ $select: #007ee5;
     background-color: #f8f8f8
 }
 
-.bg-basic {
+.bg-basic{
     background-color: #f7f9fe;
 }
 
 .bg-white {
     background-color: #fff
 }
-
 .border-gray-light {
-    border-color: #d8dde6;
+    border-color: #d8dde6 !important;
 }
 
 .border-gray {
@@ -124,38 +126,69 @@ $select: #007ee5;
 .border-offwhite {
     border-color: #f8f8f8;
 }
-
 // .
 // .
 // Legends
-.legend-orange {
+.legend-orange{
     background: $light-salmon;
     color: #fff;
 }
-
-.legend-yellow {
+.legend-yellow{
     background: $wheat;
     color: #fff;
 }
-
-.legend-blue {
+.legend-blue{
     background: $tiffany-blue;
     color: #fff;
 }
 
-.text-primary,
-.text-link {
-    color: $primary;
+// .
+// .
+// Actor Themes
+@mixin actorColors($primary, $secondary, $from, $to, $siteBackground) {
+    .text-primary, .text-link {
+        color: $primary;
+    }
+
+    .text-secondary {
+        color: $secondary;
+    }
+
+    .bg-primary {
+        background-color: $primary;
+    }
+
+    .bg-secondary {
+        background-color: $siteBackground;
+    }
 }
 
-.text-secondary {
-    color: $secondary;
+.admin_theme {
+    @import 'themes/admin.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
 }
 
-.bg-primary {
-    background-color: $primary;
+.hod_theme {
+    @import 'themes/hod.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
 }
 
-.bg-secondary {
-    background-color: $siteBackground;
+.teacher_theme {
+    @import 'themes/teacher.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
+}
+
+.student_theme {
+    @import 'themes/student-male.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
+}
+
+.student_theme.female {
+    @import 'themes/student-female.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
+}
+
+.parent_theme {
+    @import 'themes/parent.scss';
+    @include actorColors($primary, $secondary, $from, $to, $siteBackground);
 }

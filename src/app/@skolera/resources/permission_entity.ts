@@ -1,0 +1,22 @@
+export const PermissionEntity = {
+    viewLevel: 0,
+    editLevel: 1,
+    createLevel: 2,
+    deleteLevel: 3,
+    courseGroupPosts: 'Course Group Posts',
+    teacherHubPosts: 'Teacher Hub Posts',
+    zonePosts: 'Zone Posts',
+    courseGroupAssignments: 'Assignments Course Group',
+    courseAssignments: 'Assignments',
+    courseContents: 'Content',
+    courseQuizzes: 'Quizzes',
+    LessonPlanCourseGroup: 'Lesson Plans Course Group',
+    lessonPlans: 'Lesson Plans',
+    schoolAnnouncements: 'School Announcements',
+    messagesToStudents: 'Messages to Students',
+    messagesToParents: 'Messages to Parents',
+    messagesToTeachers: 'Messages to Teachers',
+    messagesToHods: 'Messages to Hods',
+    zoneMessages: 'Zone Messages to members',
+    coursePlanner: 'Course Planner'
+};

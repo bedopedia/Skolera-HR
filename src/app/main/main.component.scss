@@ -1,0 +1,39 @@
+@import 'mixins';
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
+
+    .main-header {
+        height: 50px;
+        margin: 20px 0;
+    }
+}
+
+// main mixin
+@mixin biDirectional($start, $end) {
+    .main-container {
+        padding-#{$start}: 315px;
+    }
+}
+
+// directions 
+@import 'directions/decide';
+
+@media (max-width: 991px){
+    @mixin biDirectional($start, $end) {
+        .main-container {
+            padding-#{$start}: 0;
+        }
+    }
+    // directions 
+    @import 'directions/decide';
+}
+
+.disable-page{
+    pointer-events: none;
+    opacity: 0.6;
+}
+

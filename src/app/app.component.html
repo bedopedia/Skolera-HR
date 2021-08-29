@@ -1,26 +1,8 @@
-<div class="bg-white content-shadow ptb-4 app-header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-12 flex-middle mobile-mb flex mobile-center">
-                <img height="25px" src="assets/images/skolera-logo-long.svg" alt="">
-            </div>
-
-            <div class="col-md-6 col-12 text-right mobile-center flex flex-middle flex-end">
-                <div class="auth" >
-                    <a routerLink="home/time-groups" class="s-btn btn-link btn-sm text-primary">
-                       Time Groups
-                    </a>
-                    <a routerLink="/home/employees" class="s-btn btn-link btn-sm">employees</a>
-                    <a routerLink="home/rules" class="s-btn btn-link btn-sm">Rules</a>
-                    <button (click)="logout()" class="s-btn btn-link btn-sm pointer">
-                        <span class="text-error">Logout</span>
-                    </button>
-                </div>
-                <div class="not-auth" *ngIf="!globals.currentUser">
-                    <a routerLink="/login" class="s-btn btn-link">Login</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<ngx-loading-bar></ngx-loading-bar>
+<!-- <popup-message></popup-message> -->
+<div>
+    <router-outlet name="primary"></router-outlet>
 </div>
-<router-outlet></router-outlet>
+<div id="app-notifications-container">
+    
+</div>

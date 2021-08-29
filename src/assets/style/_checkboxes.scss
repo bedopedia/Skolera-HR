@@ -88,13 +88,20 @@
     @extend %checkbox-style;
 }
 
-.s-checkbox {
+.s-checkbox,
+.treeview-container .form-inline,
+.treeview-container.form-check {
     input {
         &+label::before {
             color: #fff;
             content: "\f00c";
         }
     }
+}
+
+.treeview-container .form-inline,
+.treeview-container.form-check {
+    margin-bottom: 0.5rem;
 }
 
 .s-radio {
@@ -220,6 +227,11 @@
         }
     }
 
+    input:disabled+label {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
     input:checked+label {
         .slider-bg {
             background: $green;
@@ -248,106 +260,170 @@
     }
 }
 
-.s-checkbox,
-.s-checkbox-round,
-.s-radio {
-    input {
-        &+label {
-            padding-left: 30px;
-        }
-
-        &+label::before,
-        &+label::after {
-            left: 0;
-        }
+.s-checkbox input:indeterminate {
+    &+label::before {
+        transform: scale(0.5) !important;
+        content: '\f111' !important;
+        color: orange !important;
     }
 }
 
-.s-checkbox-slider {
-    .slider-handle {
-        left: 0px;
+.treeview-container {
+    .form-inline,
+    .form-check {
+        display: inline-flex;
+        align-items: center;
+        @extend %checkbox-style;
+
+        input {
+            display: none;
+        }
     }
 
-    input:checked+label {
+    .form-check-label {
+        margin: 0;
+    }
+}
 
+
+@mixin biDirectional($start, $end) {
+
+    .s-checkbox,
+    .s-checkbox-round,
+    .s-radio,
+    .treeview-container .form-inline,
+    .treeview-container.form-check {
+        input {
+            &+label {
+                padding-#{$start}: 30px;
+            }
+
+            &+label::before,
+            &+label::after {
+                #{$start}: 0;
+            }
+        }
+    }
+
+    .s-checkbox-slider {
         .slider-handle {
-            left: 15px;
+            #{$start}: 0px;
+        }
+
+        input:checked+label {
+
+            .slider-handle {
+                #{$start}: 15px;
+            }
         }
     }
-}
 
-.s-checkbox-slider-second {
-    .slider-handle {
-        left: 2px;
-    }
-
-    input:checked+label {
+    .s-checkbox-slider-second {
         .slider-handle {
-            left: 27px;
+            #{$start}: 2px;
         }
 
-        .slider-bg::after {
-            left: 8px;
-        }
-    }
-}
+        input:checked+label {
+            .slider-handle {
+                #{$start}: 27px;
+            }
 
-.s-checkbox,
-.s-checkbox-round,
-.s-radio {
-    input+label::after {
-        border: 1px solid $primary;
-    }
-}
-
-.s-checkbox {
-    input {
-        &:checked+label::after {
-            background: $primary;
-            border-color: $primary;
+            .slider-bg::after {
+                #{$start}: 8px;
+            }
         }
     }
 }
 
-.s-radio {
+@import 'directions/decide';
 
-    input {
-        &+label:after {
-            border-radius: 50%;
-        }
 
-        &:checked+label:after {
-            background: white;
-            border-color: $primary;
-        }
+@mixin actorStyles($primary, $secondary, $from, $to, $siteBackground) {
 
-        &:checked+label:before {
-            background: $primary;
+    .s-checkbox,
+    .s-checkbox-round,
+    .s-radio,
+    .treeview-container .form-inline,
+    .treeview-container.form-check {
+        input+label::after {
+            border: 1px solid $primary;
         }
     }
-}
 
-.s-checkbox-round {
 
-    input {
-
-        &:checked+label:after {
-            background: $primary;
-            border-color: $primary;
+    .s-checkbox,
+    .treeview-container .form-inline,
+    .treeview-container.form-check {
+        input {
+            &:checked+label::after {
+                background: $primary;
+                border-color: $primary;
+            }
+            &:indeterminate+label::before {
+                transform: scale(0.5);
+                content: '\f111';
+                color: orange;
+            }
         }
     }
-}
 
-.s-checkbox-slider {
+    .s-radio {
 
-    input:checked+label {
-        .slider-bg {
-            background: $primary;
-        }
+        input {
+            &+label:after {
+                border-radius: 50%;
+            }
 
-        .slider-handle {
-            background: #fff;
-            border-color: $primary;
+            &:checked+label:after {
+                background: white;
+                border-color: $primary;
+            }
+
+            &:checked+label:before {
+                background: $primary;
+            }
         }
     }
+
+    .s-checkbox-round {
+
+        input {
+
+            &:checked+label:after {
+                background: $primary;
+                border-color: $primary;
+            }
+        }
+    }
+
+    .s-checkbox-slider {
+
+        input:checked+label {
+            .slider-bg {
+                background: $primary;
+            }
+
+            .slider-handle {
+                background: #fff;
+                border-color: $primary;
+            }
+        }
+    }
+
+    .s-checkbox-slider-second.per-actor {
+
+        input:checked+label {
+            .slider-bg {
+                background: $primary;
+            }
+
+            .slider-handle {
+                background: #fff;
+                border-color: $primary;
+            }
+        }
+    }
+
 }
+
+@import 'themes/decide';

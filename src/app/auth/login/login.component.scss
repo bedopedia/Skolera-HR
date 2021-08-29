@@ -1,0 +1,151 @@
+@import 'mixins';
+@import 'color_scheme';
+@import 'blocks';
+@import 'variables';
+
+.login-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.login-page {
+    @extend %cover-centered;
+    background-image: url(src/assets/images/login-bg.svg);
+    color: $steel;
+    font-size: 1rem;
+    background-color: #fafafa;
+    min-height: 100vh;
+    padding: 15px;
+    position: relative;
+    
+    .login-form-container {
+        max-width: 490px;
+        margin: 0 auto;
+        padding-top: 5%;
+
+        .login-form {
+            position: relative;
+            z-index: 3;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #fff;
+            @include boxshadow(0 2px 4px 0 rgba(0, 0, 0, .2));
+            padding: 48px 25px 25px;
+
+            .whitelabel {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            .login-logo {
+                img {
+                    width: 100%;
+                    max-width: 180px;
+                }
+            }
+
+            .login-slogan {
+                font-weight: 100;
+                font-size: 1.125rem;
+                text-align: center;
+            }
+
+            .login-input {
+                padding: 11px 16px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                width: 100%;
+                color: $steel;
+                font-size: 1.25rem;
+                background-color: rgba(255, 255, 255, .7);
+                border-top: 1px solid $light_gray_low;
+                border-bottom: 1px solid $light_gray_low;
+                border-left: 1px solid $light_gray_low;
+                border-right: 1px solid $light_gray_low;
+            }
+            .eye-icon{
+                padding: 17px;
+                border-top: 1px solid $light_gray_low;
+                border-bottom: 1px solid $light_gray_low;
+                border-right: 1px solid $light_gray_low;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                width: 55px;
+                height: 48px;
+            }
+
+            .has-error {
+                .login-input {
+                    border-color: $error;
+                }
+            }
+
+            .login-label {
+                margin-bottom: 5px;
+                display: inline-block;
+                width: 100%;
+                font-weight: 300;
+            }
+
+            .login-btn {
+                width: 100%;
+                padding: 17px 0;
+                text-align: center;
+                font-size: 1.25rem;
+                border: 1px solid $cerulean-blue;
+                color: #fff;
+                background-color: $green;
+                border-radius: 4px;
+                outline: 0 !important;
+                transition: $transition_1;
+                cursor: pointer;
+            }
+            .logout-btn{
+              background-color: #fafafa; 
+              color: $cerulean-blue;
+            }
+        }
+
+        .made-with-love {
+            line-height: 20px;
+
+            img {
+                height: 20px;
+                margin-left: 5px;
+            }
+
+            i {
+                color: #ff3642;
+                animation: scaleUpDown 4s linear 0s infinite forwards;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+
+@keyframes scaleUpDown {
+    0% {
+        @include transform(scale(1) rotate(20deg))
+    }
+
+    25% {
+        @include transform(scale(0.75) rotate(0deg))
+    }
+
+    50% {
+        @include transform(scale(1) rotate(-20deg))
+    }
+
+    75% {
+        @include transform(scale(0.75) rotate(0deg))
+    }
+
+    100% {
+        @include transform(scale(1) rotate(20deg))
+    }
+}

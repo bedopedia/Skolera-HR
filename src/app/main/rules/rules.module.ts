@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RulesRoutingModule } from './rules-routing.module';
-import { RulesComponent } from './rules/rules.component';
+import { RulesListComponent } from './rules-list/rules-list.component';
 
 @NgModule({
-  declarations: [RulesComponent],
+  declarations: [RulesListComponent],
   imports: [
     CommonModule,
     RulesRoutingModule

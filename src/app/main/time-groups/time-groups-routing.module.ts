@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TimeGroupsComponent } from './time-groups/time-groups.component';
+import { TimeGroupsListComponent } from './time-groups-list/time-groups-list.component';
 
 const routes: Routes = [
-  {
-    path: '', component: TimeGroupsComponent
-   }
+    {
+        path: '', component: TimeGroupsListComponent
+    },
 ];
 
 @NgModule({

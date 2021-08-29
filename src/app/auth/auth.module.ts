@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { AuthRoutingModule } from './auth-routing.module';
+import { AuthRoutingModule } from './auth.routing.module';
+import { SharedModule } from './../shared/shared.module';
 import { LoginComponent } from './login/login.component';
-import { SharedModule } from '@shared/shared.module';
-import { CoreModule } from '@core/core.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginBackgroundComponent } from '@skolera/components/login-background/login-background.component';
 
 @NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    SharedModule,
-    CoreModule.forChild()
-  ]
+    imports: [
+        AuthRoutingModule,
+        SharedModule,
+        ReactiveFormsModule,
+        ReactiveFormsModule,
+        // NgxCaptchaModule
+
+    ],
+    declarations: [
+        LoginComponent,
+        LoginBackgroundComponent
+    ]
 })
 export class AuthModule { }
