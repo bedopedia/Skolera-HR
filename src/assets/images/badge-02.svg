@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+    <defs>
+        <rect id="a" width="80" height="80" rx="4"/>
+        <linearGradient id="d" x1="50%" x2="50%" y1="-16.306%" y2="100%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-opacity=".5"/>
+        </linearGradient>
+        <path id="c" d="M42.371 18.565a6.599 6.599 0 1 1-13.197-.002 6.599 6.599 0 0 1 13.197.002"/>
+        <linearGradient id="f" x1="50%" x2="56.019%" y1="-34.68%" y2="150.581%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-opacity=".5"/>
+        </linearGradient>
+        <path id="e" d="M62.388 42.21a7.808 7.808 0 0 1-7.81 7.808 7.808 7.808 0 1 1 0-15.617 7.809 7.809 0 0 1 7.81 7.809"/>
+        <linearGradient id="h" x1="50%" x2="55.565%" y1="-46.739%" y2="166.615%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-opacity=".5"/>
+        </linearGradient>
+        <path id="g" d="M34.012 44.19c0 5.405-4.383 9.787-9.788 9.787-5.406 0-9.789-4.382-9.789-9.787 0-5.407 4.383-9.789 9.789-9.789 5.405 0 9.788 4.382 9.788 9.79"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(0 .16)">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <rect width="81" height="81" x="-.5" y="-.5" stroke="#E5E5E5" rx="4"/>
+        <g mask="url(#b)">
+            <path fill="#F5F5F5" fill-opacity=".5" d="M75 40c0 19.33-15.67 35-35 35S5 59.33 5 40 20.67 5 40 5s35 15.67 35 35"/>
+            <path fill="#E0E0E0" fill-opacity=".4" d="M45.109 18.417l-6.62 8.763-6.359 15.782-6.358 10.505-3.48 2.429L41.544 74.96c16.148-.701 29.454-12.34 32.697-27.695l-29.131-28.85z"/>
+            <path fill="#90A4AE" d="M59.886 45.844a1.093 1.093 0 0 1-1.821.226L40.051 24.673a1.093 1.093 0 0 1 1.674-1.409l18.013 21.397c.288.341.33.807.148 1.183"/>
+            <g transform="translate(5 5)">
+                <use fill="#FFB74D" xlink:href="#c"/>
+                <use fill="url(#d)" fill-opacity=".5" style="mix-blend-mode:screen" xlink:href="#c"/>
+            </g>
+            <path fill="#90A4AE" d="M29.224 50.62a1.093 1.093 0 0 1-.999-1.538l11.367-25.557a1.094 1.094 0 0 1 1.998.889L30.223 49.969c-.181.408-.58.65-1 .65"/>
+            <g transform="translate(5 5)">
+                <use fill="#B39DDB" xlink:href="#e"/>
+                <use fill="url(#f)" fill-opacity=".5" style="mix-blend-mode:screen" xlink:href="#e"/>
+            </g>
+            <path fill="#90A4AE" d="M59.163 46.442a1.092 1.092 0 0 1-.875 1.612l-27.884 2.195a1.094 1.094 0 1 1-.172-2.18l27.884-2.195c.444-.036.849.2 1.047.568"/>
+            <g transform="translate(5 5)">
+                <use fill="#4DD0E1" xlink:href="#g"/>
+                <use fill="url(#h)" fill-opacity=".5" style="mix-blend-mode:screen" xlink:href="#g"/>
+            </g>
+        </g>
+    </g>
+</svg>

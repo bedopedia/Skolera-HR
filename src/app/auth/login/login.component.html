@@ -1,0 +1,53 @@
+<div class="login-page">
+    <login-background class="login-background"></login-background>
+    <div class="login-form-container">
+        <div class="login-form">
+            <img class="whitelabel" src="assets/images/hod-whitelabel.svg" alt="">
+            <div class="login-logo text-center mb-3">
+                <img src="{{globals.currentSchool.avatar_url}}" default="assets/images/skolera-logo.svg">
+            </div>
+            <p class="login-slogan mb-3">
+                Actor-based Unified Learning Platform
+            </p>
+            <p *ngIf="loginError" class="text-center text-error mt-3 mb-3">
+                {{errorMessage}}
+            </p>
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                <div class="form-group mb-6" [class.has-error]="(username.invalid && username.dirty) ||(loginForm.submitted && username.invalid)">
+                    <label class="login-label">Username</label>
+                    <input class="login-input" type="text"  placeholder="username" [(ngModel)]="user.username" name="username" (keyup.enter)="onSubmit()" autocomplete="username" #username="ngModel" required>
+                  
+                    <span class="text-error size-small mt-2 validator">
+                        Username is required.
+                    </span>
+                </div>
+                
+                <div class="form-group mb-6" [class.has-error]="(password.invalid && password.dirty) || (loginForm.submitted && password.invalid)">
+                    <label class="login-label">Password</label>
+                    <div class="flex flex-middle">
+                        <input class="login-input" [type]="show ? 'text' : 'password'"  name="password" placeholder="Password" [(ngModel)]="user.password" (keyup.enter)="onSubmit()" autocomplete="password" #password="ngModel" required>
+                        <img class="eye-icon" src="assets/images/admin-mask.svg" *ngIf="!show" (click)="show = true">
+                        <img class="eye-icon" src="assets/images/mask-copy.svg"  *ngIf="show"  (click)="show = false">
+                    </div>
+                    
+                    <span class="text-error size-small mt-2 validator">
+                        Password is required.
+                    </span>
+                </div>
+                <!-- <div class="form-group google-recaptcha">
+                    <ngx-invisible-recaptcha #captchaElem [siteKey]="siteKey" (reset)="invisibleReset()" (ready)="invisibleReady(captchaElem)" (load)="invisibleLoad()" (success)="invisibleSuccess($event)" [useGlobalDomain]="false" [(ngModel)]="loginRecaptcha" name="hidden-recaptcha">
+                    </ngx-invisible-recaptcha>
+                </div> -->
+                <div class="form-group pt-5">
+                    <button class="login-btn" type="submit">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+        <p class="made-with-love text-center mt-5">
+            Made with <i class="fa fa-heart"></i> by
+            <img src="assets/images/skolera-logo-long.svg" alt="">
+        </p>
+    </div>
+</div>

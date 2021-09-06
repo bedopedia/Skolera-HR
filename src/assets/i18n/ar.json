@@ -1,0 +1,17 @@
+{
+    "tr_dragon_messages": {
+        "message_corona":"Stay Home! Stay Safe!"
+      },
+    "tr_system_language": "لغة الموقع",
+    "tr_close": "إغلاق",
+    "tr_switch": "تغيير",
+    "tr_language": "اللغة",
+    "tr_home":"Home*",
+    "tr_employees":"Employees*",
+    "tr_time_groups":"Time Groups*",
+    "tr_rules":"Rules*",
+    "tr_signin": {
+        "login": "تسجيل الدخول",
+        "logout": "خروج"
+    }
+}
