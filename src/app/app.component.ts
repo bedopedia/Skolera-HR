@@ -20,7 +20,9 @@ export class AppComponent {
     }
 
     ngOnInit() {
-    
+      this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
+      this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
+      
     }
 
    

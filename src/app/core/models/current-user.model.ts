@@ -1,27 +1,27 @@
 export class CurrentUser {
-    id?: number;
-    actable_id?: number;
-    actable_type?: string;
-    actions?: [];
-    avatar_url?: string
+    id: number;
+    actable_id: number;
+    actable_type: string;
+    actions: [];
+    avatar_url: string
     child_id?: number;
     children?: null;
     city?: string;
     country?: string;
     dateofbirth?: Date;
     email?: string
-    firstname?: string;
-    gender?: string;
+    firstname: string;
+    gender: string;
     hide_grades?: boolean;
     home_address?: string;
     is_active?: boolean;
     last_sign_in_at?: Date;
-    lastname?: string;
-    locale?: string;
+    lastname: string;
+    locale: string;
     middlename?: string;
-    name?: string;
+    name: string;
     parent_id?: number;
-    password?: string;
+    password: string;
     phone?: string;
     realtime_ip?: string;
     school_name?: string;
@@ -31,5 +31,5 @@ export class CurrentUser {
     thumb_url?: string;
     unseen_notifications?: number;
     user_type?: string;
-    username?: string;
+    username: string;
 }

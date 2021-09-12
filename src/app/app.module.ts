@@ -11,6 +11,7 @@ import localeFr from '@angular/common/locales/fr';
 import localeAr from '@angular/common/locales/ar';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { AuthenticationService } from '@core/services/authentication.service';
+import { CoreModule } from '@core/core.module';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -27,6 +28,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    CoreModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
       provide: TranslateLoader,

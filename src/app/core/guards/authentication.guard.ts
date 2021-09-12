@@ -8,8 +8,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (localStorage.getItem('currentUser')) {
-            console.log("daa5l");
-            
             return true;
         }
         this.router.navigate(['login']);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { CurrentUser } from '@core/models/current-user.model';
 import { Globals } from '../core/globals';
 import { AuthenticationService } from '../core/services/authentication.service';
 
@@ -10,7 +11,7 @@ import { AuthenticationService } from '../core/services/authentication.service';
 })
 export class MainComponent implements OnInit {
 
-  currentUser:any;
+  currentUser:CurrentUser;
   arabicSelected: boolean = false;
   englishSelected: boolean = false;
   constructor(

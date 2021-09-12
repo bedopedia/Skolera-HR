@@ -49,8 +49,6 @@ export class HeaderComponent implements OnInit {
 
   setUserLanguage() {
     document.querySelector('body')?.setAttribute('dir', this.globals.currentUser.locale !== 'ar' ? 'ltr' : 'rtl');
-    console.log("his.globals.currentUser.locale",this.currentUser,this.globals.currentUser.locale);
-    
     this.userService.getCurrentUser(this.currentUser.id).subscribe(Response => {
         this.user = Response;
         this.globals.currentUser.locale = this.user.locale;

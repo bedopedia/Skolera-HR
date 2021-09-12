@@ -26,8 +26,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     returnUrl: any;
     intercept(request: any, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers;
-        if (this.globals.sessionHeaders) {
-            headers = this.globals.sessionHeaders;
+        if (JSON.parse(localStorage.getItem('sessionHeaders') || '')) {
+            headers = JSON.parse(localStorage.getItem('sessionHeaders') || '');
         } else {
             headers = {
                 'Access-Control-Allow-Origin': '*'
@@ -36,6 +36,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         request = request.clone({
             setHeaders: { ...headers, ...request.headers.headers }
         });
+
             return next.handle(request).pipe(
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {

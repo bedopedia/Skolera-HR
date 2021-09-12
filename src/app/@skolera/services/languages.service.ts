@@ -10,7 +10,7 @@ import { UserSerivce } from './user.service';
     providedIn: 'root'
 })
 export class LanguagesService {
-    currentUser = new CurrentUser;
+    currentUser = new CurrentUser();
 
     constructor(
         private userService: UserSerivce,

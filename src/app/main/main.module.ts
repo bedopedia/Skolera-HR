@@ -16,6 +16,7 @@ import { Globals } from '../core/globals';
 import { UserSerivce } from '../@skolera/services/user.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { AppNotificationService } from '../@skolera/services/app-notification.service';
+import { CoreModule } from '@core/core.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { AppNotificationService } from '../@skolera/services/app-notification.se
     LoadingBarRouterModule,
     LoadingBarHttpClientModule,
     HttpClientModule,
+    CoreModule.forRoot(),
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
