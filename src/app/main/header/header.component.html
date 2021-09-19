@@ -22,11 +22,11 @@
         <div class="single-header-box header-options-menu">
             <span class="fa fa-caret-down options-menu">
                 <div class="options-menu-container size-small weight-bold">
-                    <div class="single-option flex flex-middle">
+                    <div class="single-option flex flex-middle" (click)="openChangeLanguageDailog()">
                         <i class="fa fa-language steel" aria-hidden="true"></i>
                         {{'tr_language' | translate}}
                     </div>
-                    <div class="single-option flex flex-middle text-error logout" >
+                    <div class="single-option flex flex-middle text-error logout"  (click)="logout()">
                         <img src="assets/images/logout-ico.svg" alt="">
                       {{'tr_signin.logout' | translate}}
                     </div>

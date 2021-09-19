@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from '@skolera/components/language-switcher/language-switcher.component';
 import { AppNotificationService } from 'src/app/@skolera/services/app-notification.service';
 import { UserSerivce } from 'src/app/@skolera/services/user.service';
 import { Globals } from 'src/app/core/globals';
@@ -14,8 +16,8 @@ import { baseUrl } from 'src/environments/environment';
 })
 export class HeaderComponent implements OnInit {
   currentUser: any;
-  user :any;
-  selectedLanguage:any;
+  user: any;
+  selectedLanguage: any;
   avatarURL: any;
   userInfo: any
 
@@ -24,7 +26,8 @@ export class HeaderComponent implements OnInit {
     private userService: UserSerivce,
     private translate: TranslateService,
     private authenticationService: AuthenticationService,
-    private appNotificationService: AppNotificationService
+    private appNotificationService: AppNotificationService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -35,27 +38,38 @@ export class HeaderComponent implements OnInit {
   }
   getUserInfo() {
     this.userService.getUserHeaderData(this.currentUser.user_type.concat('s'), this.currentUser.actable_id).subscribe(
-            (response: any) => {
-                this.userInfo = response;
-            },
-            error => {
-                if (error.status != 403) {
-                    this.appNotificationService.push('There was an unexpected error, please reload', 'error');
-                }
-               
-            }
-        );
-}
+      (response: any) => {
+        this.userInfo = response;
+      },
+      error => {
+        if (error.status != 403) {
+          this.appNotificationService.push('There was an unexpected error, please reload', 'error');
+        }
+
+      }
+    );
+  }
 
   setUserLanguage() {
     document.querySelector('body')?.setAttribute('dir', this.globals.currentUser.locale !== 'ar' ? 'ltr' : 'rtl');
     this.userService.getCurrentUser(this.currentUser.id).subscribe(Response => {
-        this.user = Response;
-        this.globals.currentUser.locale = this.user.locale;
-        this.selectedLanguage = this.user.locale;
-        localStorage.setItem('currentUser', JSON.stringify(this.globals.currentUser));
-        this.translate.use(this.user.locale);
-        document.querySelector('body')?.setAttribute('dir', this.user.locale !== 'ar' ? 'ltr' : 'rtl');
+      this.user = Response;
+      this.globals.currentUser.locale = this.user.locale;
+      this.selectedLanguage = this.user.locale;
+      localStorage.setItem('currentUser', JSON.stringify(this.globals.currentUser));
+      this.translate.use(this.user.locale);
+      document.querySelector('body')?.setAttribute('dir', this.user.locale !== 'ar' ? 'ltr' : 'rtl');
+    });
+  }
+
+  logout() {
+    this.authenticationService.logout();
+  }
+  openChangeLanguageDailog() {
+    const dialogRef = this.dialog.open(LanguageSwitcherComponent, {
+        width: '400px',
+        data: this.globals.currentUser.locale,
+        disableClose: true,
     });
 }
 }
