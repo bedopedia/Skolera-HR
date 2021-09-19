@@ -17,13 +17,18 @@ import { UserSerivce } from '../@skolera/services/user.service';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { AppNotificationService } from '../@skolera/services/app-notification.service';
 import { CoreModule } from '@core/core.module';
+import { LanguageSwitcherComponent } from '@shared/components/language-switcher/language-switcher.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
   declarations: [
     MainComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    LanguageSwitcherComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +36,10 @@ import { CoreModule } from '@core/core.module';
     TranslateModule,
     LoadingBarModule,
     RouterModule,
+    FormsModule,
+    MatDialogModule,
     LoadingBarRouterModule,
+    SharedModule,
     LoadingBarHttpClientModule,
     HttpClientModule,
     CoreModule.forRoot(),
@@ -43,6 +51,7 @@ import { CoreModule } from '@core/core.module';
         },
     })
 ],
+entryComponents: [LanguageSwitcherComponent],
 providers: [
     TranslateService,
     Globals,

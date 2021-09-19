@@ -49,7 +49,7 @@ export class LanguageSwitcherComponent implements OnInit {
         
         this.closeModal(this.selectedLanguage);
     }
-    closeModal(language: string) {
+    closeModal(language: any) {
         this.dialogRef.close(language);
     }
 

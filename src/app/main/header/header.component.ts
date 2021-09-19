@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageSwitcherComponent } from '@skolera/components/language-switcher/language-switcher.component';
+import { LanguageSwitcherComponent } from '@shared/components/language-switcher/language-switcher.component';
 import { AppNotificationService } from 'src/app/@skolera/services/app-notification.service';
 import { UserSerivce } from 'src/app/@skolera/services/user.service';
 import { Globals } from 'src/app/core/globals';
-import { CurrentUser } from 'src/app/core/models/current-user.model';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { baseUrl } from 'src/environments/environment';
 
@@ -66,6 +65,8 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
   openChangeLanguageDailog() {
+    console.log("da5l");
+    
     const dialogRef = this.dialog.open(LanguageSwitcherComponent, {
         width: '400px',
         data: this.globals.currentUser.locale,

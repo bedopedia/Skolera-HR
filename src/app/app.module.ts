@@ -12,6 +12,8 @@ import localeAr from '@angular/common/locales/ar';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { CoreModule } from '@core/core.module';
+import { SharedModule } from '@shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -28,6 +30,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    SharedModule,
+    BrowserAnimationsModule,
     CoreModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
