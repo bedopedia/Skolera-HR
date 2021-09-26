@@ -2,22 +2,22 @@ export const  AdminSidebar = [
   {
     name: 'tr_home',
     routerLink: '/home',
-    icon: 'icon-home-selected-ico icon'
+    icon: 'fa fa-home icon'
   },
   {
     name: 'tr_employees',
     routerLink: '/employees',
-    icon: 'icon-Insights_ico icon'
+    icon: 'fa fa-users icon'
   },
   {
     name: 'tr_time_groups',
     routerLink: '/time-groups',
-    icon: 'icon-Connect_ico icon'
+    icon: 'fa fa-calendar icon'
   },
   {
     name: 'tr_rules',
     routerLink: '/rules',
-    icon: 'icon-academic-selected-ico icon'
+    icon: 'fa fa-handshake-o icon'
   },
  
 ];

@@ -5,23 +5,31 @@ import { CoreModule } from '@core/core.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { FormsModule } from '@angular/forms';
+import { ItemGhostComponent } from './components/item-ghost/item-ghost.component';
+import { GhostLineComponent } from './components/ghost-line/ghost-line.component';
+import { SkoleraPagination } from './components/skolera-pagination/skolera-pagination';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [GhostLineComponent,ItemGhostComponent,SkoleraPagination],
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
     CoreModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-      provide: TranslateLoader,
-      useFactory: HttpLoaderFactory,
-      deps: [HttpClient],
-      }
-    })
+    NgSelectModule,
+    TranslateModule,
+  ],
+  exports: [
+    GhostLineComponent,
+    NgSelectModule,
+    ItemGhostComponent,
+    SkoleraPagination,
+    TranslateModule,
+    CommonModule,
+    FormsModule,
   ]
 })
 export class SharedModule { }

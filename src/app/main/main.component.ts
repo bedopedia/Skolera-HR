@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { CurrentUser } from '@core/models/current-user.model';
+import { CurrentUser } from '@core/models/skolera-interfaces.model';
+import { TranslateService } from '@ngx-translate/core';
 import { Globals } from '../core/globals';
 import { AuthenticationService } from '../core/services/authentication.service';
 
@@ -17,7 +18,8 @@ export class MainComponent implements OnInit {
   constructor(
       private router: Router,
       private authenticationService:AuthenticationService,
-      private globals: Globals
+      private globals: Globals,
+      private translate:TranslateService
   ) {
       this.currentUser = this.authenticationService.getCurrentUser();
       globals.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');

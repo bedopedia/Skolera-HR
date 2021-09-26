@@ -18,8 +18,7 @@ export class SidebarComponent implements OnInit {
       public globals: Globals
   ) {
       this.appSidebar = AdminSidebar;
-      this.whitelabelUrl = '/./assets/images/skolera-logo/admin.svg';
-
+      this.whitelabelUrl = '/./assets/images/skolera-logo/admin.svg'; 
   }
 
   ngOnInit() {

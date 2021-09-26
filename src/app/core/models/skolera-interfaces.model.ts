@@ -1,4 +1,18 @@
-export class CurrentUser {
+export interface PaginationData {
+    current_page: number,
+    next_page: number,
+    prev_page: number,
+    total_count: number,
+    total_pages: number
+}
+export interface Employee {
+    number: string;
+    name: string;
+    department_name: number;
+    biometric_id: number;
+  
+  }
+  export interface CurrentUser {
     id: number;
     actable_id: number;
     actable_type: string;
@@ -20,6 +34,7 @@ export class CurrentUser {
     locale: string;
     middlename?: string;
     name: string;
+    role: {};
     parent_id?: number;
     password: string;
     phone?: string;

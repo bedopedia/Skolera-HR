@@ -8,5 +8,18 @@
     "tr_home":"Home*",
     "tr_employees":"Employees*",
     "tr_time_groups":"Time Groups*",
-    "tr_rules":"Rules*"
+    "tr_rules":"Rules*",
+    "tr_signin": {
+      "login": "Login*",
+      "logout": "Sign out*"
+  },
+  "tr_no_items_found":"No Items Found*",
+  "tr_select":"Select*"   ,
+  "tr_showing": "showing*",
+  "tr_next": "Next*",
+  "tr_previous": "Previous*",
+  "tr_empty_state": "There is no data*",
+  "tr_name": "Name*",
+  "tr_number": "Number*",
+  "tr_department": "Department*"  
 }

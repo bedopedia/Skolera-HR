@@ -13,5 +13,23 @@
     "tr_signin": {
         "login": "Login",
         "logout": "Sign out"
-    }    
+    },
+    "tr_no_items_found":"No Items Found",
+    "tr_select":"Select"   ,
+    "tr_showing": "showing",
+    "tr_next": "Next",
+    "tr_previous": "Previous",
+    "tr_empty_state": "There is no data ",
+    "tr_name": "Name",
+    "tr_number": "Number",
+    "tr_department": "Department",
+    "tr_employee_number": "Employee Number",
+    "tr_employee_name": "Employee Name",
+    "tr_employee_department_name": "Employee  Department Name",
+    "tr_biometric_id": "Biometric Id",
+    "tr_search_by_name":"Search By Name", 
+    "tr_search_by_number":"Search By Number",
+    "tr_to":"To",
+    "tr_of":"Of",
+    "tr_search_by_biometric_id":"Search By Biometric Id" 
 }

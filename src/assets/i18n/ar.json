@@ -13,5 +13,16 @@
     "tr_signin": {
         "login": "تسجيل الدخول",
         "logout": "خروج"
-    }
+    },
+    "tr_no_items_found":"لا يوجد ملف",
+    "tr_select":"اختر", 
+    "tr_showing": "اظهار",
+    "tr_next": "التالي",
+    "tr_previous": "السابق",
+    "tr_empty_state": "There is no data ",
+    "tr_name": "الاسم",
+    "tr_number": "الرقم",
+    "tr_department": "القسم",
+    "tr_to": "إلى",
+    "tr_of":"من"
 }
