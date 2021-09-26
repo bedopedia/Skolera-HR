@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@core/core.module';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { ItemGhostComponent } from './components/item-ghost/item-ghost.component';
 import { GhostLineComponent } from './components/ghost-line/ghost-line.component';
 import { SkoleraPagination } from './components/skolera-pagination/skolera-pagination';
 import {NgSelectModule} from '@ng-select/ng-select';
@@ -13,7 +11,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 
 
 @NgModule({
-  declarations: [GhostLineComponent,ItemGhostComponent,SkoleraPagination],
+  declarations: [GhostLineComponent,SkoleraPagination],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -25,7 +23,6 @@ import {NgSelectModule} from '@ng-select/ng-select';
   exports: [
     GhostLineComponent,
     NgSelectModule,
-    ItemGhostComponent,
     SkoleraPagination,
     TranslateModule,
     CommonModule,
