@@ -26,5 +26,8 @@ export class UserSerivce {
     getUserHeaderData(userType:string, userId:number) {
         return this.http.get(baseUrl + `api/${userType}/${userId}/header_data`);
     }
-   
+    getSchoolConfig() {
+        const id = 1;
+        return this.http.get(baseUrl + 'api/schools/' + id, { headers: {} });
+    }
 }

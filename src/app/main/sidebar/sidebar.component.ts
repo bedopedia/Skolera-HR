@@ -17,11 +17,16 @@ export class SidebarComponent implements OnInit {
   constructor(
       public globals: Globals
   ) {
-      this.appSidebar = AdminSidebar;
+      this.appSidebar = AdminSidebar; 
       this.whitelabelUrl = '/./assets/images/skolera-logo/admin.svg'; 
   }
 
   ngOnInit() {
   }
+  toggleChildren(event:any) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.target.parentElement.classList.toggle('children-active');
+}
 
 }

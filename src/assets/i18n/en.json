@@ -31,5 +31,9 @@
     "tr_search_by_number":"Search By Number",
     "tr_to":"To",
     "tr_of":"Of",
-    "tr_search_by_biometric_id":"Search By Biometric Id" 
+    "tr_search_by_biometric_id":"Search By Biometric Id",
+    "tr_time_group_type": "Time Group Type",
+    "tr_add_new_time_group": "Add Time Group",
+    "tr_human_resources": "Human Resources",
+    "tr_types": "Types"
 }

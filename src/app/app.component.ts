@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from './core/globals';
+import { UserSerivce } from '@skolera/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,11 @@ export class AppComponent {
 
     constructor(
         private translate: TranslateService,
-        private globals: Globals
+        private globals: Globals,
+        private usersService: UserSerivce
     ) {
       translate.setDefaultLang('en');
+      this.setSchoolConfig();
     }
 
     ngOnInit() {
@@ -103,6 +106,25 @@ export class AppComponent {
         }
     }
 
+    setSchoolConfig() {
+        if (localStorage.getItem('schoolConfig')) {
+            this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig')|| '{}');
+            console.log(this.globals.currentSchool );
+            
+            return
+        } else {
+            this.globals.showMessage('loading', '');
+            this.usersService.getSchoolConfig().subscribe(
+                (response: any) => {
+                    localStorage.setItem('schoolConfig', JSON.stringify(response));
+                    this.globals.currentSchool = response;
+                    console.log(this.globals.currentSchool );
+                    this.globals.hideMessage();
+                    return;
+                }
+            );
+        }
+    }
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }

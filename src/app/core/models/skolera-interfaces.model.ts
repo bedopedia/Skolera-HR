@@ -12,6 +12,11 @@ export interface Employee {
     biometric_id: number;
   
   }
+export interface TimeGroup{
+    name: string;
+    id: number;
+    group_type: string;
+}  
   export interface CurrentUser {
     id: number;
     actable_id: number;

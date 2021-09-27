@@ -14,6 +14,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserSerivce } from '@skolera/services/user.service';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -42,7 +43,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   
-  providers: [Globals,AuthenticationGuard,AuthenticationService],
+  providers: [Globals,AuthenticationGuard,AuthenticationService,UserSerivce],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
