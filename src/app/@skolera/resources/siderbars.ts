@@ -10,11 +10,11 @@ export const  AdminSidebar = [
       },
       {
         name: 'tr_employees',
-        routerLink: 'employees',
+        routerLink: '/employees',
       },
       {
         name: 'tr_time_groups',
-        routerLink: 'time-groups',
+        routerLink: '/time-groups',
       },
       {
         name: 'tr_rules',

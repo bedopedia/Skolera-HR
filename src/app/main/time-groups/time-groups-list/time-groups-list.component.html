@@ -29,11 +29,16 @@
           <div class="form-group">
             <label>{{'tr_types' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
-              <ng-select class="s-control s-select" placeholder="{{'tr_select' | translate}}"
-                (change)="filterTimeGroups(selectedtype,'by_type')"  notFoundText="{{'tr_no_items_found' | translate}}"
-                 [(ngModel)]="selectedtype" [items]="timeGroupsType" name="type">
-                 <ng-template let-type="item" let-item$="item$">
-                   <span class="capitalize">  {{'tr_'+type| translate}} </span>
+              <ng-select (change)="filterTimeGroups(selectedtype,'by_type')"
+             
+                class="s-control s-select black-placeholder" [clearable]="true"
+                notFoundText="{{'tr_no_items_found' | translate}}" placeholder="{{'tr_all' | translate}}"
+                [markFirst]="true" bindLabel="label" autofocus [items]="timeGroupsType" name="type"
+                [(ngModel)]="selectedtype">
+                <ng-template ng-option-tmp let-item="item">
+                  <div class="single-option bg-white">
+                    {{'tr_'+item | translate}}
+                  </div>
                 </ng-template>
               </ng-select>
               <i class="fa fa-caret-down input-icon"></i>
@@ -50,6 +55,7 @@
             <thead>
               <th>{{'tr_name' | translate}}</th>
               <th>{{'tr_time_group_type' | translate}}</th>
+              <th>{{'tr_number_of_employees' | translate}}</th>
             </thead>
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
@@ -59,10 +65,11 @@
                 <td>
                   <ng-container> {{timeGroup.group_type}}</ng-container>
                 </td>
-
+                <td>
+                  <ng-container>{{timeGroup.number_of_employees}}</ng-container>
+                </td>
               </tr>
             </tbody>
-
           </table>
 
         </div>
@@ -77,13 +84,9 @@
         </div>
       </div>
 
-
-
       <div *ngIf="timeGroupsLoading">
         <app-ghost-line [height]="6" [length]="12" [lineHight]="8" [type]="'table'"></app-ghost-line>
       </div>
-
-
 
     </div>
   </div>

@@ -38,13 +38,10 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.authenticationService.resetHeaders();
-        this.aFormGroup = this.formBuilder.group({
-            recaptcha: ['', Validators.required]
-        });
         if (this.authenticationService.getCurrentUser()) {
             this.router.navigate(['employees']);
         }
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'employees';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'employees';       
     }
 
     onSubmit() {

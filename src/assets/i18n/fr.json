@@ -21,5 +21,14 @@
   "tr_empty_state": "There is no data*",
   "tr_name": "Name*",
   "tr_number": "Number*",
-  "tr_department": "Department*"  
+  "tr_department": "Department*",
+  "tr_search_by_biometric_id":"Search By Biometric Id*",
+  "tr_time_group_type": "Time Group Type*",
+  "tr_add_new_time_group": "Add Time Group*",
+  "tr_human_resources": "Human Resources*",
+  "tr_types": "Types*",
+  "tr_fixed": "Fixed*",
+  "tr_shifts": "Shifts*",
+  "tr_all": "All*",
+  "tr_number_of_employees":"Number of employees in each group*"  
 }

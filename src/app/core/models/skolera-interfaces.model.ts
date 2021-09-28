@@ -16,6 +16,7 @@ export interface TimeGroup{
     name: string;
     id: number;
     group_type: string;
+    number_of_employees: number;
 }  
   export interface CurrentUser {
     id: number;

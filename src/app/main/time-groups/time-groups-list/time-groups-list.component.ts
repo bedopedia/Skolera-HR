@@ -9,11 +9,11 @@ import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 })
 export class TimeGroupsListComponent implements OnInit {
   timeGroupsLoading: boolean = false;
-  timeGroupsList: TimeGroup[];
+  timeGroupsList: TimeGroup[] = [];
   paginationPerPage = 10;
   selectedtype: string;
   paginationData: PaginationData;
-  timeGroupsType = ['fixed','shift']
+  timeGroupsType = ['fixed','shifts']
   isFilterOpen: boolean = false
   params: any = {
     page: 1,
@@ -24,26 +24,19 @@ export class TimeGroupsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getLeaveTypes();
     this.getTimeGroups();
   }
-  getLeaveTypes(){
-    this.TimeGroupsSerivce.getLeaveTypes().subscribe(response => {
-      console.log(response);
-      
-    })
-  }
-  getTimeGroups(){
-    this.TimeGroupsSerivce.getTimeGroups(this.params).subscribe((response:any) => {
+  getTimeGroups() {
+    this.TimeGroupsSerivce.getTimeGroups(this.params).subscribe((response: any) => {
       this.timeGroupsList = response.time_groups;
       this.paginationData = response.meta
-      
+
     })
   }
-  filterTimeGroups(term: any, serchKey: string) {
-    term = (serchKey == 'by_type') ? term : term.target.value
-    if (term.trim() === serchKey) {
-      delete this.params[serchKey];
+  filterTimeGroups(event: any, serchKey: string) {
+    let term = (serchKey == 'by_type') ? event : event.target.value
+    if(event === null){
+      delete this.params['by_type'];
     }
     else {
       this.params[serchKey] = term;

@@ -4,8 +4,7 @@ import { AuthenticationGuard } from './core/guards';
 
 const routes: Routes = [
   {path: '', redirectTo: 'employees', pathMatch: 'full'},
-  {path: 'employees', loadChildren: () => import("./main/main.module").then(m => m.MainModule), canActivate: [AuthenticationGuard]},
-  {path: 'login',  loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule),outlet: 'primary'},
+  {path: 'login',  loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule), outlet: 'primary'},
 ];
 
 @NgModule({

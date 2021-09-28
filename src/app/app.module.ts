@@ -15,6 +15,7 @@ import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserSerivce } from '@skolera/services/user.service';
+import { MainModule } from './main/main.module';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -32,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HttpClientModule,
     CommonModule,
     SharedModule,
+    MainModule,
     BrowserAnimationsModule,
     CoreModule.forRoot(),
     TranslateModule.forRoot({
