@@ -6,11 +6,13 @@ import { TimeGroupsListComponent } from './time-groups-list/time-groups-list.com
 import { SharedModule } from '@shared/shared.module';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { RouterModule } from '@angular/router';
+import { CreateEditTimeGroupComponent } from './create-edit-time-group/create-edit-time-group.component';
 
 
 @NgModule({
   declarations: [
-    TimeGroupsListComponent
+    TimeGroupsListComponent,
+    CreateEditTimeGroupComponent
   ],
   imports: [
     CommonModule,
