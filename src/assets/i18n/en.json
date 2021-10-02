@@ -39,5 +39,6 @@
     "tr_fixed": "Fixed",
     "tr_shifts": "Shifts",
     "tr_all": "All",
-    "tr_number_of_employees":"Number of employees in each group"
+    "tr_number_of_employees":"Number of employees in each group",
+    "tr_add_time_group": "Add Time Group"
 }

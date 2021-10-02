@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { HeaderComponent } from '../../header/header.component';
 
 @Component({
   selector: 'app-create-edit-time-group',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateEditTimeGroupComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<HeaderComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  closeModal(language: any) {
+    this.dialogRef.close(language);
   }
 
 }

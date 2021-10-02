@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { GhostLineComponent } from './components/ghost-line/ghost-line.component';
 import { SkoleraPagination } from './components/skolera-pagination/skolera-pagination';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { VersionCheckService } from '@skolera/services/version-check.service';
 
 
 
@@ -27,6 +29,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     TranslateModule,
     CommonModule,
     FormsModule,
-  ]
+    LoadingBarHttpClientModule
+  ],
+  providers: [VersionCheckService]
 })
 export class SharedModule { }

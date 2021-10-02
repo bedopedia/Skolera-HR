@@ -1,8 +1,10 @@
 import { Component, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from './core/globals';
 import { UserSerivce } from '@skolera/services/user.service';
+import { environment } from 'src/environments/environment';
+import { VersionCheckService } from '@skolera/services/version-check.service';
 
 @Component({
   selector: 'app-root',
@@ -10,19 +12,35 @@ import { UserSerivce } from '@skolera/services/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+    onlineEvent: Observable<Event>;
+    offlineEvent: Observable<Event>;
     subscriptions: Subscription[] = [];
+
 
     constructor(
         private translate: TranslateService,
         private globals: Globals,
-        private usersService: UserSerivce
+        private usersService: UserSerivce,
+        private versionCheckService: VersionCheckService
     ) {
       translate.setDefaultLang('en');
       this.setSchoolConfig();
     }
 
     ngOnInit() {
+        if (environment.env === 'production') {
+            this.versionCheckService.initVersionCheck('version.json');
+        }
+        this.onlineEvent = fromEvent(window, 'online');
+        this.offlineEvent = fromEvent(window, 'offline');
+
+        this.subscriptions.push(this.onlineEvent.subscribe(e => {
+            this.globals.systemAlerts.noConnection = false;
+          }));
+
+          this.subscriptions.push(this.offlineEvent.subscribe(e => {
+            this.globals.systemAlerts.noConnection = true;
+          }));
       this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
       this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
       

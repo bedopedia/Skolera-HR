@@ -1,1 +1,44 @@
-<p>create-edit-time-group works!</p>
+<div class="complex-skolera-modal language-switcher-modal">
+  <div class="modal-wrapper">
+    <div class="close-modal-icon" (click)="closeModal(null)"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="steel weight-bold size-default m-0">
+          {{'tr_add_time_group' | translate}}
+        </h3>
+      </div>
+      <div class="modal-body weight-medium steel">
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <div class="form-group">
+              <label>Group Name</label>
+              <input type="text" class="s-control">
+            </div>
+
+
+          </div>
+          <div class="col-md-12">
+            <label>Group Type</label>
+            <div class="mt-2 flex flex-middle flex-space-between max-600">
+              <div class="flex flex-middle flex-wrap">
+                <span class="s-radio size-small mr-4">
+                  <input type="radio" name="group-type" value="Fixed" id="fixed-type">
+                  <label for="publish-now">
+                    <span class="capitalize">Fixed</span>
+                  </label>
+                </span>
+                <span class="s-radio size-small">
+                  <input type="radio" name="group-type" value="Shifts" id="shifts-type">
+                  <label for="publish-later">
+                    <span class="capitalize">Shifts</span>
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

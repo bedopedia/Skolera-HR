@@ -16,6 +16,7 @@ import { SharedModule } from '@shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserSerivce } from '@skolera/services/user.service';
 import { MainModule } from './main/main.module';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -31,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    LoadingBarRouterModule,
     CommonModule,
     SharedModule,
     MainModule,
