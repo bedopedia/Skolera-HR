@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { CurrentUser } from '@core/models/skolera-interfaces.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Globals } from '../core/globals';
 import { AuthenticationService } from '../core/services/authentication.service';
 
@@ -16,11 +16,12 @@ export class MainComponent implements OnInit {
   arabicSelected: boolean = false;
   englishSelected: boolean = false;
   constructor(
-      private router: Router,
+      private router:Router,
       private authenticationService:AuthenticationService,
       private globals: Globals,
-      private translate:TranslateService
+      private translate: TranslateService
   ) {
+     translate.setDefaultLang('en');
       this.currentUser = this.authenticationService.getCurrentUser();
       globals.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
       document.body.classList.remove('admin_theme', 'teacher_theme', 'hod_theme', 'student_theme', 'female', 'parent_theme');
@@ -28,9 +29,9 @@ export class MainComponent implements OnInit {
   
   } 
   ngOnInit() {
-      // this.router.events.subscribe((event: RouterEvent) => {
-      //     this.navigationInterceptor(event)
-      // })
+      this.router.events.subscribe((event: any) => {
+          this.navigationInterceptor(event)
+      })
   }
 
   // Shows and hides the loading spinner during RouterEvent changes
