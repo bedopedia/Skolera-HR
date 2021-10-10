@@ -9,7 +9,7 @@ export class GhostLineComponent implements OnInit {
 
   @Input() length: number = 10;
   @Input() height: number;
-  @Input() lineHight: number;
+  @Input() width: number;
   @Input() type: string = 'line';
 
   constructor() { }

@@ -70,3 +70,9 @@ export class TimeGroupSchedule {
     user_type?: string;
     username: string;
 }
+
+export interface Department{
+  name: string,
+  id: number,
+  code: string
+}

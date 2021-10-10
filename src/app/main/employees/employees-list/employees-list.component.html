@@ -39,10 +39,19 @@
           <div class="form-group">
             <label>{{'tr_department' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
-              <ng-select class="s-control s-select" placeholder="{{'tr_select' | translate}}"
-                (change)="filterEmployees(selectedDepartment,'by_department_name')"
-                notFoundText="{{'tr_no_items_found' | translate}}" autofocus [(ngModel)]="selectedDepartment"
+              <ng-select class="s-control s-select"  (change)="filterEmployees(selectedDepartment,'by_department_name')" bindValue="name" (scrollToEnd)= nextBatch() bindLabel="name" [loading]="departmentsLoading" placeholder="{{'tr_select' | translate}}"
+               notFoundText="{{'tr_no_items_found' | translate}}" (clear)="filterEmployees('','by_department_name')" autofocus [(ngModel)]="selectedDepartment"
                 [items]="departments" name="department">
+                <ng-template ng-header-tmp>
+                  <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
+                      {{'tr_there_are_no_departments' | translate}}
+                  </div>
+              </ng-template>
+              <ng-template ng-footer-tmp >
+                  <div class="mb-2" *ngIf="departmentsLoading">
+                    <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                  </div>
+              </ng-template>
               </ng-select>
               <i class="fa fa-caret-down input-icon"></i>
             </div>
@@ -96,7 +105,7 @@
 
 
       <div *ngIf="employeesLoading">
-        <app-ghost-line [height]="6" [length]="12" [lineHight]="8" [type]="'table'"></app-ghost-line>
+        <app-ghost-line  [length]="12" [type]="'table'"></app-ghost-line>
       </div>
 
 

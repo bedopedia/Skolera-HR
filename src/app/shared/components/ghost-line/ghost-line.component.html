@@ -19,4 +19,10 @@
     </table>
   </div>
  
+  <div *ngIf="type == 'line'">
+    <div class="line" [style.heigth]="height? height+'px': ''" [style.width]="width? width+'px': ''" ></div>
+  </div>
+  <div *ngIf="type == 'list'">
+    <div class="line" [style.width]="width? width+'px': ''"  [style.height]="height? height+'px': ''" *ngFor="let i of ' '.repeat(length).split('')"></div>
+  </div>
 </div>
