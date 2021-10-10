@@ -143,5 +143,6 @@
     "tr_clock_out": "Clock Out",
     "tr_actions": "Actions",
     "tr_time_group_deleted_successfully":"Time Group deleted Successfully",
-    "tr_time_group_confirmation_message":"title: 'Are You Sure You Want To Delete This Time Group ?"
+    "tr_time_group_confirmation_message":"title: 'Are You Sure You Want To Delete This Time Group ?",
+    "tr_clocl_validation_text": "Clock out should be after clock in"
 }

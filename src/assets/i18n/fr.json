@@ -120,5 +120,9 @@
   "tr_fixed": "Fixed*",
   "tr_shifts": "Shifts*",
   "tr_all": "All*",
-  "tr_number_of_employees":"Number of employees in each group*"  
+  "tr_number_of_employees":"Number of employees in each group*",
+  "tr_actions": "Actions*",
+  "tr_time_group_deleted_successfully":"Time Group deleted Successfully*",
+  "tr_time_group_confirmation_message":"title: 'Are You Sure You Want To Delete This Time Group ?*",
+  "tr_clocl_validation_text": "Clock out should be after clock in*" 
 }

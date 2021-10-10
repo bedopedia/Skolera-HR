@@ -19,8 +19,8 @@
                   {{'tr_required_field' | translate}}
                 </span>
               </div>
-  
-  
+
+
             </div>
             <div class="col-md-6">
               <label>{{'tr_group_type' | translate}}</label>
@@ -34,7 +34,7 @@
                     </label>
                   </span>
                   <span class="s-radio size-small">
-  
+
                     <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="shifts"
                       id="shifts-type">
                     <label for="shifts-type">
@@ -45,7 +45,13 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="timeGroup.group_type == 'fixed'">
+            <div class="flex flrx-middle" *ngIf="inValidAllDaysTime">
+              <img src="assets/images/imported-layers.svg" class="mr-2 pl-2" alt="">
+              <h2 class="text-error weight-medium size-default">
+               {{'tr_clocl_validation_text' | translate}}
+              </h2>
+            </div>
             <div class="table-container" id="table-container">
               <table class="table s-table time-group layout-fixed">
                 <thead>
@@ -54,52 +60,52 @@
                   <th>{{'tr_count_as_bridge' | translate}}</th>
                   <th>{{'tr_clock_in' | translate}}</th>
                   <th>{{'tr_clock_out' | translate}}</th>
-                    </thead>
-                    <tbody>
-                      <tr  *ngFor="let day of timeGroup.time_group_schedule.schedule_days" >
-                        <td>
-                        <span class="capitalize">{{day.day}} </span>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let day of timeGroup.time_group_schedule_attributes.schedule_days_attributes">
+                    <td>
+                      <span class="capitalize">{{day.day}} </span>
                     </td>
-                  <td>
-                    <div>
-                      <span class="s-checkbox-slider size-small pr-5">
-                        <input type="checkbox" id="{{day.day}}_off" [(ngModel)]="day.is_off">
-                        <label for="{{day.day}}_off">
-                          <div class="slider">
-                            <span class="slider-bg"></span>
-                            <span class="slider-handle"></span>
-                          </div>
-                        </label>
+                    <td>
+                      <div>
+                        <span class="s-checkbox-slider size-small pr-5">
+                          <input type="checkbox" id="{{day.day}}_off" [(ngModel)]="day.is_off">
+                          <label for="{{day.day}}_off">
+                            <div class="slider">
+                              <span class="slider-bg"></span>
+                              <span class="slider-handle"></span>
+                            </div>
+                          </label>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <span class="s-checkbox size-small" *ngIf="!day.is_off">
+                        <input type="checkbox" id="{{day.day}}}_calculate_bridge" [(ngModel)]="day.calculate_bridging">
+                        <label for="{{day.day}}}_calculate_bridge"></label>
                       </span>
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <span class="s-checkbox size-small" *ngIf="!day.is_off">
-                      <input type="checkbox" id="{{day.day}}}_calculate_bridge" [(ngModel)]="day.calculate_bridging">
-                      <label for="{{day.day}}}_calculate_bridge"></label>
-                    </span>
-                  </td>
-                  <td>
-                    <div [class.has-error]="(isFormSubmitted && day.invalidTime)">
-                      <input *ngIf="!day.is_off" [(ngModel)]="day.clock_in" (change)="validateClockInOut(day)"
-                        name="clockIn" #clockIn="ngModel" type="time" class="s-control time-control" required>
-                    </div>
-                  </td>
-                  <td>
-                    <div [class.has-error]="(isFormSubmitted && day.invalidTime)">
-                      <input *ngIf="!day.is_off" [(ngModel)]="day.clock_out" (change)="validateClockInOut(day)"
-                        name="clockOut" #clockOut="ngModel" type="time" class="s-control time-control" required>
-                    </div>
-                  </td>
+                    </td>
+                    <td>
+                      <div [class.has-error]="(day.invalidTime)">
+                        <input *ngIf="!day.is_off" [(ngModel)]="day.clock_in" 
+                          name="clockIn" #clockIn="ngModel" type="time" (change)="validateClockInOut(day)" class="s-control time-control" required>
+                      </div>
+                    </td>
+                    <td>
+                      <div [class.has-error]="(day.invalidTime)">
+                        <input *ngIf="!day.is_off" [(ngModel)]="day.clock_out"
+                          name="clockOut" #clockOut="ngModel" type="time" (change)="validateClockInOut(day)" class="s-control time-control" required>
+                      </div>
+                    </td>
                   </tr>
-                  </tbody>
+                </tbody>
               </table>
-  
+
             </div>
-  
+
           </div>
         </div>
-       
+
 
         <div *ngIf="timeGroupLoading">
           <app-ghost-line [length]="8" [type]="'table'"></app-ghost-line>
@@ -108,7 +114,8 @@
       </div>
 
       <div class="modal-footer text-right">
-        <button class="s-btn btn-primary btn-sm mr-3" (click)="createTimeGroup()" [disabled]="isFormSubmitted"> {{'tr_action.save' | translate}}</button>
+        <button class="s-btn btn-primary btn-sm mr-3" (click)="createTimeGroup()" [disabled]="isFormSubmitted">
+          {{'tr_action.save' | translate}}</button>
         <button class="s-btn btn-secondary btn-sm"> {{'tr_action.cancel'| translate}}</button>
       </div>
 

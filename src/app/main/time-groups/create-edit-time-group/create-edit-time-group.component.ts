@@ -16,7 +16,9 @@ export class CreateEditTimeGroupComponent implements OnInit {
   isFormSubmitted:boolean = false;
   timeGroupLoading: boolean = true;
   timeGroup: TimeGroup = new TimeGroup();
-  scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()]
+  inValidAllDaysTime: boolean = false
+  scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()];
+
 
 
   constructor(
@@ -29,15 +31,13 @@ export class CreateEditTimeGroupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("this.data",this.data);
-    
     if(this.data.action == 'create'){
       this.timeGroupLoading = false
       this.timeGroup = {
         name: '',
         group_type: 'fixed',
-        time_group_schedule: {
-          schedule_days: [
+        time_group_schedule_attributes: {
+          schedule_days_attributes: [
             {
               day: 'sunday',
               clock_in: '',
@@ -97,7 +97,6 @@ export class CreateEditTimeGroupComponent implements OnInit {
   }
   private getTimeGroup(id:number){
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
-      console.log(response);
       this.timeGroup = response;
       this.timeGroupLoading = false
     })
@@ -110,12 +109,13 @@ export class CreateEditTimeGroupComponent implements OnInit {
     let clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     let clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     day.invalidTime = (clockIn > clockOut) ? true : false;
+    this.inValidAllDaysTime = this.timeGroup.time_group_schedule_attributes.schedule_days_attributes.filter(day=> day.invalidTime).length > 0 
   }
 
   public createTimeGroup() {
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
-    this.timeGroup.time_group_schedule.schedule_days.forEach(day => {
+    this.timeGroup.time_group_schedule_attributes.schedule_days_attributes.forEach(day => {
       if (day.is_off) {
         delete day.clock_in;
         delete day.clock_out;
@@ -126,6 +126,7 @@ export class CreateEditTimeGroupComponent implements OnInit {
       }
     })
     if (this.timeGroup.name == '' || isValidDays.includes(true)) {
+      this.isFormSubmitted = false
       return
     }
 
