@@ -7,7 +7,7 @@ import { SharedModule } from '@shared/shared.module';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { RouterModule } from '@angular/router';
 import { CreateEditTimeGroupComponent } from './create-edit-time-group/create-edit-time-group.component';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { CreateEditTimeGroupComponent } from './create-edit-time-group/create-ed
     CommonModule,
     TimeGroupsRoutingModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule
   ],
   providers: [TimeGroupsSerivce],
   exports: [RouterModule]

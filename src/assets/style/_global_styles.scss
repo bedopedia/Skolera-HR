@@ -1227,8 +1227,6 @@ body,
         }
 
         .modal-content {
-            max-height: 80vh;
-            overflow: auto;
             @include boxshadow(0 2px 4px rgba(0, 0, 0, .2));
             border-radius: 4px;
             background: #fff;
@@ -1237,6 +1235,14 @@ body,
             &.min-modal {
                 min-height: 80vh;
             }
+        }
+        .modal-body{
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+        .modal-footer{
+            padding: 15px;
+            border-top: 1px solid $border;
         }
 
         .modal-body,

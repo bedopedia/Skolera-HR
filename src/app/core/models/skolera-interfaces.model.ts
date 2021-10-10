@@ -1,8 +1,8 @@
 export interface PaginationData {
-    current_page: number,
-    next_page: number,
-    prev_page: number,
-    total_count: number,
+    current_page: number ;
+    next_page: number;
+    prev_page: number;
+    total_count: number;
     total_pages: number
 }
 export interface Employee {
@@ -12,12 +12,28 @@ export interface Employee {
     biometric_id: number;
   
   }
-export interface TimeGroup{
+
+export class TimeGroup {
+    
+    constructor(){ }
     name: string;
-    id: number;
+    id?: number;
     group_type: string;
-    number_of_employees: number;
-}  
+    number_of_employees?: number;
+    time_group_schedule: {
+      schedule_days :  TimeGroupSchedule[]
+    } 
+} 
+
+
+export class TimeGroupSchedule {
+    day: string;
+    clock_in?: string;
+    clock_out?: string;
+    is_off?: boolean;
+    calculate_bridging?: boolean;
+    invalidTime?: boolean;
+}
   export interface CurrentUser {
     id: number;
     actable_id: number;

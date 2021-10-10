@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '@shared/shared.module';
 import { SystemAlertsComponent } from './system-alerts/system-alerts.component';
+import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ providers: [
     Globals,
     UserSerivce,
     AuthenticationService,
-    AppNotificationService
+    AppNotificationService,
+    TimeGroupsSerivce
 ],
 
 })

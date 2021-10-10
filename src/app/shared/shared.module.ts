@@ -9,11 +9,12 @@ import { SkoleraPagination } from './components/skolera-pagination/skolera-pagin
 import {NgSelectModule} from '@ng-select/ng-select';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { VersionCheckService } from '@skolera/services/version-check.service';
+import { SkoleraConfirmationComponent } from './components/skolera-confirmation/skolera-confirmation.component';
 
 
 
 @NgModule({
-  declarations: [GhostLineComponent,SkoleraPagination],
+  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -29,7 +30,8 @@ import { VersionCheckService } from '@skolera/services/version-check.service';
     TranslateModule,
     CommonModule,
     FormsModule,
-    LoadingBarHttpClientModule
+    LoadingBarHttpClientModule,
+    SkoleraConfirmationComponent
   ],
   providers: [VersionCheckService]
 })
