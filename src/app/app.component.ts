@@ -1,7 +1,10 @@
 import { Component, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from './core/globals';
+import { UserSerivce } from '@skolera/services/user.service';
+import { environment } from 'src/environments/environment';
+import { VersionCheckService } from '@skolera/services/version-check.service';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +12,35 @@ import { Globals } from './core/globals';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+    onlineEvent: Observable<Event>;
+    offlineEvent: Observable<Event>;
     subscriptions: Subscription[] = [];
+
 
     constructor(
         private translate: TranslateService,
-        private globals: Globals
+        private globals: Globals,
+        private usersService: UserSerivce,
+        private versionCheckService: VersionCheckService
     ) {
       translate.setDefaultLang('en');
+      this.setSchoolConfig();
     }
 
     ngOnInit() {
+        if (environment.env === 'production') {
+            this.versionCheckService.initVersionCheck('version.json');
+        }
+        this.onlineEvent = fromEvent(window, 'online');
+        this.offlineEvent = fromEvent(window, 'offline');
+
+        this.subscriptions.push(this.onlineEvent.subscribe(e => {
+            this.globals.systemAlerts.noConnection = false;
+          }));
+
+          this.subscriptions.push(this.offlineEvent.subscribe(e => {
+            this.globals.systemAlerts.noConnection = true;
+          }));
       this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
       this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
       
@@ -103,6 +124,25 @@ export class AppComponent {
         }
     }
 
+    setSchoolConfig() {
+        if (localStorage.getItem('schoolConfig')) {
+            this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig')|| '{}');
+            console.log(this.globals.currentSchool );
+            
+            return
+        } else {
+            this.globals.showMessage('loading', '');
+            this.usersService.getSchoolConfig().subscribe(
+                (response: any) => {
+                    localStorage.setItem('schoolConfig', JSON.stringify(response));
+                    this.globals.currentSchool = response;
+                    console.log(this.globals.currentSchool );
+                    this.globals.hideMessage();
+                    return;
+                }
+            );
+        }
+    }
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }

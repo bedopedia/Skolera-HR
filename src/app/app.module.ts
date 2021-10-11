@@ -14,6 +14,9 @@ import { AuthenticationService } from '@core/services/authentication.service';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserSerivce } from '@skolera/services/user.service';
+import { MainModule } from './main/main.module';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -29,8 +32,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    LoadingBarRouterModule,
     CommonModule,
     SharedModule,
+    MainModule,
     BrowserAnimationsModule,
     CoreModule.forRoot(),
     TranslateModule.forRoot({
@@ -42,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   
-  providers: [Globals,AuthenticationGuard,AuthenticationService],
+  providers: [Globals,AuthenticationGuard,AuthenticationService,UserSerivce],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 // globals.ts
 import {Injectable} from '@angular/core';
+import { CurrentUser } from '@core/models/skolera-interfaces.model';
 import {Subject, BehaviorSubject} from 'rxjs';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class Globals {
   static readonly V1Header: any = {
     'accept': 'application/vnd.skolera.v1'
   };
-  currentUser: any = {};
+  currentUser: CurrentUser
   sessionHeaders: any  = null;
   currentSchool:any = currentSchool; // timezone is Cairo (UTC+02:00) by default
   siteHasMessage: boolean = false;

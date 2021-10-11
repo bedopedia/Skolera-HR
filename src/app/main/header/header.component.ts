@@ -65,8 +65,6 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
   openChangeLanguageDailog() {
-    console.log("da5l");
-    
     const dialogRef = this.dialog.open(LanguageSwitcherComponent, {
         width: '400px',
         data: this.globals.currentUser.locale,

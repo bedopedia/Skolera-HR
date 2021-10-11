@@ -2,10 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HeaderComponent } from 'src/app/main/header/header.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from '@core/globals';
-import { CurrentUser } from '@core/models/current-user.model';
 import { AuthenticationService } from '@core/services/authentication.service';
 import { UserSerivce } from '@skolera/services/user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CurrentUser } from '@core/models/skolera-interfaces.model';
 
 
 
@@ -38,14 +38,13 @@ export class LanguageSwitcherComponent implements OnInit {
             id: this.currentUser.id,
             language: this.selectedLanguage,
         }
-        this.userService.updateUser(this.currentUser.id, params).subscribe(response => {
+        this.userService.updateUser(this.currentUser.id, params).subscribe((response: any) => {
             this.translate.use(this.selectedLanguage);
             this.globals.updateUserLanguage.next(this.selectedLanguage);
             this.globals.currentUser = response;
             localStorage.setItem('currentUser', JSON.stringify(this.globals.currentUser));
             document.querySelector('body')?.setAttribute('dir', this.selectedLanguage == 'ar' ? 'rtl' : 'ltr');
         })
-    
         
         this.closeModal(this.selectedLanguage);
     }

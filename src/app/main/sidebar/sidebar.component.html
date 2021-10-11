@@ -1,16 +1,16 @@
 <div class="sidebar-background"></div>
 <div class="main-sidebar">
-    <div class="app-sidebar">
-        <div class="whitelabel-container">
-            <a href="https://skolera.com/en/Default.aspx" target="_blank">
-                <img [ngClass]="{'flip-logo': this.globals.currentUser.locale=='ar'}" src="{{whitelabelUrl}}" alt="">
-            </a>
-        </div>
-        <div class="user-picture max-center mb-5">
-            <img class="contain-full" [src]="globals.currentSchool.avatar_url" alt="">
-        </div>
+  <div class="app-sidebar">
+    <div class="whitelabel-container">
+      <a href="https://skolera.com/en/Default.aspx" target="_blank">
+        <img [ngClass]="{'flip-logo': this.globals.currentUser.locale=='ar'}" src="{{whitelabelUrl}}" alt="">
+      </a>
+    </div>
+    <div class="user-picture max-center mb-5">
+      <img class="contain-full" [src]="globals.currentSchool.avatar_url" alt="">
+    </div>
 
-        <div class="main-routing-links">
+    <!-- <div class="main-routing-links">
             <div *ngFor="let link of appSidebar" routerLinkActive="active-link" class="anchor-container">
               <div>
                 <a [routerLink]="link.routerLink">
@@ -23,5 +23,35 @@
                 </a>
               </div>
             </div>
+        </div> -->
+    <div class="main-routing-links">
+      <div *ngFor="let link of appSidebar" routerLinkActive="active-link" class="anchor-container">
+        <div >
+          <a [routerLink]="link.routerLink">
+            <div class="link-content">
+              <span [class]="link.icon"></span>
+              <span class="main-icon-text">
+                {{ link.name | translate }}
+              </span>
+            </div>
+          </a>
         </div>
+        <span *ngIf="link.children" class="fa fa-caret-down children-arrow" (click)="toggleChildren($event)">
+        </span>
+        <div *ngIf="link.children" class="child-menu mr-2">
+          <div *ngFor="let child of link.children" routerLinkActive="child-active" class="anchor-container">
+            <a [routerLink]="child.routerLink" >
+              <div class="link-content">
+                <span>
+                
+                  <p class="size-small" >
+                    {{child.name | translate}}
+                  </p>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>

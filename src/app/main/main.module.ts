@@ -21,6 +21,8 @@ import { LanguageSwitcherComponent } from '@shared/components/language-switcher/
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '@shared/shared.module';
+import { SystemAlertsComponent } from './system-alerts/system-alerts.component';
+import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { SharedModule } from '@shared/shared.module';
     MainComponent,
     HeaderComponent,
     SidebarComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    SystemAlertsComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { SharedModule } from '@shared/shared.module';
     SharedModule,
     LoadingBarHttpClientModule,
     HttpClientModule,
+    LoadingBarRouterModule,
     CoreModule.forRoot(),
     TranslateModule.forRoot({
         loader: {
@@ -57,7 +61,8 @@ providers: [
     Globals,
     UserSerivce,
     AuthenticationService,
-    AppNotificationService
+    AppNotificationService,
+    TimeGroupsSerivce
 ],
 
 })

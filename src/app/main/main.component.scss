@@ -16,7 +16,6 @@
 @mixin biDirectional($start, $end) {
     .main-container {
         padding-#{$start}: 315px;
-        padding-left: 315px
     }
 }
 

@@ -1,0 +1,128 @@
+<div>
+  <div class="content-shadow bg-white mb-5">
+    <h2 class="size-body title-with-btn plr-4 ptb-4">
+      <span class="page-title">{{'tr_time_groups' | translate }}</span>
+      <div class="btn-group inline-flex mt-2-mob">
+        <button class="s-btn size-small btn-secondary" (click)="createTimeGroup('create')">
+          <i class="fa fa-plus mr-2"></i>
+          {{ 'tr_add_new_time_group' | translate }}
+        </button>
+        <button class="s-btn btn-secondary size-body" (click)="isFilterOpen=!isFilterOpen">
+          <i class="fa fa-filter text-primary" aria-hidden="false"></i>
+        </button>
+      </div>
+    </h2>
+    <div class="isFilterOpens-card bg-secondary plr-4 ptb-2 mlr-2" *ngIf="isFilterOpen">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>{{'tr_number' | translate}}</label>
+            <div class="input-with-icon bg-white width-100">
+              <input class="text" (keyup)="filterTimeGroups($event,'by_name')" class="s-control"
+                placeholder="{{'tr_search_by_name' | translate}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>{{'tr_types' | translate}}</label>
+            <div class="input-with-icon bg-white width-100">
+              <ng-select (change)="filterTimeGroups(selectedtype,'by_type')"
+                class="s-control s-select black-placeholder" [clearable]="true"
+                notFoundText="{{'tr_no_items_found' | translate}}" placeholder="{{'tr_all' | translate}}"
+                [markFirst]="true" bindLabel="label" autofocus [items]="timeGroupsType" name="type"
+                [(ngModel)]="selectedtype">
+                <ng-template ng-option-tmp let-item="item">
+                  <div class="single-option bg-white">
+                    {{'tr_'+item | translate}}
+                  </div>
+                </ng-template>
+              </ng-select>
+              <i class="fa fa-caret-down input-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+
+
+      <div class="plr-4" *ngIf="!timeGroupsLoading">
+        <div class="alert ptb-2 plr-4 mt-2 bg-secondary size-tiny" *ngIf="checkedCells.length > 0">
+          {{checkedCells.length}} selected. <span
+            (click)="checkedCells = []; allChecked = false; partiallyChecked= false;"
+            class="text-underlined pointer text-error ml-4">Unselect
+            all</span>
+        </div>
+        <div class="table-container" id="table-container" *ngIf="timeGroupsList.length > 0">
+          <table class="s-table table layout-fixed">
+            <thead>
+              <th>
+                <skolera-multi-checkbox [isParent]="true" [(allChecked)]="allChecked"
+                  [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
+                  [id]="'selectAll'"></skolera-multi-checkbox>
+              </th>
+              <th>{{'tr_name' | translate}}</th>
+              <th>{{'tr_time_group_type' | translate}}</th>
+              <th>{{'tr_number_of_employees' | translate}}</th>
+              <th> <span class="options-menu">
+                  <i class="fa fa-ellipsis-v"></i>
+                  <div class="options-menu-container">
+                    <div class="single-option text-error" (click)="deleteTimeGroup('all')">
+                      {{ 'tr_action.delete' | translate }}
+                    </div>
+                  </div>
+                </span></th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
+                <td>
+                  <skolera-multi-checkbox [isParent]="false" [(allChecked)]="allChecked"
+                    [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
+                    [id]="timeGroup.id!"></skolera-multi-checkbox>
+                </td>
+                <td>
+                  <ng-container> {{timeGroup.name}}</ng-container>
+                </td>
+                <td>
+                  <ng-container> {{timeGroup.group_type}}</ng-container>
+                </td>
+                <td>
+                  <ng-container>{{timeGroup.number_of_employees}}</ng-container>
+                </td>
+                <td>
+                  <span class="options-menu">
+                    <i class="text-small fa fa-ellipsis-v"></i>
+                    <div class="options-menu-container">
+                      <div class="single-option border-bottom" (click)="createTimeGroup('edit',timeGroup)">
+                        {{ 'tr_action.edit' | translate }}
+                      </div>
+                      <div class="single-option text-error" (click)="deleteTimeGroup('single',timeGroup)">
+                        {{ 'tr_action.delete' | translate }}
+                      </div>
+                    </div>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="plr-4 ptb-4">
+            <skolera-pagination [paginationData]="paginationData" [perPage]="paginationPerPage"
+              (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
+          </div>
+        </div>
+        <div class="empty-state-here text-center mtb-8" *ngIf="timeGroupsList.length == 0">
+          <img class="placeholder-icon" src="assets/images/placeholders/announcments.svg" alt="">
+          <p> {{'tr_empty_state' | translate}}</p>
+        </div>
+
+
+      </div>
+
+      <div *ngIf="timeGroupsLoading">
+        <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
+      </div>
+
+    </div>
+  </div>
+</div>

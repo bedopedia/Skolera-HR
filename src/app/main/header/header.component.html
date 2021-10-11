@@ -22,7 +22,7 @@
         <div class="single-header-box header-options-menu">
             <span class="fa fa-caret-down options-menu">
                 <div class="options-menu-container size-small weight-bold">
-                    <div class="single-option flex flex-middle" (click)="openChangeLanguageDailog()">
+                    <div class="single-option flex flex-middle hidden-desktop" (click)="openChangeLanguageDailog()">
                         <i class="fa fa-language steel" aria-hidden="true"></i>
                         {{'tr_language' | translate}}
                     </div>
@@ -35,7 +35,7 @@
         </div>
 
 
-        <div class="single-header-box hidden-mobile">
+        <div class="single-header-box hidden-mobile" (click)="openChangeLanguageDailog()">
             <i class="fa fa-language" aria-hidden="true"></i>
         </div>
       
