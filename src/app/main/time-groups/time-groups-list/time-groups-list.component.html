@@ -48,7 +48,7 @@
 
 
       <div class="plr-4" *ngIf="!timeGroupsLoading">
-        <div class="alert ptb-2 plr-4 bg-secondary size-tiny" *ngIf="checkedCells.length > 0">
+        <div class="alert ptb-2 plr-4 mt-2 bg-secondary size-tiny" *ngIf="checkedCells.length > 0">
           {{checkedCells.length}} selected. <span
             (click)="checkedCells = []; allChecked = false; partiallyChecked= false;"
             class="text-underlined pointer text-error ml-4">Unselect
