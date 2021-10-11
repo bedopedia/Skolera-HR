@@ -144,5 +144,5 @@
     "tr_actions": "Actions",
     "tr_deleted_successfully":"Process Deleted Successfully",
     "tr_time_group_confirmation_message":"title: 'Are You Sure You Want To Delete This Time Group ?",
-    "tr_clocl_validation_text": "Clock out should be after clock in"
+    "tr_clocl_validation_text": "Clock out should be after clock in and have values"
 }

@@ -80,19 +80,19 @@ export class TimeGroupsListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result == 'delete') {
-          if(type == 'single'){
+          if (type == 'single') {
             this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
               this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
               this.getTimeGroups()
             })
           }
-          else{
+          else {
             this.timeGroupService.deleteTimeGroupBatch(this.checkedCells).subscribe(response => {
               this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
               this.getTimeGroups()
             })
           }
-         
+
         }
       })
 
@@ -102,11 +102,17 @@ export class TimeGroupsListComponent implements OnInit {
 
   createTimeGroup(action: string, timeGroup?: TimeGroup) {
 
-    this.dialog.open(CreateEditTimeGroupComponent, {
+    let dialogRef = this.dialog.open(CreateEditTimeGroupComponent, {
       width: '700px',
       data: action == 'edit' ? { action: action, timeGroup: timeGroup } : { action: action },
       disableClose: true,
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("result",result);
+      if (result == 'update') {
+        this.getTimeGroups();
+      }
+    })
   }
   filterTimeGroups(event: any, serchKey: string) {
     let term = (serchKey == 'by_type') ? event : event.target.value
