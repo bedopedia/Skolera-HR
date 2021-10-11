@@ -30,6 +30,6 @@ export class TimeGroupsSerivce {
         return this.http.delete(baseUrl + `api/hr/time_groups/${id}`);
     }
     deleteTimeGroupBatch(ids: number[]){
-        return this.http.post(baseUrl + `api/hr/time_groups/batch_destroy`,{'batch_id': ids});
+        return this.http.post(baseUrl + `api/hr/time_groups/batch_destroy`,{'batch_ids': ids});
     }
 }

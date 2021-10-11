@@ -41,6 +41,8 @@ export class TimeGroupsListComponent implements OnInit {
     this.getTimeGroups();
   }
   getTimeGroups() {
+    this.resetCheckboxes()
+    this.timeGroupsLoading = true;
     this.TimeGroupsSerivce.getTimeGroups(this.params).subscribe((response: any) => {
       this.timeGroupsList = response.time_groups;
       this.cells = response.time_groups.map((timeGroup: TimeGroup) => timeGroup.id);
@@ -101,19 +103,24 @@ export class TimeGroupsListComponent implements OnInit {
   }
 
   createTimeGroup(action: string, timeGroup?: TimeGroup) {
-
     let dialogRef = this.dialog.open(CreateEditTimeGroupComponent, {
       width: '700px',
       data: action == 'edit' ? { action: action, timeGroup: timeGroup } : { action: action },
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("result",result);
       if (result == 'update') {
         this.getTimeGroups();
       }
     })
   }
+
+  resetCheckboxes() {
+    this.checkedCells = [];
+    this.allChecked = false;
+    this.partiallyChecked = false;
+}
+
   filterTimeGroups(event: any, serchKey: string) {
     let term = (serchKey == 'by_type') ? event : event.target.value
     if (event === null) {
