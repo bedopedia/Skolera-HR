@@ -10,11 +10,12 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { VersionCheckService } from '@skolera/services/version-check.service';
 import { SkoleraConfirmationComponent } from './components/skolera-confirmation/skolera-confirmation.component';
+import { SkoleraMultiCheckboxComponent } from './components/skolera-multi-checkbox/skolera-multi-checkbox.component';
 
 
 
 @NgModule({
-  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent],
+  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent,SkoleraMultiCheckboxComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -31,7 +32,8 @@ import { SkoleraConfirmationComponent } from './components/skolera-confirmation/
     CommonModule,
     FormsModule,
     LoadingBarHttpClientModule,
-    SkoleraConfirmationComponent
+    SkoleraConfirmationComponent,
+    SkoleraMultiCheckboxComponent
   ],
   providers: [VersionCheckService]
 })

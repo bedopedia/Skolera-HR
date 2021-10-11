@@ -15,11 +15,15 @@ import { CreateEditTimeGroupComponent } from '../create-edit-time-group/create-e
 export class TimeGroupsListComponent implements OnInit {
   timeGroupsLoading: boolean = true;
   timeGroupsList: TimeGroup[] = [];
-  paginationPerPage = 10;
+  paginationPerPage = 5;
   selectedtype: string;
   paginationData: PaginationData;
-  timeGroupsType = ['fixed','shifts']
-  isFilterOpen: boolean = false
+  timeGroupsType = ['fixed', 'shifts']
+  isFilterOpen: boolean = false;
+  checkedCells: number[] = [];
+  allChecked: boolean = false;
+  partiallyChecked: boolean = false;
+  cells: number[] = [];
   params: any = {
     page: 1,
     per_page: this.paginationPerPage,
@@ -30,7 +34,7 @@ export class TimeGroupsListComponent implements OnInit {
     private translateService: TranslateService,
     private timeGroupService: TimeGroupsSerivce,
     private appNotificationService: AppNotificationService
-    
+
   ) { }
 
   ngOnInit(): void {
@@ -39,56 +43,74 @@ export class TimeGroupsListComponent implements OnInit {
   getTimeGroups() {
     this.TimeGroupsSerivce.getTimeGroups(this.params).subscribe((response: any) => {
       this.timeGroupsList = response.time_groups;
+      this.cells = response.time_groups.map((timeGroup: TimeGroup) => timeGroup.id);
       this.paginationData = response.meta
       this.timeGroupsLoading = false;
 
     })
   }
 
-  deleteTimeGroup(timeGroup:TimeGroup) {
-    let data = {
-        title: this.translateService.instant("tr_time_group_confirmation_message"),
-        buttons: [
-            {
-                label: this.translateService.instant("tr_action.cancel"),
-                actionCallback: 'cancel',
-                type: 'btn-secondary'
-            },
-            {
-                label: this.translateService.instant("tr_action.delete"),
-                actionCallback: 'delete',
-                type: 'btn-danger'
-            }
-        ]
+  deleteTimeGroup(type: string, timeGroup?: TimeGroup) {
+
+    if (type != 'single' && this.checkedCells.length < 1) {
+      this.appNotificationService.push('Please select one item at least', 'error');
     }
 
-        const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
-            width: '650px',
-            data: data,
-            disableClose: true
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result == 'delete') {
-              this.timeGroupService.deleteTimeGroup(timeGroup.id!).subscribe(response => {
-                this.appNotificationService.push(this.translateService.instant('tr_time_group_deleted_successfully'), 'success');
-                this.getTimeGroups()
-              })
-            }
-        })
-    
-}
- 
-  createTimeGroup(action: string,timeGroup?: TimeGroup){
+    if (type == 'single' || (type == 'all' && this.checkedCells.length >= 1)) {
+      let data = {
+        title: this.translateService.instant("tr_time_group_confirmation_message"),
+        buttons: [
+          {
+            label: this.translateService.instant("tr_action.cancel"),
+            actionCallback: 'cancel',
+            type: 'btn-secondary'
+          },
+          {
+            label: this.translateService.instant("tr_action.delete"),
+            actionCallback: 'delete',
+            type: 'btn-danger'
+          }
+        ]
+      }
+
+      const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
+        width: '650px',
+        data: data,
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == 'delete') {
+          if(type == 'single'){
+            this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
+              this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
+              this.getTimeGroups()
+            })
+          }
+          else{
+            this.timeGroupService.deleteTimeGroupBatch(this.checkedCells).subscribe(response => {
+              this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
+              this.getTimeGroups()
+            })
+          }
+         
+        }
+      })
+
+    }
+
+  }
+
+  createTimeGroup(action: string, timeGroup?: TimeGroup) {
 
     this.dialog.open(CreateEditTimeGroupComponent, {
       width: '700px',
-      data: action == 'edit' ? {action: action, timeGroup:timeGroup}: {action: action},
+      data: action == 'edit' ? { action: action, timeGroup: timeGroup } : { action: action },
       disableClose: true,
-  });
+    });
   }
   filterTimeGroups(event: any, serchKey: string) {
     let term = (serchKey == 'by_type') ? event : event.target.value
-    if(event === null){
+    if (event === null) {
       delete this.params['by_type'];
     }
     else {

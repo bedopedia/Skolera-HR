@@ -48,16 +48,39 @@
 
 
       <div class="plr-4" *ngIf="!timeGroupsLoading">
+        <div class="alert ptb-2 plr-4 bg-secondary size-tiny" *ngIf="checkedCells.length > 0">
+          {{checkedCells.length}} selected. <span
+            (click)="checkedCells = []; allChecked = false; partiallyChecked= false;"
+            class="text-underlined pointer text-error ml-4">Unselect
+            all</span>
+        </div>
         <div class="table-container" id="table-container" *ngIf="timeGroupsList.length > 0">
           <table class="s-table table layout-fixed">
             <thead>
+              <th>
+                <skolera-multi-checkbox [isParent]="true" [(allChecked)]="allChecked"
+                  [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
+                  [id]="'selectAll'"></skolera-multi-checkbox>
+              </th>
               <th>{{'tr_name' | translate}}</th>
               <th>{{'tr_time_group_type' | translate}}</th>
               <th>{{'tr_number_of_employees' | translate}}</th>
-              <th>{{'tr_actions' | translate}}</th>
+              <th> <span class="options-menu">
+                  <i class="fa fa-ellipsis-v"></i>
+                  <div class="options-menu-container">
+                    <div class="single-option text-error" (click)="deleteTimeGroup('all')">
+                      {{ 'tr_action.delete' | translate }}
+                    </div>
+                  </div>
+                </span></th>
             </thead>
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
+                <td>
+                  <skolera-multi-checkbox [isParent]="false" [(allChecked)]="allChecked"
+                    [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
+                    [id]="timeGroup.id!"></skolera-multi-checkbox>
+                </td>
                 <td>
                   <ng-container> {{timeGroup.name}}</ng-container>
                 </td>
@@ -69,16 +92,16 @@
                 </td>
                 <td>
                   <span class="options-menu">
-                    <i class="icon-more-selected-ico"></i>
+                    <i class="text-small fa fa-ellipsis-v"></i>
                     <div class="options-menu-container">
-                        <div class="single-option" (click)="createTimeGroup('edit',timeGroup)">
-                            {{ 'tr_action.edit' | translate }}
-                        </div>
-                        <div class="single-option text-error" (click)="deleteTimeGroup(timeGroup)">
-                          {{ 'tr_action.delete' | translate }}
+                      <div class="single-option border-bottom" (click)="createTimeGroup('edit',timeGroup)">
+                        {{ 'tr_action.edit' | translate }}
+                      </div>
+                      <div class="single-option text-error" (click)="deleteTimeGroup('single',timeGroup)">
+                        {{ 'tr_action.delete' | translate }}
                       </div>
                     </div>
-                </span>
+                  </span>
                 </td>
               </tr>
             </tbody>
