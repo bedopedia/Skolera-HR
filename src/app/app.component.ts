@@ -18,13 +18,9 @@ export class AppComponent {
 
 
     constructor(
-        private translate: TranslateService,
         private globals: Globals,
-        private usersService: UserSerivce,
         private versionCheckService: VersionCheckService
-    ) {
-      this.setSchoolConfig();
-    }
+    ) {}
 
     ngOnInit() {
         if (environment.env === 'production') {
@@ -42,7 +38,7 @@ export class AppComponent {
           }));
       this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
       this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
-      
+
     }
 
    
@@ -123,23 +119,6 @@ export class AppComponent {
         }
     }
 
-    setSchoolConfig() {
-        if (localStorage.getItem('schoolConfig')) {
-            this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig')|| '{}');
-            return
-        } else {
-            this.globals.showMessage('loading', '');
-            this.usersService.getSchoolConfig().subscribe(
-                (response: any) => {
-                    localStorage.setItem('schoolConfig', JSON.stringify(response));
-                    this.globals.currentSchool = response;
-                    console.log(this.globals.currentSchool );
-                    this.globals.hideMessage();
-                    return;
-                }
-            );
-        }
-    }
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }

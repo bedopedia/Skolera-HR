@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { CurrentUser } from '@core/models/skolera-interfaces.model';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { UserSerivce } from '@skolera/services/user.service';
 import { Globals } from '../core/globals';
 import { AuthenticationService } from '../core/services/authentication.service';
 
@@ -19,7 +20,7 @@ export class MainComponent implements OnInit {
       private router:Router,
       private authenticationService:AuthenticationService,
       private globals: Globals,
-      private translate: TranslateService
+      private userService: UserSerivce
   ) {
       this.currentUser = this.authenticationService.getCurrentUser();
       globals.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -30,7 +31,29 @@ export class MainComponent implements OnInit {
       this.router.events.subscribe((event: any) => {
           this.navigationInterceptor(event)
       })
+      this.setSchoolConfig()
   }
+
+  setSchoolConfig() {
+    if (localStorage.getItem('schoolConfig')) {
+        this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig') || '');
+        return
+    } else {
+        this.globals.showMessage('loading', '');
+        this.userService.getSchoolConfig().subscribe(
+            (response: any) => {
+                localStorage.setItem('schoolConfig', JSON.stringify(response));
+                this.globals.currentSchool = response;
+                this.globals.hideMessage();
+                return;
+            },
+            error => {
+                this.globals.showMessage('error', 'An unexpected error occured, please reload.');
+                return;
+            }
+        );
+    }
+}
 
   // Shows and hides the loading spinner during RouterEvent changes
   navigationInterceptor(event: RouterEvent): void {

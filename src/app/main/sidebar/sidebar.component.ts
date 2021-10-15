@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
       this.whitelabelUrl = '/./assets/images/skolera-logo/admin.svg'; 
   }
 
-  ngOnInit() {
+  ngOnInit() {  
   }
   toggleChildren(event:any) {
     event.preventDefault();
