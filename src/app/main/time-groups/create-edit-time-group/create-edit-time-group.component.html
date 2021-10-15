@@ -71,7 +71,7 @@
                       <td>
                         <div>
                           <span class="s-checkbox-slider size-small pr-5">
-                            <input type="checkbox" id="{{day.day}}_off" [(ngModel)]="day.is_off">
+                            <input type="checkbox" id="{{day.day}}_off" [(ngModel)]="day.is_off" name="dayOff">
                             <label for="{{day.day}}_off">
                               <div class="slider">
                                 <span class="slider-bg"></span>
@@ -83,8 +83,8 @@
                       </td>
                       <td class="text-center">
                         <span class="s-checkbox size-small" *ngIf="!day.is_off">
-                          <input type="checkbox" id="{{day.day}}}_calculate_bridge"
-                            [(ngModel)]="day.calculate_bridging">
+                          <input type="checkbox" id="{{day.day}}}_calculate_bridge" [(ngModel)]="day.calculate_bridging"
+                            name="calculateBridge">
                           <label for="{{day.day}}}_calculate_bridge"></label>
                         </span>
                       </td>
@@ -111,7 +111,146 @@
           <div *ngIf="timeGroupLoading">
             <app-ghost-line [length]="8" [type]="'table'"></app-ghost-line>
           </div>
+
+          <div class="assign-employees-section">
+            <div class="plr-4">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group mb-0">
+                    <label>{{'tr_number' | translate}}</label>
+                    <div class="input-with-icon bg-white width-100">
+                      <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
+                        placeholder="{{'tr_search_by_number' | translate}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group mb-0">
+                    <label>{{'tr_name' | translate}}</label>
+                    <div class="input-with-icon bg-white width-100">
+                      <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
+                        placeholder="{{'tr_search_by_name' | translate}}">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group mb-0">
+                    <label>{{'tr_department' | translate}}</label>
+                    <div class="input-with-icon bg-white width-100">
+                      <ng-select class="s-control s-select"
+                        (change)="filterEmployees(selectedDepartment,'by_department_name')" bindValue="name"
+                        (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
+                        placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
+                        (clear)="filterEmployees('','by_department_name')" autofocus [(ngModel)]="selectedDepartment"
+                        [items]="departments" name="department">
+                        <ng-template ng-header-tmp>
+                          <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
+                            {{'tr_there_are_no_departments' | translate}}
+                          </div>
+                        </ng-template>
+                        <ng-template ng-footer-tmp>
+                          <div class="mb-2" *ngIf="departmentsLoading">
+                            <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                          </div>
+                        </ng-template>
+                      </ng-select>
+                      <i class="fa fa-caret-down input-icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row border-bottom mt-4">
+              <div class="col-md-6">
+                <div class="weight-bold">{{'tr_employees' | translate}}</div>
+                <div class="text-center flex flex-middle flex-center" *ngIf="employeesList.length <= 0">
+                  <div class="ptb-2 plr-2">
+                    <img src="assets/images/placeholders/zones.svg" alt="">
+                    <p class="size-tiny weight-bold mt-3">
+                      {{'tr_employees_empty_state' | translate}}
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-4 employees-container">
+                  <div class="flex flex-middle mb-4" *ngFor="let employee of employeesList; let i=index">
+                    <span class="s-checkbox">
+                      <input type="checkbox" id="employee-id-{{i}}" name="employee"
+                        (change)="assignEmployeeIngroup($event,employee)">
+                      <label for="employee-id-{{i}}"></label>
+                    </span>
+                    <h1 class="size-small ml-1">{{employee.name}}</h1>
+                  </div>
+                  <div
+                    *ngIf="employeesPaginationData.next_page && employeesPaginationData.total_count > employeesList.length && employeesList.length > 0"
+                    class="text-link text-center pb-4 pl-2 pointer " (click)="nextpage()">
+                    {{'tr_load_more' | translate}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- <div class="flex flex-middle flex-space-between pr-7">
+                      <h2 class="weight-bold size-small">
+                          {{'tr_employees' | translate}}
+                      </h2>
+                      <h2 class="weight-bold size-small">
+                        {{'tr_time_schedule' | translate}}
+                    </h2>
+                      <h2 class="weight-bold size-small">
+                          {{'tr_action.remove' | translate}}
+                      </h2>
+                     
+                  </div> -->
+                <table class="table s-table layout-fixed">
+                  <thead>
+                    <th>
+                      {{'tr_employees' | translate}}
+                    </th>
+                    <th>
+                      {{'tr_time_schedule' | translate}}
+                    </th>
+                    <th> {{'tr_action.remove' | translate}}</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let timegroupEmployee of timeGroupsEmployees; let i=index">
+                      <td>{{timegroupEmployee.name}}</td>
+                      <td>add time group</td>
+                      <td>
+                        <div class="text-center width-100 pointer" (click)="removeEmployeeFromGroup(timegroupEmployee)">
+                          <img src="assets/images/delete-icon.svg">
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <div class="mt-4 users-container pr-6">
+                      <div *ngFor="let timegroupEmployee of timeGroupsEmployees; let i=index">
+                      
+                          <div class="flex flex-middle flex-space-between mb-4">
+                              <div class="width-100">{{timegroupEmployee.name}}</div>
+                              <div>
+                                <span class="hover-link">add time group</span>
+                              </div>
+                              <button class="s-btn btn-secondary btn-link btn-sm">+</button>
+                              <div class="width-100 text-center">
+                                  <span class="s-checkbox">
+                                      <input type="checkbox" id="timegroupEmployee-id-{{i}}" [(ngModel)]="member.is_admin">
+                                      <label for="timegroupEmployee-id-{{i}}"></label>
+                                  </span>
+                              </div> 
+                              <div class="text-center width-100 pointer" (click)="removeEmployeeFromGroup(timegroupEmployee)">
+                                <img src="assets/images/delete-icon.svg">
+                            </div>
+                          </div>
+                      </div>
+                  </div>  -->
+
+              </div>
+            </div>
+          </div>
         </div>
+
+
 
         <div class="modal-footer text-right">
           <button class="s-btn btn-primary btn-sm mr-3" type="submit" [disabled]="isFormSubmitted">

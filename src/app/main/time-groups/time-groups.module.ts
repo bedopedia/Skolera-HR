@@ -8,6 +8,7 @@ import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { RouterModule } from '@angular/router';
 import { CreateEditTimeGroupComponent } from './create-edit-time-group/create-edit-time-group.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { EmployeesSerivce } from '@skolera/services/employees.services';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     RouterModule,
     MatDialogModule
   ],
-  providers: [TimeGroupsSerivce],
+  providers: [TimeGroupsSerivce,EmployeesSerivce],
   exports: [RouterModule]
   
 })

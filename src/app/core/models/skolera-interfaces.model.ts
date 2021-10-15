@@ -10,6 +10,7 @@ export interface Employee {
     name: string;
     department_name: number;
     biometric_id: number;
+    isSelected? : boolean
   
   }
 

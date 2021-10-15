@@ -57,6 +57,8 @@ export class HeaderComponent implements OnInit {
       this.selectedLanguage = this.user.locale;
       localStorage.setItem('currentUser', JSON.stringify(this.globals.currentUser));
       this.translate.use(this.user.locale);
+      console.log("this.user.locale",this.user.locale);
+      
       document.querySelector('body')?.setAttribute('dir', this.user.locale !== 'ar' ? 'ltr' : 'rtl');
     });
   }

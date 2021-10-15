@@ -23,7 +23,6 @@ export class AppComponent {
         private usersService: UserSerivce,
         private versionCheckService: VersionCheckService
     ) {
-      translate.setDefaultLang('en');
       this.setSchoolConfig();
     }
 
@@ -127,8 +126,6 @@ export class AppComponent {
     setSchoolConfig() {
         if (localStorage.getItem('schoolConfig')) {
             this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig')|| '{}');
-            console.log(this.globals.currentSchool );
-            
             return
         } else {
             this.globals.showMessage('loading', '');

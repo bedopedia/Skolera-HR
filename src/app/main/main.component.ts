@@ -21,10 +21,8 @@ export class MainComponent implements OnInit {
       private globals: Globals,
       private translate: TranslateService
   ) {
-     translate.setDefaultLang('en');
       this.currentUser = this.authenticationService.getCurrentUser();
       globals.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      document.body.classList.remove('admin_theme', 'teacher_theme', 'hod_theme', 'student_theme', 'female', 'parent_theme');
       document.body.classList.add('admin_theme');
   
   } 

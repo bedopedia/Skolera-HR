@@ -38,3 +38,8 @@
 .s-control.time-control {
     height: 1.7rem !important;
 }
+
+.employees-container{
+    max-height: 250px;
+    overflow: auto;
+}
