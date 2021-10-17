@@ -64,8 +64,9 @@
                     <th>{{'tr_clock_out' | translate}}</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let day of timeGroup.time_group_schedule_attributes!.schedule_days_attributes">
+                    <tr *ngFor="let day of timeGroup.time_group_schedule_attributes!.schedule_days_attributes!">
                       <td>
+                        {{day | json}}
                         <span class="capitalize">{{day.day}} </span>
                       </td>
                       <td>
@@ -83,9 +84,9 @@
                       </td>
                       <td class="text-center">
                         <span class="s-checkbox size-small" *ngIf="!day.is_off">
-                          <input type="checkbox" id="{{day.day}}}_calculate_bridge" [(ngModel)]="day.calculate_bridging"
+                          <input type="checkbox" id="{{day.day}}}_calculate_bridging" [(ngModel)]="day.calculate_bridging"
                             name="calculateBridge">
-                          <label for="{{day.day}}}_calculate_bridge"></label>
+                          <label for="{{day.day}}}_calculate_bridging"></label>
                         </span>
                       </td>
                       <td>

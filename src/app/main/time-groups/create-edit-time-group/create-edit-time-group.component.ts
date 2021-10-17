@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-edit-time-group',
@@ -20,9 +21,10 @@ export class CreateEditTimeGroupComponent implements OnInit {
   timeGroup: TimeGroup = new TimeGroup();
   inValidAllDaysTime: boolean = false
   scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()];
+  private subscriptions: Subscription[] = [];
 
 
-  departments: Department[];
+  departments: Department[] = [];
   selectedDepartment: string;
   dePartmentsParams: any = {
     page: 1,
@@ -118,10 +120,15 @@ export class CreateEditTimeGroupComponent implements OnInit {
   public closeModal() {
     this.dialogRef.close();
   }
+
   private getTimeGroup(id: number) {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
-      this.timeGroup = response;
-      this.timeGroupLoading = false
+      this.timeGroup = response
+      response.time_group_schedule.schedule_days_attributes = response.time_group_schedule.schedule_days ;
+      this.timeGroup.time_group_schedule_attributes  = response.time_group_schedule;
+      delete this.timeGroup.time_group_schedule_attributes?.schedule_days;
+      delete this.timeGroup.time_group_schedule;
+      this.timeGroupLoading = false;
     })
 
   }
@@ -132,7 +139,7 @@ export class CreateEditTimeGroupComponent implements OnInit {
     let clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     let clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     day.invalidTime = (clockIn > clockOut) ? true : false;
-    this.inValidAllDaysTime = this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes.filter(day => day.invalidTime).length > 0
+    this.inValidAllDaysTime = this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes!.filter(day => day.invalidTime).length > 0
   }
 
   public createTimeGroup() {
@@ -140,7 +147,7 @@ export class CreateEditTimeGroupComponent implements OnInit {
     let isValidDays: boolean[] = []
     if (this.timeGroup.group_type == 'fixed') {
 
-      this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes.forEach(day => {
+      this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes!.forEach(day => {
         if (day.is_off) {
           delete day.clock_in;
           delete day.clock_out;
@@ -190,9 +197,7 @@ export class CreateEditTimeGroupComponent implements OnInit {
     })
   }
 
-  getUnassignedEmployess() {
-
-  }
+ 
 
   nextBatch() {
     if (this.departmentsPagination.next_page) {
@@ -244,4 +249,7 @@ export class CreateEditTimeGroupComponent implements OnInit {
     console.log("timegroupEmployee", timegroupEmployee);
 
   }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s && s.unsubscribe())
+}
 }

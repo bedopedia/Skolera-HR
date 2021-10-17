@@ -22,7 +22,12 @@ export class TimeGroup {
     group_type: string;
     number_of_employees?: number;
     time_group_schedule_attributes?: {
-      schedule_days_attributes :  TimeGroupSchedule[]
+      schedule_days_attributes? :  TimeGroupSchedule[],
+      schedule_days? :  TimeGroupSchedule[]
+    } ;
+     time_group_schedule?: {
+      schedule_days? :  TimeGroupSchedule[]
+      schedule_days_attributes? :  TimeGroupSchedule[],
     } 
 } 
 
