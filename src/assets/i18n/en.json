@@ -143,7 +143,15 @@
     "tr_clock_out": "Clock Out",
     "tr_actions": "Actions",
     "tr_deleted_successfully":"Process Deleted Successfully",
-    "tr_time_group_confirmation_message":"title: 'Are You Sure You Want To Delete This Time Group ?",
+    "tr_time_group_confirmation_message":"Are You Sure You Want To Delete This Time Group ?",
     "tr_clocl_validation_text": "Clock out should be after clock in and have values",
-    "tr_time_schedule":"Time Schedule"
+    "tr_time_schedule":"Time Schedule",
+    "tr_add_time_schedule": "Add Time Schedule",
+    "tr_load_more": "Load more",
+    "tr_delete_employee_confirmation_message": "Are You Sure You Want To Delete This Time Employee ?",
+    "tr_time_group_updated_successfully": "Time Group Updated Successfully",
+    "tr_edit_time_group": "Edit Time Group",
+    "tr_assign_employees":"Assign Employees",
+    "tr_time_schedual_for_employee_updated_ssuccessfuly": "Time Schedual for employee Updated Successfully",
+    "tr_time_group_employees_updated_successfully": "Time Group Employees Updated Successfully"
 }

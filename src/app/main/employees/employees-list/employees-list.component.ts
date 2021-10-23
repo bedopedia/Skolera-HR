@@ -63,13 +63,8 @@ export class EmployeesListComponent implements OnInit {
   }
 
   filterEmployees(term: any, serchKey: string) {
-    term = (serchKey == 'by_department_name') ? term : term.target.value
-    if (term.trim() === serchKey) {
-      delete this.params[serchKey];
-    }
-    else {
-      this.params[serchKey] = term;
-    }
+    term = (serchKey == 'by_department_id') ? term : term.target.value
+    this.params[serchKey] = term;
     this.getEmployees();
   }
   paginationUpdate(page: number) {

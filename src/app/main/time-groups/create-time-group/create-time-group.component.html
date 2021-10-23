@@ -1,0 +1,74 @@
+<div class="complex-skolera-modal language-switcher-modal">
+  <div class="modal-wrapper">
+    <div class="close-modal-icon" (click)="closeModal()"></div>
+    <div class="modal-content">
+      <form action="" #timeGroupForm="ngForm" (ngSubmit)="createTimeGroup()">
+        <div class="modal-header">
+          <h3 class="steel weight-bold size-default m-0">
+            {{'tr_edit_time_group' | translate}}
+          </h3>
+        </div>
+        <div class="modal-body weight-medium steel">
+          <div *ngIf="!timeGroupLoading">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group"
+                  [class.has-error]="(name.invalid && name.dirty) || (timeGroupForm.submitted && name.invalid)">
+                  <label>{{'tr_group_name' | translate}}</label>
+                  <input type="text" [(ngModel)]="timeGroup.name" name="name" #name="ngModel" required
+                    class="s-control">
+                  <span class="text-error size-small ml-2 validator">
+                    {{'tr_required_field' | translate}}
+                  </span>
+                </div>
+
+
+              </div>
+              <div class="col-md-6">
+                <label>{{'tr_group_type' | translate}}</label>
+                <div class="mt-2 flex flex-middle flex-space-between max-600">
+                  <div class="flex flex-middle flex-wrap">
+                    <span class="s-radio size-small mr-4">
+                      <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="fixed"
+                        id="fixed-type">
+                      <label for="fixed-type">
+                        <span class="capitalize">{{'tr_fixed' | translate}}</span>
+                      </label>
+                    </span>
+                    <span class="s-radio size-small">
+
+                      <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="shifts"
+                        id="shifts-type">
+                      <label for="shifts-type">
+                        <span class="capitalize">{{'tr_shifts' | translate}}</span>
+                      </label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="timeGroup.group_type == 'fixed'">
+              <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
+                [inValidAllDaysTime]="inValidAllDaysTime"
+                [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
+                [timeScheduleLoading]="timeGroupLoading">
+              </app-time-schedule-form>
+            </div>
+          </div>
+          <div *ngIf="timeGroupLoading">
+            <app-ghost-line [length]="8" [type]="'table'"></app-ghost-line>
+          </div>
+        </div>
+
+
+
+        <div class="modal-footer text-right">
+          <button class="s-btn btn-primary btn-sm mr-3" type="submit" [disabled]="isFormSubmitted">
+            {{'tr_action.save' | translate}}</button>
+          <button class="s-btn btn-secondary btn-sm" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
     <h2 class="size-body title-with-btn plr-4 ptb-4">
       <span class="page-title">{{'tr_time_groups' | translate }}</span>
       <div class="btn-group inline-flex mt-2-mob">
-        <button class="s-btn size-small btn-secondary" (click)="createTimeGroup('create')">
+        <button class="s-btn size-small btn-secondary" (click)="createTimeGroup()">
           <i class="fa fa-plus mr-2"></i>
           {{ 'tr_add_new_time_group' | translate }}
         </button>
@@ -94,8 +94,8 @@
                   <span class="options-menu">
                     <i class="text-small fa fa-ellipsis-v"></i>
                     <div class="options-menu-container">
-                      <div class="single-option border-bottom" (click)="createTimeGroup('edit',timeGroup)">
-                        {{ 'tr_action.edit' | translate }}
+                      <div class="single-option border-bottom width-100" [routerLink]="timeGroup.id + '/edit'">
+                          {{ 'tr_action.edit' | translate }}
                       </div>
                       <div class="single-option text-error" (click)="deleteTimeGroup('single',timeGroup)">
                         {{ 'tr_action.delete' | translate }}

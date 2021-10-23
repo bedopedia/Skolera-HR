@@ -6,11 +6,13 @@ export interface PaginationData {
     total_pages: number
 }
 export interface Employee {
+  id?: number
     number: string;
     name: string;
     department_name: number;
     biometric_id: number;
     isSelected? : boolean
+    time_group_schedule?: TimeGroupSchedule[]
   
   }
 
@@ -21,6 +23,8 @@ export class TimeGroup {
     id?: number;
     group_type: string;
     number_of_employees?: number;
+    employees?: Employee [];
+    employees_attributes?: EmployeesAttributes;
     time_group_schedule_attributes?: {
       schedule_days_attributes? :  TimeGroupSchedule[],
       schedule_days? :  TimeGroupSchedule[]
@@ -30,12 +34,18 @@ export class TimeGroup {
       schedule_days_attributes? :  TimeGroupSchedule[],
     } 
 } 
+export interface EmployeesAttributes{
+  id: number,
+	time_group_schedule_attributes: {
+			schedule_days_attributes :  TimeGroupSchedule[]
+    }
+}
 
 
 export class TimeGroupSchedule {
     day: string;
-    clock_in?: string;
-    clock_out?: string;
+    clock_in?: string | null;
+    clock_out?: string | null;
     is_off?: boolean;
     calculate_bridging?: boolean;
     invalidTime?: boolean;

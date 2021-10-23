@@ -51,7 +51,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 }),
         
             catchError((error: HttpErrorResponse) => {
-                console.log("error.status",error.status,error);
                 const chunkFailedMessage = /Loading chunk [\d]+ failed/;
                 if (chunkFailedMessage.test(error.message)) {
                   this.globals.systemAlerts.newVersion = true;

@@ -39,7 +39,15 @@
     height: 1.7rem !important;
 }
 
+.employees-table{
+    th,td {
+        padding: 0.3rem 1rem !important;
+        border-bottom: none !important;
+    } 
+}
+
 .employees-container{
-    max-height: 250px;
+    max-height: 350px;
+    min-height: 350px;
     overflow: auto;
 }

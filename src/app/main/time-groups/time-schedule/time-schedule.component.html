@@ -1,0 +1,27 @@
+<div class="complex-skolera-modal language-switcher-modal">
+    <div class="modal-wrapper">
+      <div class="close-modal-icon" (click)="closeModal()"></div>
+      <div class="modal-content">
+        <form action="" #timeGroupForm="ngForm" (ngSubmit)="addEmployeeTimeSchedule()">
+          <div class="modal-header">
+            <h3 class="steel weight-bold size-default m-0">
+              {{'tr_add_time_schedule' | translate}}
+            </h3>
+          </div>
+          <div class="modal-body weight-medium steel">
+           <app-time-schedule-form (returnedScheduleDays)="scheduleDays = $event"  [timeScheduleLoading]="timeScheduleLoading" [inValidAllDaysTime]="inValidAllDaysTime" [scheduleDays]="scheduleDays"></app-time-schedule-form>
+          </div>
+  
+  
+  
+          <div class="modal-footer text-right">
+            <button class="s-btn btn-primary btn-sm mr-3" type="submit">
+              {{'tr_action.save' | translate}}</button>
+            <button class="s-btn btn-secondary btn-sm" type="reset" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+          </div>
+  
+        </form>
+      </div>
+    </div>
+  </div>
+  

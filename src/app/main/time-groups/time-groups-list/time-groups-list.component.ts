@@ -5,7 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
-import { CreateEditTimeGroupComponent } from '../create-edit-time-group/create-edit-time-group.component';
+import { Subscription } from 'rxjs';
+import { CreateTimeGroupComponent } from '../create-time-group/create-time-group.component';
+
 
 @Component({
   selector: 'app-time-groups-list',
@@ -15,7 +17,7 @@ import { CreateEditTimeGroupComponent } from '../create-edit-time-group/create-e
 export class TimeGroupsListComponent implements OnInit {
   timeGroupsLoading: boolean = true;
   timeGroupsList: TimeGroup[] = [];
-  paginationPerPage = 5;
+  paginationPerPage = 10;
   selectedtype: string;
   paginationData: PaginationData;
   timeGroupsType = ['fixed', 'shifts']
@@ -23,6 +25,7 @@ export class TimeGroupsListComponent implements OnInit {
   checkedCells: number[] = [];
   allChecked: boolean = false;
   partiallyChecked: boolean = false;
+  private subscriptions: Subscription[] = [];
   cells: number[] = [];
   params: any = {
     page: 1,
@@ -83,16 +86,16 @@ export class TimeGroupsListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result == 'delete') {
           if (type == 'single') {
-            this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
+            this.subscriptions.push(this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
               this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
               this.getTimeGroups()
-            })
+            }))
           }
           else {
-            this.timeGroupService.deleteTimeGroupBatch(this.checkedCells).subscribe(response => {
+            this.subscriptions.push(this.timeGroupService.deleteTimeGroupBatch(this.checkedCells).subscribe(response => {
               this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
               this.getTimeGroups()
-            })
+            }))
           }
 
         }
@@ -102,10 +105,9 @@ export class TimeGroupsListComponent implements OnInit {
 
   }
 
-  createTimeGroup(action: string, timeGroup?: TimeGroup) {
-    let dialogRef = this.dialog.open(CreateEditTimeGroupComponent, {
-      width: '700px',
-      data: action == 'edit' ? { action: action, timeGroup: timeGroup } : { action: action },
+  createTimeGroup() {
+    let dialogRef = this.dialog.open(CreateTimeGroupComponent, {
+      width: '750px',
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -134,6 +136,10 @@ export class TimeGroupsListComponent implements OnInit {
   paginationUpdate(page: number) {
     this.params.page = page;
     this.getTimeGroups();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s && s.unsubscribe())
   }
 
 }
