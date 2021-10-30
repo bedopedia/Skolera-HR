@@ -46,8 +46,30 @@
                     </label>
                   </span>
   
-  
-  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>{{'tr_rule' | translate}}</label>
+                <div class="input-with-icon bg-white width-100">
+                  <ng-select class="s-control s-select" (scrollToEnd)=nextRulesBatch() bindLabel="name"
+                    [loading]="rulesLoading" placeholder="{{'tr_select' | translate}}"
+                    notFoundText="{{'tr_no_items_found' | translate}}" autofocus
+                    [(ngModel)]="timeGroup.rule" [items]="rules"
+                    name="rules">
+                    <ng-template ng-header-tmp>
+                      <div class="pt-2 text-center" *ngIf="!rulesLoading && !rules.length">
+                        {{'tr_there_are_no_rules' | translate}}
+                      </div>
+                    </ng-template>
+                    <ng-template ng-footer-tmp>
+                      <div class="mb-2" *ngIf="rulesLoading">
+                        <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                  <i class="fa fa-caret-down input-icon"></i>
                 </div>
               </div>
             </div>

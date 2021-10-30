@@ -159,5 +159,7 @@
     "tr_create_rule": "Create Rule",
     "tr_leave_types": "Leave Types",
     "tr_from": "from",
-    "tr_lop": "LOP"
+    "tr_lop": "LOP",
+    "tr_rule": "Rule",
+    "tr_there_are_no_rules": "There Are No Rules"
 }

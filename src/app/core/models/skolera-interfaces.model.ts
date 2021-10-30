@@ -1,3 +1,5 @@
+import { Rule } from "./rules-interfaces.model";
+
 export interface PaginationData {
     current_page: number ;
     next_page: number;
@@ -32,7 +34,9 @@ export class TimeGroup {
      time_group_schedule?: {
       schedule_days? :  TimeGroupSchedule[]
       schedule_days_attributes? :  TimeGroupSchedule[],
-    } 
+    } ;
+    rule?: Rule
+
 } 
 export interface EmployeesAttributes{
   id: number,

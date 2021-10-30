@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
 import { TimeScheduleComponent } from '../time-schedule/time-schedule.component';
+import { Rule } from '@core/models/rules-interfaces.model';
+import { RulesSerivce } from '@skolera/services/rules.services';
 
 @Component({
   selector: 'app-edit-time-group',
@@ -34,20 +36,26 @@ export class EditTimeGroupComponent implements OnInit {
     page: 1,
     per_page: 10,
   };
-
   employessParams: any = {
     page: 1,
     per_page: 10,
     unassigned: true
   };
+  rulesParams: any = {
+    page: 1,
+    per_page: 10,
+  }
 
   employeesPaginationData: PaginationData
   departmentsPagination: PaginationData
+  rulesPagination: PaginationData
   employeesLoading: boolean = true;
   departmentsLoading: boolean = true;
   employeesList: Employee[] = [];
   timeGroupEmployees: any
   processType: string = 'create';
+  rulesLoading: boolean = true;
+  rules: Rule[] = []
   @ViewChild('timeGroupForm') announcementForm: NgForm;
 
   constructor(
@@ -58,6 +66,7 @@ export class EditTimeGroupComponent implements OnInit {
     private employeesService: EmployeesSerivce,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private rulesSerivce: RulesSerivce
 
   ) { }
 
@@ -67,6 +76,7 @@ export class EditTimeGroupComponent implements OnInit {
     })
 
     this.getEmployees();
+    this.getRules();
     this.getDepartments();
     this.getTimeGroup(this.timeGroupId);
   }
@@ -74,13 +84,15 @@ export class EditTimeGroupComponent implements OnInit {
 
   private getTimeGroup(id: number) {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
-      this.timeGroup = response
+      this.timeGroup = response;
       if (this.timeGroup.group_type == 'fixed') {
         response.time_group_schedule.schedule_days_attributes = response.time_group_schedule.schedule_days;
         this.timeGroup.time_group_schedule_attributes = response.time_group_schedule;
         delete this.timeGroup.time_group_schedule_attributes?.schedule_days;
         delete this.timeGroup.time_group_schedule;
       }
+      console.log("nnn this.timeGroup",this.timeGroup);
+      
       this.timeGroupLoading = false;
 
     })
@@ -90,12 +102,13 @@ export class EditTimeGroupComponent implements OnInit {
     let dialogRef = this.dialog.open(TimeScheduleComponent, {
       width: '750px',
       disableClose: true,
-      data: { 
+      data: {
         employeeId: employee.id!,
         timeGroupId: this.timeGroupId,
         employeeTimeSchedule: employee.time_group_schedule!,
         timeScheduleLoading: false,
-        timeGroupEmployeesIds: this.timeGroup.employees?.map(employee => { return employee.id }) }
+        timeGroupEmployeesIds: this.timeGroup.employees?.map(employee => { return employee.id })
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'update') {
@@ -112,7 +125,6 @@ export class EditTimeGroupComponent implements OnInit {
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
     if (this.timeGroup.group_type == 'fixed') {
-
       this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes!.forEach(day => {
         if (day.is_off) {
           day.clock_in = null;
@@ -136,7 +148,6 @@ export class EditTimeGroupComponent implements OnInit {
       return
     }
 
-    this.updateTimeGroupEmployees()
     this.timeGroupService.editTimeGroup(this.timeGroupId, { time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_updated_successfully'), 'success');
       this.isFormSubmitted = false;
@@ -146,7 +157,7 @@ export class EditTimeGroupComponent implements OnInit {
     })
   }
 
-  getDepartments() {
+  public getDepartments() {
     this.departmentsLoading = true
     this.subscriptions.push(this.employeesService.getDepartments(this.dePartmentsParams).subscribe((response: any) => {
       this.departmentsPagination = response.meta;
@@ -154,25 +165,39 @@ export class EditTimeGroupComponent implements OnInit {
       this.departmentsLoading = false
     }))
   }
+  public getRules() {
+    this.rulesLoading = true;
+    this.subscriptions.push(this.rulesSerivce.getRules(this.rulesParams).subscribe((response: any) => {
+      this.rules = response.rules;
+      this.rulesPagination = response.meta;
+      this.rulesLoading = false;
 
+    }))
+  }
+  public nextRulesBatch() {
+    if (this.rulesPagination.next_page) {
+      this.rulesLoading = true;
+      this.rulesParams.page = this.departmentsPagination.next_page;
+      this.getRules();
+    }
+  }
 
-
-  nextBatch() {
+  public nextBatch() {
     if (this.departmentsPagination.next_page) {
       this.departmentsLoading = true;
       this.dePartmentsParams.page = this.departmentsPagination.next_page;
       this.getDepartments();
     }
   }
-  nextpage() {
+  public nextpage() {
     let nextPage = this.employeesPaginationData.next_page;
     this.employessParams.page = nextPage;
     if (nextPage) {
       this.getEmployees()
     }
   }
-  
-  getEmployees() {
+
+  public getEmployees() {
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
@@ -180,7 +205,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.employeesLoading = false
     })
   }
-  updateTimeGroupEmployees() {
+  public updateTimeGroupEmployees() {
     let updateParams = {
       'time_group': {
         "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
@@ -194,7 +219,7 @@ export class EditTimeGroupComponent implements OnInit {
         this.isFormSubmitted = false;
       }))
   }
-  assignEmployeeIngroup(event: any, timegroupEmployee: Employee) {
+  public assignEmployeeIngroup(event: any, timegroupEmployee: Employee) {
     if (event.target.checked) {
       this.timeGroup.employees?.push(timegroupEmployee)
     }
@@ -203,14 +228,14 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
 
-  filterEmployees(term: any, serchKey: string) {
+  public filterEmployees(term: any, serchKey: string) {
     term = (serchKey == 'by_department_id') ? term : term.target.value
     this.employessParams[serchKey] = term;
     this.employeesList = [];
     this.getEmployees();
   }
 
-  removeEmployeeFromGroup(timegroupEmployee: Employee) {
+  public removeEmployeeFromGroup(timegroupEmployee: Employee) {
     let data = {
       title: this.translate.instant("tr_delete_employee_confirmation_message"),
       buttons: [
