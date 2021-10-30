@@ -11,69 +11,80 @@
           </button>
         </div>
       </h3>
-    </div>
-    <div class="bg-white plr-4 ptb-4 mb-4 content-shadow">
-      <div *ngIf="!timeGroupLoading">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group"
-              [class.has-error]="(name.invalid && name.dirty) || (timeGroupForm.submitted && name.invalid)">
-              <label>{{'tr_group_name' | translate}}</label>
-              <input type="text" [(ngModel)]="timeGroup.name" name="name" #name="ngModel" required class="s-control">
-              <span class="text-error size-small ml-2 validator">
-                {{'tr_required_field' | translate}}
-              </span>
+      <div class="ptb-4">
+        <div *ngIf="!timeGroupLoading">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group"
+                [class.has-error]="(name.invalid && name.dirty) || (timeGroupForm.submitted && name.invalid)">
+                <label>{{'tr_group_name' | translate}}</label>
+                <input type="text" [(ngModel)]="timeGroup.name" name="name" #name="ngModel" required class="s-control">
+                <span class="text-error size-small ml-2 validator">
+                  {{'tr_required_field' | translate}}
+                </span>
+              </div>
+  
+  
             </div>
-
-
-          </div>
-          <div class="col-md-6">
-            <label>{{'tr_group_type' | translate}}</label>
-            <div class="mt-2 flex flex-middle flex-space-between max-600">
-              <div class="flex flex-middle flex-wrap">
-                <span class="s-radio size-small mr-4">
-                  <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="fixed" id="fixed-type"
-                    disabled>
-                  <label for="fixed-type">
-                    <span class="capitalize">{{'tr_fixed' | translate}}</span>
-                  </label>
-                </span>
-                <span class="s-radio size-small">
-
-                  <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="shifts"
-                    id="shifts-type" disabled>
-                  <label for="shifts-type">
-                    <span class="capitalize">{{'tr_shifts' | translate}}</span>
-                  </label>
-                </span>
-
-
-
+            <div class="col-md-6">
+              <label>{{'tr_group_type' | translate}}</label>
+              <div class="mt-2 flex flex-middle flex-space-between max-600">
+                <div class="flex flex-middle flex-wrap">
+                  <span class="s-radio size-small mr-4">
+                    <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="fixed" id="fixed-type"
+                      disabled>
+                    <label for="fixed-type">
+                      <span class="capitalize">{{'tr_fixed' | translate}}</span>
+                    </label>
+                  </span>
+                  <span class="s-radio size-small">
+  
+                    <input type="radio" [(ngModel)]="timeGroup.group_type" name="group-type" value="shifts"
+                      id="shifts-type" disabled>
+                    <label for="shifts-type">
+                      <span class="capitalize">{{'tr_shifts' | translate}}</span>
+                    </label>
+                  </span>
+  
+  
+  
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div *ngIf="timeGroupLoading">
+          <app-ghost-line [height]="10" [width]="100" [type]="'line'"></app-ghost-line>
+        </div>
       </div>
-      <div *ngIf="timeGroupLoading">
-        <app-ghost-line [height]="10" [width]="100" [type]="'line'"></app-ghost-line>
-      </div>
-    </div>
-    <div class="bg-white plr-4 ptb-4 mb-4 content-shadow" *ngIf="timeGroup.group_type == 'fixed'">
-      <div *ngIf="!timeGroupLoading">
-        <h3 class="steel weight-bold size-default mb-2"> {{'tr_add_time_schedule' | translate}}</h3>
-        <div class="pr-6">
-
-          <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
-            [inValidAllDaysTime]="inValidAllDaysTime"
-            [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
-            [timeScheduleLoading]="timeGroupLoading">
-          </app-time-schedule-form>
+      <div class="border-box plr-4 ptb-2 mb-4" *ngIf="timeGroup.group_type == 'fixed'">
+        <div *ngIf="!timeGroupLoading">
+          <h3 class="steel weight-bold size-default mb-2"> {{'tr_add_time_schedule' | translate}}</h3>
+          <div class="pr-6">
+  
+            <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
+              [inValidAllDaysTime]="inValidAllDaysTime"
+              [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
+              [timeScheduleLoading]="timeGroupLoading">
+            </app-time-schedule-form>
+          </div>
         </div>
       </div>
     </div>
+ 
     <div class="bg-white plr-4 ptb-4 mb-4 content-shadow">
       <div class="assign-employees-section">
-        <h3 class="steel weight-bold size-default mb-4">{{'tr_assign_employees' | translate}}</h3>
+        <h3 class="steel weight-bold size-default title-with-btn mb-4">{{'tr_assign_employees' | translate}}
+
+          <div>
+            <button class="s-btn btn-primary btn-sm mr-3" type="button" (click)="updateTimeGroupEmployees()">
+              {{'tr_action.save' | translate}}</button>
+            <button type="reset" class="s-btn btn-secondary btn-sm" [routerLink]="['/time-groups']">
+              {{'tr_action.cancel'| translate}}
+            </button>
+          </div>
+        </h3>
+
         <div>
           <div class="row">
             <div class="col-md-3">

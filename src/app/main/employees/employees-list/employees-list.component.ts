@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { Department, Employee, PaginationData } from '@core/models/skolera-interfaces.model'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employees-list',
@@ -29,6 +30,7 @@ export class EmployeesListComponent implements OnInit {
   };
   paginationData: PaginationData
   departmentsPagination: PaginationData
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private employeesService: EmployeesSerivce,
@@ -40,19 +42,19 @@ export class EmployeesListComponent implements OnInit {
   }
   getEmployees() {
     this.employeesLoading = true;
-    this.employeesService.getEmployees(this.params).subscribe((response: any) => {
+    this.subscriptions.push(this.employeesService.getEmployees(this.params).subscribe((response: any) => {
       this.employeesList = response.employees
       this.paginationData = response.meta;
       this.employeesLoading = false
-    })
+    }))
   }
   getDepartments() {
     this.departmentsLoading = true
-    this.employeesService.getDepartments(this.dePartmentsParams).subscribe((response: any) => {
+    this.subscriptions.push(this.employeesService.getDepartments(this.dePartmentsParams).subscribe((response: any) => {
       this.departmentsPagination = response.meta;
       this.departments = this.departments.concat(response.employee_departments);
       this.departmentsLoading = false
-    })
+    }))
   }
   nextBatch() {
     if (this.departmentsPagination.next_page) {
@@ -70,6 +72,9 @@ export class EmployeesListComponent implements OnInit {
   paginationUpdate(page: number) {
     this.params.page = page;
     this.getEmployees();
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s && s.unsubscribe())
   }
 
 }

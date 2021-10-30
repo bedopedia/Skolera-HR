@@ -1,0 +1,95 @@
+<div>
+  <div class="content-shadow bg-white mb-5">
+    <h2 class="size-body title-with-btn plr-4 ptb-4">
+      <span class="page-title">{{'tr_rules' | translate }}</span>
+      <div class="btn-group">
+        <button class="s-btn size-small btn-secondary" (click)="openRuleForm('create')">
+          <i class="fa fa-plus mr-2"></i>
+          {{ 'tr_add_new_rule' | translate }}
+        </button>
+        <button class="s-btn btn-secondary size-body" (click)="isFilterOpen=!isFilterOpen">
+          <i class="fa fa-filter text-primary" aria-hidden="false"></i>
+        </button>
+      </div>
+
+    </h2>
+    <div class="isFilterOpens-card bg-secondary plr-4 ptb-2 mlr-2" *ngIf="isFilterOpen">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>{{'tr_name' | translate}}</label>
+            <div class="input-with-icon bg-white width-100">
+              <input class="text" class="s-control" (keyup)="filterRules($event)"
+                placeholder="{{'tr_search_by_name' | translate}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+
+      <div class="plr-4" *ngIf="!rulesLoading">
+        <div class="table-container" id="table-container" *ngIf="rulesList.length > 0">
+          <table class="s-table table layout-fixed">
+            <thead>
+              <th>{{'tr_employee_number' | translate}}</th>
+              <th>{{'tr_created_at' | translate}}</th>
+              <th>
+                <span class="options-menu">
+                  <i class="fa fa-ellipsis-v"></i>
+                  <div class="options-menu-container">
+                    <div class="single-option text-error">
+                      {{ 'tr_action.delete' | translate }}
+                    </div>
+                  </div>
+                </span>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rule of rulesList; let i=index">
+                <td>
+                  <ng-container> {{rule.name}}</ng-container>
+                </td>
+
+                <td>
+                  <ng-container> {{rule.created_at  | date: 'dd MMM yyyy'}}</ng-container>
+                </td>
+                <td>
+                  <span class="options-menu">
+                    <i class="fa fa-ellipsis-v"></i>
+                    <div class="options-menu-container">
+                      <div class="single-option text-error">
+                        {{ 'tr_action.delete' | translate }}
+                      </div>
+                      <div class="single-option" (click)="openRuleForm('edit',rule)">
+                        {{ 'tr_action.edit' | translate }}
+                      </div>
+                    </div>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+        <div class="empty-state-here text-center mtb-8" *ngIf="rulesList.length == 0">
+          <img class="placeholder-icon" src="assets/images/placeholders/announcments.svg" alt="">
+          <p> {{'tr_empty_state' | translate}}</p>
+        </div>
+
+        <div class="plr-4 ptb-4">
+          <skolera-pagination [paginationData]="paginationData" [perPage]="paginationPerPage"
+            (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
+        </div>
+      </div>
+
+      <div *ngIf="rulesLoading">
+        <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

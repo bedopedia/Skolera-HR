@@ -17,6 +17,10 @@ const routes: Routes = [
         path: 'time-groups',
         loadChildren: () => import('./time-groups/time-groups.module').then(m => m.TimeGroupsModule)
       },
+      {
+        path: 'rules',
+        loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)
+      },
 
       {
         path: '**', loadChildren: () => import('./employees/employees.module').then(m => m.EmployeesModule)

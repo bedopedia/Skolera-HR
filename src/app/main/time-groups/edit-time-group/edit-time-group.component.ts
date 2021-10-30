@@ -94,7 +94,8 @@ export class EditTimeGroupComponent implements OnInit {
         employeeId: employee.id!,
         timeGroupId: this.timeGroupId,
         employeeTimeSchedule: employee.time_group_schedule!,
-        timeScheduleLoading: false }
+        timeScheduleLoading: false,
+        timeGroupEmployeesIds: this.timeGroup.employees?.map(employee => { return employee.id }) }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'update') {
@@ -170,7 +171,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.getEmployees()
     }
   }
-
+  
   getEmployees() {
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {

@@ -153,5 +153,11 @@
     "tr_edit_time_group": "Edit Time Group",
     "tr_assign_employees":"Assign Employees",
     "tr_time_schedual_for_employee_updated_ssuccessfuly": "Time Schedual for employee Updated Successfully",
-    "tr_time_group_employees_updated_successfully": "Time Group Employees Updated Successfully"
+    "tr_time_group_employees_updated_successfully": "Time Group Employees Updated Successfully",
+    "tr_created_at": "Created at",
+    "tr_add_new_rule": "Add New Rule",
+    "tr_create_rule": "Create Rule",
+    "tr_leave_types": "Leave Types",
+    "tr_from": "from",
+    "tr_lop": "LOP"
 }

@@ -110,6 +110,7 @@ export class TimeScheduleComponent implements OnInit {
 
     let updateParams = {
       "time_group": {
+        "employee_ids": this.data.timeGroupEmployeesIds,
         "employees_attributes": {
           "id": this.employeeId,
           "time_group_schedule_attributes": {

@@ -1,0 +1,153 @@
+<div class="complex-skolera-modal language-switcher-modal">
+  <div class="modal-wrapper">
+    <div class="close-modal-icon" (click)="closeModal()"></div>
+    <div class="modal-content">
+      <form action="" #ruleForm="ngForm" (ngSubmit)="createRule()">
+        <div class="modal-header">
+          <h3 class="steel weight-bold size-default m-0">
+            {{'tr_create_rule' | translate}}
+          </h3>
+        </div>
+        <div class="modal-body weight-medium steel">
+          <div class="flex flrx-middle" *ngIf="inValidAllTradinessTime">
+            <img src="assets/images/imported-layers.svg" class="mr-2 pl-2" alt="">
+            <h2 class="text-error weight-medium size-default">
+              {{'tr_clocl_validation_text' | translate}}
+            </h2>
+          </div>
+          <div *ngIf="!ruleLoading">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group"
+                  [class.has-error]="(name.invalid && name.dirty) || (ruleForm.submitted && name.invalid)">
+                  <label>{{'tr_group_name' | translate}}</label>
+                  <input type="text" [(ngModel)]="rule.name" name="name" #name="ngModel" required class="s-control">
+                  <span class="text-error size-small ml-2 validator">
+                    {{'tr_required_field' | translate}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="flex flex-middle">
+                    <span class="weight-bold text-primary"> Absence Rule/</span>
+                    <span>{{'tr_leave_types' | translate}} </span>
+                  </label>
+                  <div class="input-with-icon bg-white width-100">
+                    <ng-select class="s-control s-select" bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name"
+                      [loading]="leaveTypesLoading" placeholder="{{'tr_select' | translate}}"
+                      notFoundText="{{'tr_no_items_found' | translate}}" autofocus [(ngModel)]="rule.leave_type_id"
+                      [items]="leaveTypes" name="leaveType">
+                      <ng-template ng-header-tmp>
+                        <div class="pt-2 text-center" *ngIf="!leaveTypesLoading && !leaveTypes.length">
+                          {{'tr_there_are_no_leave_types' | translate}}
+                        </div>
+                      </ng-template>
+                      <ng-template ng-footer-tmp>
+                        <div class="mb-2" *ngIf="leaveTypesLoading">
+                          <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                    <i class="fa fa-caret-down input-icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="weight-bold text-primary mtb-4 title-with-btn border-bottom pb-2"> Tardiness Rule
+                <div>
+                  <button class="s-btn btn-secondary btn-sm" type="button" (click) = addTradinessRule()>+ Add New Tradiness Rule</button>
+                </div>  
+                </label>
+              </div>
+              </div>
+
+              <div class="" *ngFor="let tardinessRule of rule.tardiness_rules_attributes!; let index=index">
+                <div class="border-bottom flex flex-miidle flex-space-between">
+                  <Label>Rule {{index+1}} </Label>
+                  <div>
+                    delete
+                  </div>
+                </div>
+                <div class="row" >
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>{{'tr_leave_types' | translate}}</label>
+                      <div class="input-with-icon bg-white width-100">
+                        <ng-select class="s-control s-select" bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name"
+                          [loading]="leaveTypesLoading" placeholder="{{'tr_select' | translate}}"
+                          notFoundText="{{'tr_no_items_found' | translate}}" autofocus
+                          [(ngModel)]="tardinessRule.leave_type_id!" [items]="leaveTypes"
+                          name="tradinessLeaveType">
+                          <ng-template ng-header-tmp>
+                            <div class="pt-2 text-center" *ngIf="!leaveTypesLoading && !leaveTypes.length">
+                              {{'tr_there_are_no_leave_types' | translate}}
+                            </div>
+                          </ng-template>
+                          <ng-template ng-footer-tmp>
+                            <div class="mb-2" *ngIf="leaveTypesLoading">
+                              <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                            </div>
+                          </ng-template>
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>{{'tr_lop' | translate}}</label>
+                      <div class="input-with-icon bg-white width-100">
+                        <ng-select class="s-control s-select" bindValue="value" bindLabel="name"
+                          placeholder="{{'tr_select' | translate}}"
+                          [(ngModel)]="tardinessRule.is_half_day!" [items]="lops">
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                      </div>
+    
+                      <span class="text-error size-small ml-2 validator">
+                        {{'tr_required_field' | translate}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group" [class.has-error]="(tardinessRule.invalidTime)">
+                      <label>{{'tr_from' | translate}}</label>
+                      <input [(ngModel)]="tardinessRule.start_time" name="startTime" #startTime="ngModel"
+                        type="time" class="s-control time-control"  (change)="validateStartAndEndTime(tardinessRule)" required>
+                      <span class="text-error size-small ml-2 validator">
+                        {{'tr_required_field' | translate}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group"  [class.has-error]="(tardinessRule.invalidTime)">
+                      <label>{{'tr_to' | translate}}</label>
+                      <input [(ngModel)]="tardinessRule.end_time" name="endTime" #endTime="ngModel"
+                        type="time" class="s-control time-control" (change)="validateStartAndEndTime(tardinessRule)" required>
+                      <span class="text-error size-small ml-2 validator">
+                        {{'tr_required_field' | translate}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        
+          </div>
+
+        </div>
+
+        <div class="modal-footer text-right">
+          <button class="s-btn btn-primary btn-sm mr-3" type="submit" [disabled]="isFormSubmitted">
+            {{'tr_action.save' | translate}}</button>
+          <button class="s-btn btn-secondary btn-sm" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

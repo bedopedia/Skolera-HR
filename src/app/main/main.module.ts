@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '@shared/shared.module';
 import { SystemAlertsComponent } from './system-alerts/system-alerts.component';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
+import { RulesSerivce } from '@skolera/services/rules.services';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ providers: [
     UserSerivce,
     AuthenticationService,
     AppNotificationService,
-    TimeGroupsSerivce
+    TimeGroupsSerivce,
+    RulesSerivce 
 ],
 
 })
