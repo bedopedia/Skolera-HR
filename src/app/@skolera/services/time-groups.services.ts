@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
-import { TimeGroup } from '@core/models/skolera-interfaces.model';
-
-
 
 @Injectable()
 export class TimeGroupsSerivce {

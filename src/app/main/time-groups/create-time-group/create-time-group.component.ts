@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Department, Employee, PaginationData, TimeGroup, TimeGroupSchedule } from '@core/models/skolera-interfaces.model';
+import { TimeGroup, TimeGroupSchedule } from '@core/models/time-groups-interface.model';
+import { Department, Employee } from '@core/models/employees-interface.model';
+import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 

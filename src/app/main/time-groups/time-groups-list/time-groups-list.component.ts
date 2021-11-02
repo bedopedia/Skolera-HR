@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogRole, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PaginationData, TimeGroup } from '@core/models/skolera-interfaces.model';
+import { MatDialog } from '@angular/material/dialog';
+import { PaginationData } from '@core/models/skolera-interfaces.model';
+import { TimeGroup } from '@core/models/time-groups-interface.model';
 import { TranslateService } from '@ngx-translate/core';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
 import { AppNotificationService } from '@skolera/services/app-notification.service';

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { TimeGroupSchedule } from '@core/models/skolera-interfaces.model';
+import { TimeGroupSchedule } from '@core/models/time-groups-interface.model';
 import * as moment from 'moment';
 import { EventEmitter } from '@angular/core';
 

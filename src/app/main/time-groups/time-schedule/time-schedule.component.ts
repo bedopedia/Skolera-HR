@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TimeGroupSchedule } from '@core/models/skolera-interfaces.model';
+import { TimeGroupSchedule } from '@core/models/time-groups-interface.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';

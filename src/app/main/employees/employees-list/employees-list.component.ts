@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
-import { Department, Employee, PaginationData } from '@core/models/skolera-interfaces.model'
+import { PaginationData } from '@core/models/skolera-interfaces.model'
+import { Department, Employee } from '@core/models/employees-interface.model'
 import { Subscription } from 'rxjs';
 
 @Component({
