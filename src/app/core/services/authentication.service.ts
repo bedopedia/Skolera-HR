@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from './../../../environments/environment';
 import { Router } from '@angular/router';
-// import { MatDialog } from '@angular/material/dialog';
 import { Globals } from '../globals';
 
 const httpOptions = {
@@ -24,8 +23,7 @@ export class AuthenticationService {
     constructor(
         private http: HttpClient,
         private globals: Globals,
-        private router: Router,
-        // public dialog: MatDialog,
+        private router: Router
     ) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
         this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -36,7 +34,8 @@ export class AuthenticationService {
             {
                 username: username,
                 password: password,
-                mobile: 'true'
+                mobile: 'true',
+                hr_module: true
             },
             {
                 observe: 'response'

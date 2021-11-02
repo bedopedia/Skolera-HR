@@ -19,8 +19,10 @@ export class AppComponent {
 
     constructor(
         private globals: Globals,
-        private versionCheckService: VersionCheckService
-    ) {}
+        private versionCheckService: VersionCheckService,
+        private translate: TranslateService
+    ) {
+    }
 
     ngOnInit() {
         if (environment.env === 'production') {

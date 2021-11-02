@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LeaveType, Rule, TradinessRule } from '@core/models/rules-interfaces.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { TranslateService } from '@ngx-translate/core';
+import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { RulesSerivce } from '@skolera/services/rules.services';
 import * as moment from 'moment';
@@ -24,17 +25,12 @@ export class RuleFormComponent implements OnInit {
   leaveTypesPagination: PaginationData;
   selectedLeaveType: number;
   inValidAllTradinessTime: boolean = false;
+  errorMessage: string;
   leaveTypesPaginationParams = {
     page: 1,
     per_page: 10
   }
-  lops = [{
-    name: 0.5,
-    value: true
-  }, {
-    name: 1,
-    value: false
-  }]
+  lops = [1, 0.5]
 
   private subscriptions: Subscription[] = [];
   private ruleId: number;
@@ -43,39 +39,45 @@ export class RuleFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ruleService: RulesSerivce,
     private appNotificationService: AppNotificationService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    console.log("data", this.data);
     if (this.data.type == 'create') {
       this.rule = {
         name: '',
-        leave_type_id: 1,
-        tardiness_rules_attributes: [new TradinessRule()]
-
+        leave_type_id: 1
       }
     }
     else {
       this.ruleId = this.data.rule.id
       this.getRule()
     }
-
-
     this.getLeveTypes()
 
   }
   public addTradinessRule() {
-    this.rule.tardiness_rules_attributes?.push(new TradinessRule())
+    if (!this.rule.tardiness_rules_attributes!) {
+      this.rule.tardiness_rules_attributes! = [new TradinessRule()]
+    }
+    else {
+      this.rule.tardiness_rules_attributes?.push(new TradinessRule());
+    }
   }
   public validateStartAndEndTime(tardinessRule: TradinessRule) {
-    if (tardinessRule.start_time == '' || tardinessRule.end_time == '') {
+    if ((tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
+      this.inValidAllTradinessTime = true;
+      tardinessRule.invalidTime = true
+    }
+    else if (!this.isFormSubmitted && (tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
       return
     }
-    let startTime = moment(tardinessRule.start_time, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-    let endTime = moment(tardinessRule.end_time, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-    tardinessRule.invalidTime = (startTime > endTime) ? true : false;
-    this.inValidAllTradinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
+    else {
+      tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
+      this.inValidAllTradinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
+    }
+
   }
   public closeModal() {
     this.dialogRef.close();
@@ -86,6 +88,10 @@ export class RuleFormComponent implements OnInit {
       this.ruleLoading = false;
       this.rule = response;
       this.rule.tardiness_rules_attributes = response.tardiness_rules;
+      this.rule.deleted_tardiness_rules! = [];
+      this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
+        tardinessRule.lop = tardinessRule.is_half_day ? 1 : 0.5
+      })
       this.rule.leave_type_id = response.absence_leave_type.id
     }, error => {
       this.appNotificationService.push(error.name, 'error');
@@ -93,7 +99,17 @@ export class RuleFormComponent implements OnInit {
       this.isFormSubmitted = false;
     }))
   }
+  submitFrorm() {
+    this.isFormSubmitted = true;
+    if (this.getIsInValidRule() || this.rule.name == '') {
+      this.isFormSubmitted = false;
+      return
+    }
+    this.rule.tardiness_rules_attributes?.forEach(tardinessRule => tardinessRule.is_half_day = tardinessRule.lop == 1 ? true : false)
+    this.data.type == 'create' ? this.createRule() : this.updateRule();
+  }
   updateRule() {
+    this.rule.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.concat(this.rule.deleted_tardiness_rules!)
     let ruleParams = {
       rules: this.rule
     }
@@ -105,7 +121,84 @@ export class RuleFormComponent implements OnInit {
       this.isFormSubmitted = false;
     }))
   }
+  private getIsInValidRule(): boolean {
+
+    let invalidRuleForm = false;
+    if (this.rule.tardiness_rules_attributes!) {
+      this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
+        this.validateStartAndEndTime(tardinessRule);
+        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime) {
+          invalidRuleForm = true;
+        }
+        else invalidRuleForm = false;
+      })
+    }
+    else {
+      if (this.rule.leave_type_id == null) {
+        this.errorMessage = this.translate.instant('tr_at_least_one_rule')
+        invalidRuleForm = true;
+      }
+      else {
+        invalidRuleForm = false;
+      }
+    }
+    return invalidRuleForm;
+  }
+  deleteTardinessRule(deletedTardinessRule: TradinessRule) {
+    let data = {
+      title: this.translate.instant("tr_sure_message"),
+      buttons: [
+        {
+          label: this.translate.instant("tr_action.cancel"),
+          actionCallback: 'cancel',
+          type: 'btn-secondary'
+        },
+        {
+          label: this.translate.instant("tr_action.delete"),
+          actionCallback: 'delete',
+          type: 'btn-danger'
+        }
+      ]
+    }
+
+    const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
+      width: '300px',
+      data: data,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'delete') {
+        this.rule.tardiness_rules_attributes?.forEach((tardinessRule, index) => {
+          if (tardinessRule == deletedTardinessRule) {
+            console.log("deletedTardinessRule", deletedTardinessRule);
+
+            if (deletedTardinessRule.id!) {
+              tardinessRule._destroy = true;
+              this.rule.deleted_tardiness_rules?.push(tardinessRule)
+            }
+            this.rule.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.filter(tardinessRule => tardinessRule != deletedTardinessRule)
+          }
+          if (this.rule.tardiness_rules_attributes?.length == 0) {
+            this.inValidAllTradinessTime = false;
+          }
+          else {
+            this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
+              this.validateStartAndEndTime(tardinessRule);
+            })
+
+          }
+
+
+
+        })
+
+      }
+    })
+
+
+  }
   createRule() {
+
     let ruleParams = {
       rules: this.rule
     }

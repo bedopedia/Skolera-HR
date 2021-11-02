@@ -161,5 +161,15 @@
     "tr_from": "from",
     "tr_lop": "LOP",
     "tr_rule": "Rule",
-    "tr_there_are_no_rules": "There Are No Rules"
+    "tr_there_are_no_rules": "There Are No Rules",
+    "tr_rule_updated_successfully": "Rule Updated Successfully",
+    "tr_start_end_validation_text": "End Time should be after Start Time and have values",
+    "tr_at_least_one_rule": "Choose at least one Rule absent or tardiness rule",
+    "tr_sure_message": "Are you sure you want to delete?",
+    "tr_mins": "mins",
+    "tr_rule_created_successfully":"Rule Created Successfully",
+    "tr_edit_rule": "Edit Rule",
+    "tr_absence_rule": "Absence Rule",
+    "tr_tardiness_rule":"Tardiness Rule",
+    "tr_add_new_tardiness_rule": "Add New Tardiness Rule"
 }

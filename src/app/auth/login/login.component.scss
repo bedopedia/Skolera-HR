@@ -13,7 +13,7 @@
 
 .login-page {
     @extend %cover-centered;
-    background-image: url(/src/assets/images/login-bg.svg);
+    background-image: url('../../../assets/images/login-bg.svg');
     color: $steel;
     font-size: 1rem;
     background-color: #fafafa;
