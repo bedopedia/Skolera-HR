@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { RulesSerivce } from '@skolera/services/rules.services';
-import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({
