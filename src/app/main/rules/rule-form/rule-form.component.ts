@@ -17,13 +17,13 @@ import { Subscription } from 'rxjs';
 export class RuleFormComponent implements OnInit {
   @ViewChild('ruleForm') announcementForm: NgForm;
   isFormSubmitted: boolean = false;
-  ruleLoading: boolean = false;
+  ruleLoading: boolean = true;
   leaveTypes: LeaveType[] = [];
   rule: Rule;
   leaveTypesLoading: boolean = true;
   leaveTypesPagination: PaginationData;
   selectedLeaveType: number;
-  inValidAllTradinessTime: boolean = false;
+  invalidAllTardinessTime: boolean = false;
   errorMessage: string;
   leaveTypesPaginationParams = {
     page: 1,
@@ -44,6 +44,7 @@ export class RuleFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.type == 'create') {
+      this.ruleLoading = false;
       this.rule = {
         name: '',
         leave_type_id: 1
@@ -66,7 +67,7 @@ export class RuleFormComponent implements OnInit {
   }
   public validateStartAndEndTime(tardinessRule: TardinessRule ) {
     if ((tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
-      this.inValidAllTradinessTime = true;
+      this.invalidAllTardinessTime = true;
       tardinessRule.invalidTime = true
     }
     else if (!this.isFormSubmitted && (tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
@@ -74,7 +75,7 @@ export class RuleFormComponent implements OnInit {
     }
     else {
       tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
-      this.inValidAllTradinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
+      this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
     }
 
   }
@@ -178,7 +179,7 @@ export class RuleFormComponent implements OnInit {
             this.rule.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.filter(tardinessRule => tardinessRule != deletedTardinessRule)
           }
           if (this.rule.tardiness_rules_attributes?.length == 0) {
-            this.inValidAllTradinessTime = false;
+            this.invalidAllTardinessTime = false;
           }
           else {
             this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
