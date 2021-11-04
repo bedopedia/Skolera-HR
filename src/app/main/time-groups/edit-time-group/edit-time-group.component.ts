@@ -24,7 +24,7 @@ export class EditTimeGroupComponent implements OnInit {
   isFormSubmitted: boolean = false;
   timeGroupLoading: boolean = true;
   timeGroup: TimeGroup;
-  inValidAllDaysTime: boolean = false
+  invalidAllDaysTime: boolean = false
   scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()];
   private subscriptions: Subscription[] = [];
   timeGroupId: number
@@ -153,7 +153,7 @@ export class EditTimeGroupComponent implements OnInit {
 
     if (this.timeGroup.name == '' || isValidDays.includes(true)) {
       this.isFormSubmitted = false;
-      this.inValidAllDaysTime = isValidDays.includes(true)
+      this.invalidAllDaysTime = isValidDays.includes(true)
       return
     }
     if(this.timeGroup.rule?.id){

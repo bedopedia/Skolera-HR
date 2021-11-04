@@ -9,7 +9,7 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./time-schedule-form.component.scss']
 })
 export class TimeScheduleFormComponent implements OnInit {
-  @Input() inValidAllDaysTime: boolean = false;
+  @Input() invalidAllDaysTime: boolean = false;
   @Input() scheduleDays: TimeGroupSchedule [];
   @Input() timeScheduleLoading: boolean = true;
   @Output() returnedScheduleDays: EventEmitter<TimeGroupSchedule []> = new EventEmitter<TimeGroupSchedule []>();
@@ -25,7 +25,7 @@ export class TimeScheduleFormComponent implements OnInit {
     let clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     let clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     day.invalidTime = (clockIn > clockOut) ? true : false;
-    this.inValidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
+    this.invalidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
     this.returnedScheduleDays.emit(this.scheduleDays);
   }
   
