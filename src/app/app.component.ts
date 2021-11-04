@@ -113,7 +113,7 @@ export class AppComponent {
         menu.querySelectorAll('.options-menu-container')[0].style.maxHeight = 'none';
         menu.classList.remove('reverse-h');
         let offsetAndHeight = menu.querySelectorAll('.options-menu-container')[0].offsetHeight + menu.offsetTop;
-        let widnowHeight = document.body.clientHeight;
+        let widnowHeight = window.innerHeight
         let outOfWindowVertically = offsetAndHeight - widnowHeight > 0 ? true : false;
         if (outOfWindowVertically) {
             menu.classList.add('reverse-v')
