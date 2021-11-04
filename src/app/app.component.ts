@@ -39,6 +39,7 @@ export class AppComponent {
             this.globals.systemAlerts.noConnection = true;
           }));
       this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
+      this.translate.use(this.globals.currentUser.locale);
       this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
 
     }
