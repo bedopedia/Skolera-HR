@@ -10,10 +10,10 @@ export class RulesSerivce {
 
     }
     getRules(params:any) {
-        return this.http.get(baseUrl + `api//hr/rules`,{ params: params });
+        return this.http.get(baseUrl + `api/hr/rules`,{ params: params });
     }
     getRule(ruleId: number){
-        return this.http.get(baseUrl + `api//hr/rules/${ruleId}`);
+        return this.http.get(baseUrl + `api/hr/rules/${ruleId}`);
     }
     createRule(params:any){
         return this.http.post(baseUrl + `api/hr/rules`,params);
@@ -22,6 +22,6 @@ export class RulesSerivce {
         return this.http.put(baseUrl + `api/hr/rules/${ruleId}`,params);
     }
     getLeaveTypes(params: any){
-        return  this.http.get(baseUrl + `api//hr/leave_types`,{ params: params });
+        return  this.http.get(baseUrl + `api/hr/leave_types`,{ params: params });
     }
 }

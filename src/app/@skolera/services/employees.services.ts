@@ -10,10 +10,10 @@ export class EmployeesSerivce {
 
     }
     getEmployees(params:any) {
-        return this.http.get(baseUrl + `api//hr/employees`,{ params: params });
+        return this.http.get(baseUrl + `api/hr/employees`,{ params: params });
     }
     getDepartments(params: any){
-        return this.http.get(baseUrl + `api//hr/employee_departments`,{ params: params });
+        return this.http.get(baseUrl + `api/hr/employee_departments`,{ params: params });
     }
    
 }
