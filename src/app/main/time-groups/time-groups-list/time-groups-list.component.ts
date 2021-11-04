@@ -124,13 +124,13 @@ export class TimeGroupsListComponent implements OnInit {
     this.partiallyChecked = false;
 }
 
-  filterTimeGroups(event: any, serchKey: string) {
-    let term = (serchKey == 'by_type') ? event : event.target.value
+  filterTimeGroups(event: any, searchKey: string) {
+    let term = (searchKey == 'by_type') ? event : event.target.value
     if (event === null) {
       delete this.params['by_type'];
     }
     else {
-      this.params[serchKey] = term;
+      this.params[searchKey] = term;
     }
     this.getTimeGroups();
   }

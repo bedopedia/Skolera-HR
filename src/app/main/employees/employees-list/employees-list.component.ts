@@ -64,9 +64,9 @@ export class EmployeesListComponent implements OnInit {
     }
   }
 
-  filterEmployees(term: any, serchKey: string) {
-    term = (serchKey == 'by_department_id') ? term : term.target.value
-    this.params[serchKey] = term;
+  filterEmployees(term: any, searchKey: string) {
+    term = (searchKey == 'by_department_id') ? term : term.target.value
+    this.params[searchKey] = term;
     this.getEmployees();
   }
   paginationUpdate(page: number) {

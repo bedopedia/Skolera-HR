@@ -239,9 +239,9 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
 
-  public filterEmployees(term: any, serchKey: string) {
-    term = (serchKey == 'by_department_id') ? term : term.target.value
-    this.employessParams[serchKey] = term;
+  public filterEmployees(term: any, searchKey: string) {
+    term = (searchKey == 'by_department_id') ? term : term.target.value
+    this.employessParams[searchKey] = term;
     this.employeesList = [];
     this.getEmployees();
   }
