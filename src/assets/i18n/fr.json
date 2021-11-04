@@ -151,5 +151,6 @@
     "tr_edit_rule": "Edit Rule*",
     "tr_absence_rule": "Absence Rule*",
     "tr_tardiness_rule":"Tardiness Rule*",
-    "tr_add_new_tardiness_rule": "Add New Tardiness Rule*"
+    "tr_add_new_tardiness_rule": "Add New Tardiness Rule*",
+    "tr_create_time_group":"Create Time Group*"
 }

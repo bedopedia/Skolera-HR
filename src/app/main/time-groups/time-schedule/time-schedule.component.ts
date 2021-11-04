@@ -28,6 +28,8 @@ export class TimeScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("this.data",this.data);
+    
     this.timeGroupId = this.data.timeGroupId;
     this.employeeId = this.data.employeeId;
     this.timeScheduleLoading = this.data.timeScheduleLoading
@@ -114,7 +116,7 @@ export class TimeScheduleComponent implements OnInit {
         "employees_attributes": {
           "id": this.employeeId,
           "time_group_schedule_attributes": {
-            "id": this.data.employeeTimeSchedule.id,
+            id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
             "schedule_days_attributes": this.scheduleDays
           }
         }
