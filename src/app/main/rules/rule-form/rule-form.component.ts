@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LeaveType, Rule, TradinessRule } from '@core/models/rules-interfaces.model';
+import { LeaveType, Rule, TardinessRule  } from '@core/models/rules-interfaces.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { TranslateService } from '@ngx-translate/core';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
@@ -56,15 +56,15 @@ export class RuleFormComponent implements OnInit {
     this.getLeveTypes()
 
   }
-  public addTradinessRule() {
+  public addTardinessRule () {
     if (!this.rule.tardiness_rules_attributes!) {
-      this.rule.tardiness_rules_attributes! = [new TradinessRule()]
+      this.rule.tardiness_rules_attributes! = [new TardinessRule ()]
     }
     else {
-      this.rule.tardiness_rules_attributes?.push(new TradinessRule());
+      this.rule.tardiness_rules_attributes?.push(new TardinessRule ());
     }
   }
-  public validateStartAndEndTime(tardinessRule: TradinessRule) {
+  public validateStartAndEndTime(tardinessRule: TardinessRule ) {
     if ((tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.inValidAllTradinessTime = true;
       tardinessRule.invalidTime = true
@@ -143,7 +143,7 @@ export class RuleFormComponent implements OnInit {
     }
     return invalidRuleForm;
   }
-  deleteTardinessRule(deletedTardinessRule: TradinessRule) {
+  deleteTardinessRule(deletedTardinessRule: TardinessRule ) {
     let data = {
       title: this.translate.instant("tr_sure_message"),
       buttons: [

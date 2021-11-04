@@ -2,13 +2,13 @@ export class Rule{
   name: string = '';
   id?: number;
   created_at?: Date;
-  tardiness_rules_attributes?:TradinessRule[] = [];
-  deleted_tardiness_rules?: TradinessRule[] = [];
+  tardiness_rules_attributes?:TardinessRule [] = [];
+  deleted_tardiness_rules?: TardinessRule [] = [];
   leave_type_id?: number;
   is_half_day?: boolean;
   }
 
- export class TradinessRule{
+ export class TardinessRule {
     constructor(
       public start_time: string = '' ,
       public end_time: string = '',
