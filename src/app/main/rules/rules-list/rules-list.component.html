@@ -32,8 +32,7 @@
         <div class="table-container" id="table-container" *ngIf="rulesList.length > 0">
           <table class="s-table table layout-fixed">
             <thead>
-              <th>{{'tr_employee_number' | translate}}</th>
-              <th>{{'tr_created_at' | translate}}</th>
+              <th>{{'tr_name' | translate}}</th>
               <th>
                 <span class="options-menu">
                   <i class="fa fa-ellipsis-v"></i>
@@ -49,10 +48,6 @@
               <tr *ngFor="let rule of rulesList; let i=index">
                 <td>
                   <ng-container> {{rule.name}}</ng-container>
-                </td>
-
-                <td>
-                  <ng-container> {{rule.created_at  | date: 'dd MMM yyyy'}}</ng-container>
                 </td>
                 <td>
                   <span class="options-menu">

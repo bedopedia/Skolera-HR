@@ -57,7 +57,7 @@ export class RuleFormComponent implements OnInit {
     this.getLeveTypes()
 
   }
-  public addTardinessRule () {
+  public addTardinessRule() {
     if (!this.rule.tardiness_rules_attributes!) {
       this.rule.tardiness_rules_attributes! = [new TardinessRule ()]
     }
