@@ -1,0 +1,61 @@
+<div class="complex-skolera-modal language-switcher-modal">
+  <div class="modal-wrapper">
+    <div class="close-modal-icon" (click)="closeModal()"></div>
+    <div class="modal-content">
+      <form action="" #attendanceSheetForm="ngForm">
+        <div class="modal-header">
+          <h3 class="steel weight-bold size-default m-0">
+            {{'tr_upload_sheet' | translate}}
+          </h3>
+        </div>
+        <div class="modal-body weight-medium steel">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label class="text-small"> Excel Sheet </label>
+                <input type="file" id="fileUpload">
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="text-small"> Start date </label>
+                <div class="input-with-icon inline-block width-100">
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId2" class="s-control"
+                    name="start_date" required>
+                  <mat-datepicker #pickId2></mat-datepicker>
+                  <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId2"></mat-datepicker-toggle>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="text-small"> End date </label>
+                <div class="input-with-icon inline-block width-100">
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId2" class="s-control"
+                    name="end_date" required>
+                  <mat-datepicker #pickId></mat-datepicker>
+                  <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId"></mat-datepicker-toggle>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer text-right">
+          <button class="s-btn btn-primary mr-3" type="submit">
+            {{'tr_action.save' | translate}}</button>
+          <button class="s-btn btn-secondary" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

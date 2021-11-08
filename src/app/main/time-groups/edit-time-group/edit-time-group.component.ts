@@ -39,7 +39,7 @@ export class EditTimeGroupComponent implements OnInit {
   employessParams: any = {
     page: 1,
     per_page: 10,
-    unassigned: true
+    unassigned: true,
   };
   rulesParams: any = {
     page: 1,
@@ -73,6 +73,7 @@ export class EditTimeGroupComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.timeGroupId = params.id
+      this.employessParams.by_time_group_id =  this.timeGroupId ;
     })
 
     this.getEmployees();
@@ -91,8 +92,6 @@ export class EditTimeGroupComponent implements OnInit {
         delete this.timeGroup.time_group_schedule_attributes?.schedule_days;
         delete this.timeGroup.time_group_schedule;
       }
-      console.log("nnn this.timeGroup",this.timeGroup);
-      
       this.timeGroupLoading = false;
 
     })

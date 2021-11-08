@@ -39,19 +39,21 @@
           <div class="form-group">
             <label>{{'tr_department' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
-              <ng-select class="s-control s-select"  (change)="filterEmployees(selectedDepartment,'by_department_id')" bindValue="id" (scrollToEnd)= nextBatch() bindLabel="name" [loading]="departmentsLoading" placeholder="{{'tr_select' | translate}}"
-               notFoundText="{{'tr_no_items_found' | translate}}" (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
+              <ng-select class="s-control s-select" (change)="filterEmployees(selectedDepartment,'by_department_id')"
+                bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
+                placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
+                (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
                 [items]="departments" name="department">
                 <ng-template ng-header-tmp>
                   <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
-                      {{'tr_there_are_no_departments' | translate}}
+                    {{'tr_there_are_no_departments' | translate}}
                   </div>
-              </ng-template>
-              <ng-template ng-footer-tmp >
+                </ng-template>
+                <ng-template ng-footer-tmp>
                   <div class="mb-2" *ngIf="departmentsLoading">
                     <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
                   </div>
-              </ng-template>
+                </ng-template>
               </ng-select>
               <i class="fa fa-caret-down input-icon"></i>
             </div>
@@ -62,13 +64,29 @@
     <div>
 
       <div class="plr-4" *ngIf="!employeesLoading">
-        <div class="table-container" id="table-container"  *ngIf="employeesList.length > 0">
+        <div class="table-container" id="table-container" *ngIf="employeesList.length > 0">
           <table class="s-table table layout-fixed">
             <thead>
-              <th>{{'tr_employee_number' | translate}}</th>
-              <th>{{'tr_employee_name' | translate}}</th>
-              <th>{{'tr_employee_department_name' | translate}}</th>
-              <th>{{'tr_biometric_id' | translate}}</th>
+              <th>
+                <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
+                  {{ 'tr_employee_number' | translate }}
+                </div>
+              </th>
+              <th>
+                <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'" [orderBy]="'name'">
+                  {{'tr_employee_name' | translate}}
+                </div>
+              </th>
+              <th>
+                <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder" [type]="'department'" [orderBy]="'department'">
+                  {{'tr_employee_department_name' | translate}}
+                </div>
+              </th>
+              <th>
+                <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder"  [orderBy]="'biometric_id'">
+                  {{'tr_biometric_id' | translate}}
+                </div>
+              </th>
             </thead>
             <tbody>
               <tr *ngFor="let employee of employeesList; let i=index">
@@ -105,7 +123,7 @@
 
 
       <div *ngIf="employeesLoading">
-        <app-ghost-line  [length]="12" [type]="'table'"></app-ghost-line>
+        <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
       </div>
 
 

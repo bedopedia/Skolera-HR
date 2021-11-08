@@ -21,6 +21,10 @@ export const  AdminSidebar = [
         name: 'tr_rules',
         routerLink: '/rules',
       },
+      {
+        name: 'tr_attendance_sheets',
+        routerLink:'/sheets'
+      }
     ]
   },
  

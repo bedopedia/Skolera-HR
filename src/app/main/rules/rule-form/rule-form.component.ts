@@ -47,7 +47,8 @@ export class RuleFormComponent implements OnInit {
       this.ruleLoading = false;
       this.rule = {
         name: '',
-        leave_type_id: 1
+        leave_type_id: 1,
+        tardiness_rules_attributes:[]
       }
     }
     else {
@@ -124,7 +125,7 @@ export class RuleFormComponent implements OnInit {
   private getIsInValidRule(): boolean {
 
     let invalidRuleForm = false;
-    if (this.rule.tardiness_rules_attributes!) {
+    if (this.rule.tardiness_rules_attributes!.length > 0) {
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
         this.validateStartAndEndTime(tardinessRule);
         if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime) {
