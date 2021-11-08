@@ -23,6 +23,7 @@ input[type=file]::file-selector-button {
     background-color: transparent;
     color: $primary !important;
     width: 50%;
+    margin-right: 5px;
     border-color: $primary !important;
     > * {
         color: $primary !important;

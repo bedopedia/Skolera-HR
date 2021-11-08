@@ -20,7 +20,7 @@
               <div class="col-md-6">
                 <div class="form-group"
                   [class.has-error]="(name.invalid && name.dirty) || (ruleForm.submitted && name.invalid)">
-                  <label>{{'tr_group_name' | translate}}</label>
+                  <label>{{'tr_name' | translate}}</label>
                   <input type="text" [(ngModel)]="rule.name" name="name" #name="ngModel" required class="s-control">
                   <span class="text-error size-small ml-2 validator">
                     {{'tr_required_field' | translate}}
@@ -70,8 +70,10 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label class="weight-bold text-primary mtb-2 title-with-btn pb-2"> {{'tr_tardiness_rule' | translate}}
-                    <div>
+                  <label class="weight-bold text-primary mtb-2 title-with-btn pb-2" > 
+                    <span *ngIf="rule.tardiness_rules_attributes! && rule.tardiness_rules_attributes!.length>0">  {{'tr_tardiness_rules' | translate}}</span>
+                  
+                    <div class="ml-auto">
                       <button class="s-btn btn-secondary btn-sm" type="button"
                         (click)=addTardinessRule()>{{'tr_add_new_tardiness_rule' | translate}}</button>
                     </div>
@@ -80,7 +82,7 @@
               </div>
 
 
-              <div [ngClass]="{'mb-6 pb-6': rule.tardiness_rules_attributes!}">
+              <div [ngClass]="{'mb-6 pb-6': rule.tardiness_rules_attributes! && rule.tardiness_rules_attributes!.length>0}">
                 <div class="border-box plr-2 ptb-1 mb-2"
                   *ngFor="let tardinessRule of rule.tardiness_rules_attributes!; let index=index">
                   <div class="flex flex-miidle flex-space-between mtb-2">

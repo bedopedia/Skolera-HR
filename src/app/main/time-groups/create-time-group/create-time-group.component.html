@@ -14,7 +14,7 @@
               <div class="col-md-6">
                 <div class="form-group"
                   [class.has-error]="(name.invalid && name.dirty) || (timeGroupForm.submitted && name.invalid)">
-                  <label>{{'tr_group_name' | translate}}</label>
+                  <label>{{'tr_name' | translate}}</label>
                   <input type="text" [(ngModel)]="timeGroup.name" name="name" #name="ngModel" required
                     class="s-control">
                   <span class="text-error size-small ml-2 validator">

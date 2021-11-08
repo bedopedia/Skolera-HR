@@ -14,6 +14,7 @@ import { SheetsListComponent } from '../sheets-list/sheets-list.component';
 export class SheetFormComponent implements OnInit {
   @ViewChild('attendanceSheetForm') attendanceSheetForm: NgForm;
   private subscriptions: Subscription[] = [];
+  holidays: any[] = []
   constructor(
     public dialogRef: MatDialogRef<SheetsListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,7 +30,14 @@ export class SheetFormComponent implements OnInit {
   public closeModal() {
     this.dialogRef.close();
   }
-  
+  addHoliday(holiday:any){
+
+console.log(holiday);
+this.holidays.push(holiday)
+  }
+  removeHoliday(holiday:any){
+
+  }
   ngOnDestroy() {
     this.subscriptions.forEach(s => s && s.unsubscribe())
   }

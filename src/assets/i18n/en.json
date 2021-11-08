@@ -126,10 +126,11 @@
     "tr_add_new_time_group": "Add Time Group",
     "tr_human_resources": "Human Resources",
     "tr_types": "Types",
+    "tr_type": "Type",
     "tr_fixed": "Fixed",
     "tr_shifts": "Shifts",
     "tr_all": "All",
-    "tr_number_of_employees":"Number of employees in each group",
+    "tr_number_of_employees":"Number of employees",
     "tr_add_time_group": "Add Time Group",
     "tr_time_group_created_successfully": "Time Group created successfully",
     "tr_required_field": "Field Is Required",
@@ -170,10 +171,12 @@
     "tr_rule_created_successfully":"Rule Created Successfully",
     "tr_edit_rule": "Edit Rule",
     "tr_absence_rule": "Absence Rule",
+    "tr_tardiness_rules":"Tardiness Rules",
     "tr_tardiness_rule":"Tardiness Rule",
     "tr_add_new_tardiness_rule": "Add New Tardiness Rule",
     "tr_create_time_group":"Create Time Group",
     "tr_attendance_sheets": "Attendance Sheets",
     "tr_upload_sheet":"Upload Sheet",
-    "tr_choose_a_date": "Choose a date"
+    "tr_choose_a_date": "Choose a date",
+    "tr_edit_time_schedule": "Edit Time Schedule"
 }

@@ -69,17 +69,17 @@
             <thead>
               <th>
                 <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
-                  {{ 'tr_employee_number' | translate }}
+                  {{ 'tr_number' | translate }}
                 </div>
               </th>
               <th>
                 <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'" [orderBy]="'name'">
-                  {{'tr_employee_name' | translate}}
+                  {{'tr_name' | translate}}
                 </div>
               </th>
               <th>
                 <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder" [type]="'department'" [orderBy]="'department'">
-                  {{'tr_employee_department_name' | translate}}
+                  {{'tr_department' | translate}}
                 </div>
               </th>
               <th>

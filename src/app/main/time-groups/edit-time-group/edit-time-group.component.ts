@@ -38,8 +38,7 @@ export class EditTimeGroupComponent implements OnInit {
   };
   employessParams: any = {
     page: 1,
-    per_page: 10,
-    unassigned: true,
+    per_page: 10
   };
   rulesParams: any = {
     page: 1,
@@ -73,7 +72,7 @@ export class EditTimeGroupComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.timeGroupId = params.id
-      this.employessParams.by_time_group_id =  this.timeGroupId ;
+      this.employessParams.by_time_group_with_unassigned =  this.timeGroupId ;
     })
 
     this.getEmployees();
@@ -127,6 +126,7 @@ export class EditTimeGroupComponent implements OnInit {
       }
     }
     this.timeGroupService.updateRule(this.timeGroupId, params).subscribe(response => {
+      this.appNotificationService.push(this.translate.instant('tr_rule_updated_successfully'), 'success');
     })
   }
   public updateTimeGroup() {
@@ -245,37 +245,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.getEmployees();
   }
 
-  public removeEmployeeFromGroup(timegroupEmployee: Employee) {
-    let data = {
-      title: this.translate.instant("tr_delete_employee_confirmation_message"),
-      buttons: [
-        {
-          label: this.translate.instant("tr_action.cancel"),
-          actionCallback: 'cancel',
-          type: 'btn-secondary'
-        },
-        {
-          label: this.translate.instant("tr_action.delete"),
-          actionCallback: 'delete',
-          type: 'btn-danger'
-        }
-      ]
-    }
-
-    const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
-      width: '450px',
-      data: data,
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'delete') {
-        this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timegroupEmployee.name);
-        this.updateTimeGroupEmployees()
-        this.getEmployees()
-      }
-    })
-
-  }
+ 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s && s.unsubscribe())
   }

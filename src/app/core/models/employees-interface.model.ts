@@ -13,6 +13,7 @@ export interface Employee {
     biometric_id: number;
     isSelected?: boolean
     time_group_schedule?: TimeGroupSchedule[]
+    time_group?:any
 
 }
 export interface EmployeesAttributes {

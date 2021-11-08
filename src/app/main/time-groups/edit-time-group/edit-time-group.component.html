@@ -17,7 +17,7 @@
             <div class="col-md-6">
               <div class="form-group"
                 [class.has-error]="(name.invalid && name.dirty) || (timeGroupForm.submitted && name.invalid)">
-                <label>{{'tr_group_name' | translate}}</label>
+                <label>{{'tr_name' | translate}}</label>
                 <input type="text" [(ngModel)]="timeGroup.name" name="name" #name="ngModel" required class="s-control">
                 <span class="text-error size-small ml-2 validator">
                   {{'tr_required_field' | translate}}
@@ -81,7 +81,7 @@
       </div>
       <div class="border-box plr-4 ptb-2 mb-4" *ngIf="timeGroup.group_type == 'fixed'">
         <div *ngIf="!timeGroupLoading">
-          <h3 class="steel weight-bold size-default mb-2"> {{'tr_add_time_schedule' | translate}}</h3>
+          <h3 class="steel weight-bold size-default mb-2"> {{'tr_edit_time_schedule' | translate}}</h3>
           <div class="pr-6">
   
             <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
@@ -170,7 +170,7 @@
             <div class="mt-4 employees-container" *ngIf="!employeesLoading">
               <div class="flex flex-middle mb-4" *ngFor="let employee of employeesList; let i=index">
                 <span class="s-checkbox">
-                  <input type="checkbox" id="employee-id-{{i}}" name="employee"
+                  <input type="checkbox" id="employee-id-{{i}}" name="employee" [checked]="employee.time_group!"
                     (change)="assignEmployeeIngroup($event,employee)">
                   <label for="employee-id-{{i}}"></label>
                 </span>
@@ -192,10 +192,8 @@
                 <th>
                   {{'tr_employees' | translate}}
                 </th>
-                <th class="text-center">
+                <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                   {{'tr_time_schedule' | translate}}
-                </th>
-                <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'"> {{'tr_action.remove' | translate}}
                 </th>
               </thead>
               <tbody *ngIf="timeGroup.employees!.length > 0">
@@ -204,13 +202,6 @@
                   <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                     <button class="s-btn btn-link" type="button" (click)="openTimeScheduleModal(timegroupEmployee)">
                       {{'tr_time_schedule' | translate}} </button>
-                  </td>
-                  <td class="text-center">
-                    <div class="flex flex-middle flex-center pointer"
-                      (click)="removeEmployeeFromGroup(timegroupEmployee)">
-                      <img src="assets/images/delete-icon.svg">
-                      <span class="text-error ml-2">{{'tr_action.delete' | translate}}</span>
-                    </div>
                   </td>
                 </tr>
               </tbody>

@@ -10,10 +10,10 @@
         </div>
         <div class="modal-body weight-medium steel">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
               <div class="form-group">
-                <label class="text-small"> Excel Sheet </label>
-                <input type="file" id="fileUpload">
+                <label class="text-small mb-2"> Excel Sheet </label>
+                <input type="file" class="width-100" id="fileUpload">
 
               </div>
             </div>
@@ -34,7 +34,7 @@
               <div class="form-group">
                 <label class="text-small"> End date </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId2" class="s-control"
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId" class="s-control"
                     name="end_date" required>
                   <mat-datepicker #pickId></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId"></mat-datepicker-toggle>
@@ -44,7 +44,22 @@
             </div>
 
             <div class="col-md-6">
+              <div class="form-group">
+                <label class="text-small"> National Holidays Dates </label>
+                <div class="input-with-icon inline-block width-100">
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" (dateChange) ="addHoliday($event.value)" [matDatepicker]="pickId3" class="s-control"
+                    name="holidays_date" required>
+                  <mat-datepicker #pickId3></mat-datepicker>
+                  <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId3"></mat-datepicker-toggle>
+                </div>
 
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="selected-item-no-border mr-2 bg-secondary mt-2" *ngFor="let holiday of holidays">
+                {{holiday | date: 'dd MMM yyyy' }}
+                <img class="close-icon ml-1" (click)="removeHoliday(holiday)" src="assets/images/remove.svg">
+            </div>
             </div>
           </div>
         </div>
