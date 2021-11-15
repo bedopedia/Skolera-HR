@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserSerivce } from '@skolera/services/user.service';
 import { MainModule } from './main/main.module';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { UploadFilesWithPreSignedUrlService } from '@skolera/services/upload_files_with_presigned_Url.service';
 registerLocaleData(localeFr, 'fr');
 registerLocaleData(localeAr, 'ar');
 
@@ -47,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   
-  providers: [Globals,AuthenticationGuard,AuthenticationService,UserSerivce],
+  providers: [Globals,AuthenticationGuard,AuthenticationService,UserSerivce,UploadFilesWithPreSignedUrlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

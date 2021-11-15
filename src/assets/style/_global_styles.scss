@@ -230,7 +230,7 @@ tooltip-content .tooltip {
     &.loading::before {
         content: '';
         display: inline-block;
-        // background-image: url(assets/images/site-loader.svg);
+        background-image: url('../images/site-loader.svg');
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -660,7 +660,7 @@ iframe {
 
 .box-vertical-line {
     min-width: 3px;
-    height: 60px;
+    height: 40px;
     background-color: #e1e5f0;
 }
 
@@ -682,9 +682,9 @@ iframe {
 }
 
 .single-attachment {
-    width: 120px;
-    min-width: 120px;
-    height: 100px;
+    width: 170px;
+    min-width: 45px;
+    height: 45px;
     border-radius: 4px;
     position: relative;
 
@@ -765,8 +765,8 @@ iframe {
     }
 
     .file-icon {
-        width: 50px;
-        height: 50px;
+        width: 35px;
+        height: 35px;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -870,7 +870,7 @@ iframe {
 .xlsm,
 .xlsx,
 .xltm {
-    background-image: url("/src/assets/images/file-icons/xlsx-icon.svg") !important;
+    background-image: url('../images/file-icons/xlsx-icon.svg') !important;
 }
 
 

@@ -15,5 +15,13 @@ export class EmployeesSerivce {
     getDepartments(params: any){
         return this.http.get(baseUrl + `api/hr/employee_departments`,{ params: params });
     }
-   
+   getEmployeeAttendance(params: any){
+    return this.http.get(baseUrl + `api/hr/employees_attendances`,{ params: params });
+   }
+   createAttendanceSheet(params: any){
+    return this.http.post(baseUrl + `api/hr/employees_attendances`, params);
+   }
+   saveUploadedFile(params:any) {
+    return this.http.post(`${baseUrl}/api/upload_file`, params);
+}
 }

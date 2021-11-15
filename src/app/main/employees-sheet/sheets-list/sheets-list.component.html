@@ -1,45 +1,81 @@
 <div class="content-shadow bg-white mb-5">
-    <h2 class="size-body title-with-btn plr-4 ptb-4">
-        <span class="page-title"> {{'tr_attendance_sheets' | translate }}</span>
-   
-      <div class="btn-group">
-        <button class="s-btn size-small btn-secondary" (click)="uploadSheet()">
-          <i class="fa fa-plus mr-2"></i>
-          {{ 'tr_upload_sheet' | translate }}
-        </button>
-      </div>
+  <h2 class="size-body title-with-btn plr-4 ptb-4">
+    <span class="page-title"> {{'tr_attendance_sheets' | translate }}</span>
 
-    </h2>
-    <div class="table-container" id="table-container">
-        <table class="s-table table layout-fixed">
-          <thead>
-            <th>
-              Sheet Name
-            </th>
-            <th>
-                Start date
-            </th>
-            <th>
-                End date
-            </th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-             
-              </td>
-               
-              <td>
-                
-              </td>
-              <td>
-               
-              </td>
+    <div class="btn-group">
+      <button class="s-btn size-small btn-primary" (click)="uploadSheet()">
+        <i class="fa fa-plus mr-2"></i>
+        {{ 'tr_upload_sheet' | translate }}
+      </button>
+      <button class="s-btn size-small btn-secondary">
+        <i class="fa fa-download mr-2"></i>
+        {{ 'tr_download_template' | translate }}
+      </button>
 
-            </tr>
-          </tbody>
-
-        </table>
-
-      </div>
     </div>
+
+  </h2>
+  <div *ngIf="!sheetsLoading">
+    <div class="table-container" id="table-container" *ngIf="sheets.length > 0">
+      <table class="s-table table layout-fixed">
+        <thead>
+          <th>
+            {{"tr_name" | translate}}
+          </th>
+          <th>
+            {{"tr_start_date" | translate}}
+          </th>
+          <th>
+            {{"tr_end_date" | translate}}
+          </th>
+          <th>
+            {{"tr_national_holidays" | translate}}
+          </th>
+          <th>
+            {{"tr_state" | translate}}
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sheet of sheets">
+            <td>
+              {{sheet.uploaded_file.name}}
+            </td>
+
+            <td>
+              {{sheet.start_date}}
+            </td>
+            <td>
+              {{sheet.end_date}}
+            </td>
+            <td>
+              <div *ngFor="let nationalHoliday of sheet.national_holidays">
+                {{nationalHoliday.day}}
+              </div>
+            </td>
+            <td
+              [ngClass]="{'text-error': sheet.state == 'validation_failed' ||sheet.state == 'sync_failed' ,'text-success': sheet.state == 'validation_success' ||sheet.state == 'sync_success' }">
+              {{"tr_"+sheet.state | translate}}
+            </td>
+
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+    <div class="empty-state-here text-center mtb-8" *ngIf="sheets.length == 0">
+      <img class="placeholder-icon" src="assets/images/placeholders/Content.svg" alt="">
+      <p> {{'tr_empty_state' | translate}}</p>
+    </div>
+
+    <div class="plr-4 ptb-4">
+      <skolera-pagination [paginationData]="paginationData" [perPage]="paginationPerPage"
+        (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
+    </div>
+  </div>
+  <div *ngIf="sheetsLoading">
+    <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
+  </div>
+
+
+</div>

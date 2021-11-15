@@ -2,7 +2,7 @@
   <div class="modal-wrapper">
     <div class="close-modal-icon" (click)="closeModal()"></div>
     <div class="modal-content">
-      <form action="" #attendanceSheetForm="ngForm">
+      <form #attendanceSheetForm="ngForm" (ngSubmit)="submitForm()">
         <div class="modal-header">
           <h3 class="steel weight-bold size-default m-0">
             {{'tr_upload_sheet' | translate}}
@@ -13,16 +13,45 @@
             <div class="col-md-10">
               <div class="form-group">
                 <label class="text-small mb-2"> Excel Sheet </label>
-                <input type="file" class="width-100" id="fileUpload">
+                <!-- <input type="file" class="width-100" (change)="fileInputChange($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  name="uploadedFile" id="fileUpload"> -->
 
+                <div class="flex flex-middle">
+                  <div>
+                    <label [for]="'id'" class="pointer single-attachment-with-safe text-center mr-4 mb-0">
+                      <input type="file" [id]="'id'" class="d-none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  name="uploadedFile" [disabled]="isFileLoading" (change)="fileInputChange($event)">
+                      <div class="flex flex-middle">
+                        <img class="mr-1" src="assets/images/teacher-upload-img.svg" alt="">
+                        <span
+                          class="text-link mb-1 weight-medium size-tiny"> Upload Excel Sheet</span>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="box-vertical-line mr-4"></div>
+                  <div class="single-attachment file-box mr-2" *ngIf="sheetFile">
+                      <div class="single-attachment-container">
+                          <div class="close-icon remove-file" (click)="deleteUploadedFile(sheetFile)" *ngIf="!isFileUpdating"></div>
+                          <div class="width-100 flex flex-middle">
+                              <div class="file-icon xlsx mr-2">
+                              </div>
+                              <p class="size-tiny file-name-dotted steel">{{sheetFile.name}}</p>
+                          </div>
+                          <div class="file-status-container" [ngClass]="{'file-loading': isFileLoading, 'file-success': isFileSuccess, 'file-error': isFileHasError, 'file-has-status': (isFileLoading|| isFileSuccess|| isFileHasError)}">
+                            <div class="file-status-message">
+                                <i class="success-icon status-icon fa fa-check" *ngIf="isFileSuccess"></i>
+                                <i class="error-icon status-icon fa fa-warning" *ngIf="isFileHasError"></i>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="text-small"> Start date </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId2" class="s-control"
-                    name="start_date" required>
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="sheet.start_date"
+                    [matDatepicker]="pickId2" class="s-control" name="start_date" required>
                   <mat-datepicker #pickId2></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId2"></mat-datepicker-toggle>
                 </div>
@@ -34,8 +63,8 @@
               <div class="form-group">
                 <label class="text-small"> End date </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [matDatepicker]="pickId" class="s-control"
-                    name="end_date" required>
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="sheet.end_date"
+                    [matDatepicker]="pickId" class="s-control" name="end_date" required>
                   <mat-datepicker #pickId></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId"></mat-datepicker-toggle>
                 </div>
@@ -47,8 +76,8 @@
               <div class="form-group">
                 <label class="text-small"> National Holidays Dates </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" (dateChange) ="addHoliday($event.value)" [matDatepicker]="pickId3" class="s-control"
-                    name="holidays_date" required>
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="nationalHolidayDate" [min]="sheet.start_date" [max]="sheet.end_date" [disabled]="!sheet.start_date && !sheet.end_date" (dateChange)="addHoliday($event.value)"
+                    [matDatepicker]="pickId3" class="s-control" name="holidays_date" required>
                   <mat-datepicker #pickId3></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId3"></mat-datepicker-toggle>
                 </div>
@@ -56,18 +85,18 @@
               </div>
             </div>
             <div class="col-md-12">
-              <div class="selected-item-no-border mr-2 bg-secondary mt-2" *ngFor="let holiday of holidays">
-                {{holiday | date: 'dd MMM yyyy' }}
+              <div class="selected-item-no-border mr-2 bg-secondary mt-2" *ngFor="let holiday of this.sheet.national_holidays">
+                {{holiday.day | date: 'dd MMM yyyy' }}
                 <img class="close-icon ml-1" (click)="removeHoliday(holiday)" src="assets/images/remove.svg">
-            </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="modal-footer text-right">
-          <button class="s-btn btn-primary mr-3" type="submit">
+          <button class="s-btn btn-primary mr-3" type="submit" [disabled]="isFileLoading">
             {{'tr_action.save' | translate}}</button>
-          <button class="s-btn btn-secondary" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+          <button class="s-btn btn-secondary" type="reset" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
         </div>
 
       </form>

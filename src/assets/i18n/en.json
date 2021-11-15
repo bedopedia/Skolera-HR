@@ -178,5 +178,15 @@
     "tr_attendance_sheets": "Attendance Sheets",
     "tr_upload_sheet":"Upload Sheet",
     "tr_choose_a_date": "Choose a date",
-    "tr_edit_time_schedule": "Edit Time Schedule"
+    "tr_edit_time_schedule": "Edit Time Schedule",
+    "tr_validation_failed": "Validation Failed",
+    "tr_validation_succedded":"Validation Succedded",
+    "tr_start_date":"Start Date",
+    "tr_end_date":"End Date",
+    "tr_state":"State",
+    "tr_national_holidays":"National Holidays",
+    "tr_download_template":"Download Template",
+    "tr_sync_succeeded":"Sync Succeeded",
+    "tr_sync_failed": "Sync Failed",
+    "tr_validating": "validating"
 }
