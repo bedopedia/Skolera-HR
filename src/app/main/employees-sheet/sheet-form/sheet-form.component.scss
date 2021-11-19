@@ -53,6 +53,9 @@
 .error-icon {
   color: $error;
 }
+.border-error{
+  border: 1px dashed red !important;
+}
 
 
   @keyframes rotate360 {

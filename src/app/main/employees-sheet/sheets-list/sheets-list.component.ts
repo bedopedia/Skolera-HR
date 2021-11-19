@@ -25,13 +25,14 @@ export class SheetsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getSheets()
+    this.getSheets();
   }
 
   getSheets(){
     this.sheetsLoading = true;
     this.EmployeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any)=> {
       this.sheets = response.employees_attendnaces
+      
       this.paginationData = response.meta;
       this.sheetsLoading = false;
       

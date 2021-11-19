@@ -31,14 +31,12 @@ export class SheetFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appNotificationService: AppNotificationService,
     public translate: TranslateService,
-    private dialog: MatDialog,
     private employeesSerivce: EmployeesSerivce,
     private uploadFilesWithPreSignedUrlService: UploadFilesWithPreSignedUrlService
 
   ) { }
 
   ngOnInit(): void {
-    //  this.sheet = new AttendanceSheet();
 
   }
 
@@ -48,21 +46,21 @@ export class SheetFormComponent implements OnInit {
   addHoliday(holidayDate: any) {
     holidayDate = moment(holidayDate).format('YYYY-MM-DD');
     this.nationalHolidayDate = ''
-    if(this.sheet.national_holidays.filter(nationalDay=> nationalDay.day.toString() == holidayDate.toString() ).length > 0){
+    if (this.sheet.national_holidays.filter(nationalDay => nationalDay.day.toString() == holidayDate.toString()).length > 0) {
       return
     }
     else {
       this.sheet.national_holidays.push(
-        {day: holidayDate}
+        { day: holidayDate }
       )
     }
- 
+
   }
   removeHoliday(holiday: any) {
-    this.sheet.national_holidays= this.sheet.national_holidays.filter(nationalDay=>nationalDay.day != holiday.day )
+    this.sheet.national_holidays = this.sheet.national_holidays.filter(nationalDay => nationalDay.day != holiday.day)
   }
-  deleteUploadedFile(file:any){
-    this.sheetFile = '';
+  deleteUploadedFile(file: any) {
+    this.sheetFile = null;
   }
   fileInputChange(event: any) {
     this.isFileUpdating = true;
@@ -73,7 +71,7 @@ export class SheetFormComponent implements OnInit {
       public_url: ''
     }
     this.isFileLoading = true;
-    this.uploadFilesWithPreSignedUrlService.getPreSignedUrl({
+    this.subscriptions.push(this.uploadFilesWithPreSignedUrlService.getPreSignedUrl({
       presigned_url: {
         model_name: 'EmployeesAttendance',
         file_name: this.sheetFile.name
@@ -81,27 +79,39 @@ export class SheetFormComponent implements OnInit {
     }).subscribe((presignedUrlResponse: any) => {
       params.public_url = presignedUrlResponse.public_url;
       this.sheet.uploaded_file_attributes = params;
-      this.isFileUpdating = false;
+      this.sheet.national_holidays_attributes = this.sheet.national_holidays
+      this.subscriptions.push(this.uploadFilesWithPreSignedUrlService.putFileToS3(this.sheetFile, presignedUrlResponse.presigned_url).subscribe(
+        (s3Response: any) => {
+          this.isFileUpdating = false;
+          this.isFileLoading = false;
+          this.isFileSuccess = true;
+        }, error => {
+          this.isFileHasError = true;
+          this.isFileLoading = false;
+          this.isFileUpdating = false;
+        }))
+    }, error => {
+      this.isFileHasError = true;
       this.isFileLoading = false;
-      this.isFileSuccess = true;
-        this.uploadFilesWithPreSignedUrlService.putFileToS3(this.sheetFile, presignedUrlResponse.presigned_url).subscribe(
-          (s3Response: any) => {
-           
-          })
-      }, error => {
-        this.isFileHasError = true;
-      }
-    )
+      this.isFileUpdating = false;
+    }
+    ))
   }
 
   submitForm() {
-    delete  this.sheet.state;
-    delete  this.sheet.uploaded_file
+    if (this.sheetFile == null || !this.sheet.start_date || !this.sheet.end_date) {
+      return
+    }
+    delete this.sheet.state;
+    delete this.sheet.uploaded_file
     let params = {
       employees_attendance: this.sheet
     }
     this.employeesSerivce.createAttendanceSheet(params).subscribe(response => {
+      this.appNotificationService.push(this.translate.instant('tr_attendance_sheet_created_successfully'), 'success');
       this.dialogRef.close('update');
+    }, error => {
+      this.appNotificationService.push(this.translate.instant('tr_something_went_wrong'), 'error');
     })
   }
   ngOnDestroy() {

@@ -2,8 +2,8 @@
   <h2 class="size-body title-with-btn plr-4 ptb-4">
     <span class="page-title"> {{'tr_attendance_sheets' | translate }}</span>
 
-    <div class="btn-group">
-      <button class="s-btn size-small btn-primary" (click)="uploadSheet()">
+    <div>
+      <button class="s-btn size-small btn-primary mr-2" (click)="uploadSheet()">
         <i class="fa fa-plus mr-2"></i>
         {{ 'tr_upload_sheet' | translate }}
       </button>
@@ -34,6 +34,10 @@
           <th>
             {{"tr_state" | translate}}
           </th>
+          <th>
+            {{"tr_sync" | translate}}
+          </th>
+          <th></th>
         </thead>
         <tbody>
           <tr *ngFor="let sheet of sheets">
@@ -42,19 +46,63 @@
             </td>
 
             <td>
-              {{sheet.start_date}}
+              {{sheet.start_date  | date: 'dd/MM/yyyy' }}
             </td>
             <td>
-              {{sheet.end_date}}
+              {{sheet.end_date  | date: 'dd/MM/yyyy' }}
             </td>
-            <td>
-              <div *ngFor="let nationalHoliday of sheet.national_holidays">
+            <td> 
+              <div class="flex flex-middle flex-wrap">
+                <span class="selected-item-no-border ml-1 plr-1 bg-secondary"
+                *ngFor="let nationalHoliday of sheet.national_holidays | slice:0:2">
                 {{nationalHoliday.day}}
+              </span>
+              <span class="options-menu ml-2">
+                <div *ngIf="sheet.national_holidays.length > 2">
+                  + {{sheet.national_holidays.length - 2}}
+                </div>
+                <div class="options-menu-container">
+                  <div class="single-option"
+                    *ngFor="let nationalHoliday of sheet.national_holidays | slice:2:sheet.national_holidays.length">
+                    <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day}}</div>
+                  </div>
+                </div>
+              </span>
+
               </div>
+             
             </td>
             <td
-              [ngClass]="{'text-error': sheet.state == 'validation_failed' ||sheet.state == 'sync_failed' ,'text-success': sheet.state == 'validation_success' ||sheet.state == 'sync_success' }">
+              >
+          
+
+
+          <span class="options-menu">
+
+             <div class="open-modal pointer hover-link" [ngClass]="{'text-error': sheet.state == 'validation_failed' ||sheet.state == 'sync_failed' ,'text-success': sheet.state == 'validation_success' ||sheet.state == 'sync_success' }" >
               {{"tr_"+sheet.state | translate}}
+            </div>
+            <div class="options-menu-container plr-6" *ngIf="sheet.logs">
+              <span class="weight-bold text-primary mb-1"> {{'tr_logs' | translate}}</span>
+              {{sheet.logs}}
+            </div>
+          </span>
+           
+             
+            </td>
+            <td>
+              <button class="s-btn btn-secondary btn-sm"
+                *ngIf="sheet.state=='validation_success'">{{"tr_start_sync" | translate}}</button>
+            </td>
+            <td>
+              <span class="options-menu">
+                <i class="fa fa-ellipsis-v"></i>
+                <div class="options-menu-container">
+                  <a class="single-option text-success width-100" href="{{sheet.uploaded_file.download_url}}">
+                    {{ 'tr_action.download' | translate }}
+                  </a>
+                </div>
+              </span>
             </td>
 
           </tr>

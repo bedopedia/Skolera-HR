@@ -12,19 +12,20 @@
           <div class="row">
             <div class="col-md-10">
               <div class="form-group">
-                <label class="text-small mb-2"> Excel Sheet </label>
-                <!-- <input type="file" class="width-100" (change)="fileInputChange($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  name="uploadedFile" id="fileUpload"> -->
-
-                <div class="flex flex-middle">
+                <label class="text-small mb-2"> {{'tr_excel_sheet' | translate}} </label>
+                <div class="flex flex-middle" >
                   <div>
-                    <label [for]="'id'" class="pointer single-attachment-with-safe text-center mr-4 mb-0">
-                      <input type="file" [id]="'id'" class="d-none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  name="uploadedFile" [disabled]="isFileLoading" (change)="fileInputChange($event)">
+                    <label [class.border-error]="(attendanceSheetForm.submitted && sheetFile == null)" [for]="'id'" class="pointer single-attachment-with-safe text-center mr-4 mb-0">
+                      <input type="file" [id]="'id'"  class="d-none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  name="uploadedFile" #uploadedFile="ngModel" [(ngModel)]="sheetFile" [disabled]="isFileLoading || sheetFile" (change)="fileInputChange($event)" required>
                       <div class="flex flex-middle">
                         <img class="mr-1" src="assets/images/teacher-upload-img.svg" alt="">
-                        <span
-                          class="text-link mb-1 weight-medium size-tiny"> Upload Excel Sheet</span>
+                        <span [class.text-error]="(attendanceSheetForm.submitted && sheetFile== null)"
+                          class="text-link mb-1 weight-medium size-tiny">{{'tr_upload_excel_sheet' | translate}}</span>
                       </div>
                     </label>
+                    <span class="text-error size-small mt-1 " *ngIf="(attendanceSheetForm.submitted && sheetFile== null)">
+                      {{'tr_required_field' | translate}}
+                    </span>
                   </div>
                   <div class="box-vertical-line mr-4"></div>
                   <div class="single-attachment file-box mr-2" *ngIf="sheetFile">
@@ -47,36 +48,42 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label class="text-small"> Start date </label>
+              <div class="form-group"  [class.has-error]="(startDate.invalid && startDate.dirty) || (attendanceSheetForm.submitted && startDate.invalid)">
+                <label class="text-small"> {{'tr_start_date' | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="sheet.start_date"
-                    [matDatepicker]="pickId2" class="s-control" name="start_date" required>
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" #startDate="ngModel" [max]="sheet.end_date" [(ngModel)]="sheet.start_date"
+                    [matDatepicker]="pickId2" class="s-control" name="startDate" required>
                   <mat-datepicker #pickId2></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId2"></mat-datepicker-toggle>
                 </div>
+                <span class="text-error size-small mt-1  validator">
+                  {{'tr_required_field' | translate}}
+                </span>
 
               </div>
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
-                <label class="text-small"> End date </label>
+              <div class="form-group" [class.has-error]="(endDate.invalid && endDate.dirty) || (attendanceSheetForm.submitted && endDate.invalid)">
+                <label class="text-small"> {{'tr_end_date' | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="sheet.end_date"
-                    [matDatepicker]="pickId" class="s-control" name="end_date" required>
+                  <input placeholder="{{'tr_choose_a_date' | translate}}" [min]="sheet.start_date" [(ngModel)]="sheet.end_date"
+                    [matDatepicker]="pickId" class="s-control" name="endDate" #endDate="ngModel" required>
                   <mat-datepicker #pickId></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId"></mat-datepicker-toggle>
                 </div>
+                <span class="text-error size-small mt-1  validator">
+                  {{'tr_required_field' | translate}}
+                </span>
 
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="text-small"> National Holidays Dates </label>
+                <label class="text-small"> {{"tr_national_holidays_dates" | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}" [(ngModel)]="nationalHolidayDate" [min]="sheet.start_date" [max]="sheet.end_date" [disabled]="!sheet.start_date && !sheet.end_date" (dateChange)="addHoliday($event.value)"
+                  <input placeholder="{{'tr_choose_a_date' | translate}}"  [(ngModel)]="nationalHolidayDate" [min]="sheet.start_date" [max]="sheet.end_date" [disabled]="!sheet.start_date && !sheet.end_date" (dateChange)="addHoliday($event.value)"
                     [matDatepicker]="pickId3" class="s-control" name="holidays_date" required>
                   <mat-datepicker #pickId3></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId3"></mat-datepicker-toggle>
