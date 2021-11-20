@@ -119,16 +119,6 @@ export class EditTimeGroupComponent implements OnInit {
     this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes != scheduleDays;
   }
 
-  public updateRule(){
-    let params ={
-      time_group: {
-        "rule_id": this.timeGroup.rule?.id
-      }
-    }
-    this.timeGroupService.updateRule(this.timeGroupId, params).subscribe(response => {
-      this.appNotificationService.push(this.translate.instant('tr_rule_updated_successfully'), 'success');
-    })
-  }
   public updateTimeGroup() {
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
@@ -155,9 +145,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.invalidAllDaysTime = isValidDays.includes(true)
       return
     }
-    if(this.timeGroup.rule?.id){
-      this.updateRule();
-    }
+    this.timeGroup.rule_id = this.timeGroup.rule?.id
     this.timeGroupService.editTimeGroup(this.timeGroupId, { time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_updated_successfully'), 'success');
       this.isFormSubmitted = false;
