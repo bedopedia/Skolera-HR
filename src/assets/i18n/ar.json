@@ -194,5 +194,7 @@
     "tr_attendance_sheet_created_successfully":"Attendance Sheet Created Successfully*",
     "tr_excel_sheet":"Excel Sheet*",
     "tr_upload_excel_sheet":"Upload Excel Sheet*",
-    "tr_national_holidays_dates":"National Holidays Dates*"
+    "tr_national_holidays_dates":"National Holidays Dates*",
+    "tr_applies_to":"Applies to*",
+    "tr_assign_message":"Assign schedule to each employee individually*"
 }

@@ -153,5 +153,7 @@
     "tr_tardiness_rules":"Tardiness Rules*",
     "tr_tardiness_rule":"Tardiness Rule*",
     "tr_add_new_tardiness_rule": "Add New Tardiness Rule*",
-    "tr_create_time_group":"Create Time Group*"
+    "tr_create_time_group":"Create Time Group*",
+    "tr_applies_to":"Applies to*",
+    "tr_assign_message":"Assign schedule to each employee individually*"
 }
