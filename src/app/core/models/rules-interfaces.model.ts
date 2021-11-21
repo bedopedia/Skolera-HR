@@ -6,7 +6,7 @@ export class Rule{
   deleted_tardiness_rules?: TardinessRule [] = [];
   leave_type_id?: number;
   is_half_day?: boolean;
-  time_groups?:boolean;
+  time_groups?:string;
   }
 
  export class TardinessRule {
