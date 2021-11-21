@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceSheet } from '@core/models/attendance-sheets-interface.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { SheetFormComponent } from '../sheet-form/sheet-form.component';
 
@@ -21,7 +22,8 @@ export class SheetsListComponent implements OnInit {
   sheets:AttendanceSheet[] = [];
   constructor(
     private dialog: MatDialog,
-    private EmployeesSerivce: EmployeesSerivce
+    private EmployeesSerivce: EmployeesSerivce,
+    private appNotificationService:AppNotificationService
   ) { }
 
   ngOnInit(): void {
@@ -32,10 +34,11 @@ export class SheetsListComponent implements OnInit {
     this.sheetsLoading = true;
     this.EmployeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any)=> {
       this.sheets = response.employees_attendnaces
-      
       this.paginationData = response.meta;
       this.sheetsLoading = false;
       
+    },error=> {
+      this.appNotificationService.push('There was an unexpected error, please reload', 'error');
     })
   }
   paginationUpdate(page: number) {

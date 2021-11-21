@@ -43,10 +43,13 @@ export class SheetFormComponent implements OnInit {
   public closeModal() {
     this.dialogRef.close();
   }
+  validateNationalHolidays(holidayDate: Date){
+   return  this.sheet.national_holidays.filter(nationalDay => nationalDay.day.toString() == holidayDate.toString()).length > 0
+  }
   addHoliday(holidayDate: any) {
     holidayDate = moment(holidayDate).format('YYYY-MM-DD');
     this.nationalHolidayDate = ''
-    if (this.sheet.national_holidays.filter(nationalDay => nationalDay.day.toString() == holidayDate.toString()).length > 0) {
+    if (this.validateNationalHolidays(holidayDate)) {
       return
     }
     else {
@@ -64,6 +67,7 @@ export class SheetFormComponent implements OnInit {
   }
   fileInputChange(event: any) {
     this.isFileUpdating = true;
+    this.isFileHasError = false;
     this.sheetFile = event.target.files[0];
     let params = {
       name: this.sheetFile.name,

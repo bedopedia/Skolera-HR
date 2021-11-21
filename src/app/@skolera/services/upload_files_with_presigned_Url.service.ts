@@ -15,8 +15,8 @@ export class UploadFilesWithPreSignedUrlService {
     putFileToS3(body: File, presignedUrl: string){
         return this.http.put(presignedUrl, body)
     }
-    getFileFromS3(public_url: string){
-        return this.http.get(public_url, {responseType: 'blob'})
+    getFileFromS3(publicUrl: string){
+        return this.http.get(publicUrl, {responseType: 'blob'})
     }
     saveUploadedFile(params:any) {
         return this.http.post(`${baseUrl}/api/upload_file`, params);

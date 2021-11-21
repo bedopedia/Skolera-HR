@@ -1,11 +1,4 @@
-// export interface AttendanceSheet {
-//     start_date: string,
-//     end_date: string,
-//     state: string,
-//     national_holidays: NationalHoliday[],
-//     uploaded_file: any
-//     id?: number
-// }
+
 export interface NationalHoliday {
     day: string
 }
