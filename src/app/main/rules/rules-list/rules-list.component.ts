@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Rule } from '@core/models/rules-interfaces.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
+import { TranslateService } from '@ngx-translate/core';
+import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { RulesSerivce } from '@skolera/services/rules.services';
 import { Subscription } from 'rxjs';
 import { RuleFormComponent } from '../rule-form/rule-form.component';
@@ -25,7 +28,9 @@ export class RulesListComponent implements OnInit {
   
   constructor(
     private rulesSerivce: RulesSerivce,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private appNotificationService: AppNotificationService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +57,46 @@ export class RulesListComponent implements OnInit {
         this.getRules();
       }
     })
+  }
+  deleteRule(rule: Rule){
+    console.log("rule",rule);
+    if(rule.time_groups! ){
+      this.appNotificationService.push(this.translateService.instant('tr_rule_deleting_message'), 'error');
+      return
+    }
+    let data = {
+      title: this.translateService.instant("tr_rule_confirmation_message"),
+      buttons: [
+        {
+          label: this.translateService.instant("tr_action.cancel"),
+          actionCallback: 'cancel',
+          type: 'btn-secondary'
+        },
+        {
+          label: this.translateService.instant("tr_action.delete"),
+          actionCallback: 'delete',
+          type: 'btn-danger'
+        }
+      ]
+    }
+
+    const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
+      width: '650px',
+      data: data,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'delete') {
+        this.subscriptions.push(this.rulesSerivce.deleteRule(rule.id!).subscribe((response: any ) => {
+          this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
+          this.getRules();
+           
+         }))
+
+      }
+    })
+
+    
   }
   filterRules(term: any){
     term =  term.target.value

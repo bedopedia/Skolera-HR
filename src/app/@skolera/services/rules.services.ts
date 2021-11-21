@@ -24,4 +24,7 @@ export class RulesSerivce {
     getLeaveTypes(params: any){
         return  this.http.get(baseUrl + `api/hr/leave_types`,{ params: params });
     }
+    deleteRule(ruleId: number){
+        return  this.http.delete(baseUrl + `api/hr/rules/${ruleId}`);
+    }
 }
