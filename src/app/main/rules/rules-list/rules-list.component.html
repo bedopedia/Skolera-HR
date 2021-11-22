@@ -34,6 +34,9 @@
             <thead>
               <th>{{'tr_name' | translate}}</th>
               <th>
+                {{"tr_applies_to"| translate}}
+              </th>
+              <th>
                 <span class="options-menu">
                   <i class="fa fa-ellipsis-v"></i>
                   <div class="options-menu-container">
@@ -48,6 +51,9 @@
               <tr *ngFor="let rule of rulesList; let i=index">
                 <td>
                   <ng-container> {{rule.name}}</ng-container>
+                </td>
+                <td>
+                 {{rule.time_groups}}
                 </td>
                 <td>
                   <span class="options-menu">
