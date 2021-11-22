@@ -15,7 +15,7 @@
           <th>{{'tr_clock_out' | translate}}</th>
         </thead>
         <tbody>
-          <tr *ngFor="let day of scheduleDays">
+          <tr *ngFor="let day of scheduleDays; let index= index">
             <td>
               <span class="capitalize">{{day.day}} </span>
             </td>
@@ -33,8 +33,8 @@
               </div>
             </td>
             <td class="text-center">
-              <span class="s-checkbox size-small" *ngIf="!day.is_off">
-                <input type="checkbox" id="{{day.day}}_calculate_bridging"
+              <span class="s-checkbox size-small" *ngIf="showCalculateBridge(day,index)">
+                <input type="checkbox" id="{{day.day}}_calculate_bridging" 
                   [(ngModel)]="day.calculate_bridging" name="calculateBridge_{{day.day}}">
                 <label for="{{day.day}}_calculate_bridging"></label>
               </span>
