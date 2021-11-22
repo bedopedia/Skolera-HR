@@ -65,14 +65,7 @@
               <th>{{'tr_name' | translate}}</th>
               <th>{{'tr_type' | translate}}</th>
               <th>{{'tr_number_of_employees' | translate}}</th>
-              <th> <span class="options-menu">
-                  <i class="fa fa-ellipsis-v"></i>
-                  <div class="options-menu-container">
-                    <div class="single-option text-error" (click)="deleteTimeGroup('all')">
-                      {{ 'tr_action.delete' | translate }}
-                    </div>
-                  </div>
-                </span></th>
+              <th></th>
             </thead>
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
@@ -97,7 +90,7 @@
                       <div class="single-option border-bottom width-100" [routerLink]="timeGroup.id + '/edit'">
                           {{ 'tr_action.edit' | translate }}
                       </div>
-                      <div class="single-option text-error" (click)="deleteTimeGroup('single',timeGroup)">
+                      <div class="single-option text-error" (click)="deleteTimeGroup(timeGroup)">
                         {{ 'tr_action.delete' | translate }}
                       </div>
                     </div>

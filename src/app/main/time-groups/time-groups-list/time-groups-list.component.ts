@@ -56,53 +56,42 @@ export class TimeGroupsListComponent implements OnInit {
     })
   }
 
-  deleteTimeGroup(type: string, timeGroup?: TimeGroup) {
-
-    if (type != 'single' && this.checkedCells.length < 1) {
-      this.appNotificationService.push('Please select one item at least', 'error');
+  deleteTimeGroup( timeGroup?: TimeGroup) {
+    if(timeGroup?.number_of_employees! > 0 ){
+      this.appNotificationService.push(this.translateService.instant('tr_delete_time_group_message'), 'error');
+      return
     }
 
-    if (type == 'single' || (type == 'all' && this.checkedCells.length >= 1)) {
-      let data = {
-        title: this.translateService.instant("tr_time_group_confirmation_message"),
-        buttons: [
-          {
-            label: this.translateService.instant("tr_action.cancel"),
-            actionCallback: 'cancel',
-            type: 'btn-secondary'
-          },
-          {
-            label: this.translateService.instant("tr_action.delete"),
-            actionCallback: 'delete',
-            type: 'btn-danger'
-          }
-        ]
-      }
-
-      const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
-        width: '650px',
-        data: data,
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result == 'delete') {
-          if (type == 'single') {
-            this.subscriptions.push(this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
-              this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
-              this.getTimeGroups()
-            }))
-          }
-          else {
-            this.subscriptions.push(this.timeGroupService.deleteTimeGroupBatch(this.checkedCells).subscribe(response => {
-              this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
-              this.getTimeGroups()
-            }))
-          }
-
+    let data = {
+      title: this.translateService.instant("tr_time_group_confirmation_message"),
+      buttons: [
+        {
+          label: this.translateService.instant("tr_action.cancel"),
+          actionCallback: 'cancel',
+          type: 'btn-secondary'
+        },
+        {
+          label: this.translateService.instant("tr_action.delete"),
+          actionCallback: 'delete',
+          type: 'btn-danger'
         }
-      })
-
+      ]
     }
+
+    const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
+      width: '650px',
+      data: data,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'delete') {
+        this.subscriptions.push(this.timeGroupService.deleteTimeGroup(timeGroup!.id!).subscribe(response => {
+          this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
+          this.getTimeGroups()
+        }))
+
+      }
+    })
 
   }
 

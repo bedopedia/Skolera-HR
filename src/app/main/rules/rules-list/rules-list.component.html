@@ -37,14 +37,6 @@
                 {{"tr_applies_to"| translate}}
               </th>
               <th>
-                <span class="options-menu">
-                  <i class="fa fa-ellipsis-v"></i>
-                  <div class="options-menu-container">
-                    <div class="single-option text-error">
-                      {{ 'tr_action.delete' | translate }}
-                    </div>
-                  </div>
-                </span>
               </th>
             </thead>
             <tbody>
@@ -59,7 +51,7 @@
                   <span class="options-menu">
                     <i class="fa fa-ellipsis-v"></i>
                     <div class="options-menu-container">
-                      <div class="single-option text-error">
+                      <div class="single-option text-error" (click)="deleteRule(rule)">
                         {{ 'tr_action.delete' | translate }}
                       </div>
                       <div class="single-option" (click)="openRuleForm('edit',rule)">
