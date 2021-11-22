@@ -59,7 +59,6 @@ export class RulesListComponent implements OnInit {
     })
   }
   deleteRule(rule: Rule){
-    console.log("rule",rule);
     if(rule.time_groups! ){
       this.appNotificationService.push(this.translateService.instant('tr_rule_deleting_message'), 'error');
       return
@@ -90,7 +89,8 @@ export class RulesListComponent implements OnInit {
         this.subscriptions.push(this.rulesSerivce.deleteRule(rule.id!).subscribe((response: any ) => {
           this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
           this.getRules();
-           
+         }, error=> {
+          this.appNotificationService.push('There was an unexpected error, please reload', 'error');
          }))
 
       }
