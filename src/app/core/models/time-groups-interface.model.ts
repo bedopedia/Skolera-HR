@@ -18,7 +18,8 @@ export class TimeGroup {
         schedule_days?: TimeGroupSchedule[]
         schedule_days_attributes?: TimeGroupSchedule[],
     };
-    rule?: Rule
+    rule?: Rule;
+    rule_id?: number;
 
 }
 

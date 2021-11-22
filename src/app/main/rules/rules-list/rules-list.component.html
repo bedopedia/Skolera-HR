@@ -34,12 +34,18 @@
             <thead>
               <th>{{'tr_name' | translate}}</th>
               <th>
+                {{"tr_applies_to"| translate}}
+              </th>
+              <th>
               </th>
             </thead>
             <tbody>
               <tr *ngFor="let rule of rulesList; let i=index">
                 <td>
                   <ng-container> {{rule.name}}</ng-container>
+                </td>
+                <td>
+                 {{rule.time_groups}}
                 </td>
                 <td>
                   <span class="options-menu">
