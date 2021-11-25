@@ -28,5 +28,15 @@ export class TimeScheduleFormComponent implements OnInit {
     this.invalidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
     this.returnedScheduleDays.emit(this.scheduleDays);
   }
+  showCalculateBridge(day: TimeGroupSchedule,index: number){
+    let isShowCountAsBridge;
+    if(index >0 && index <6){
+      isShowCountAsBridge = this.scheduleDays[index-1].is_off || this.scheduleDays[index+1].is_off
+    }
+    else {
+      isShowCountAsBridge = index == 0 ?  (this.scheduleDays[index+1].is_off || this.scheduleDays[6].is_off) : (this.scheduleDays[index-1].is_off || this.scheduleDays[0].is_off);
+    }
+    return  (!day.is_off) && isShowCountAsBridge
+  }
   
 }
