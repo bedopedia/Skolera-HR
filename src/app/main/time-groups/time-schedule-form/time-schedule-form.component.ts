@@ -34,7 +34,7 @@ export class TimeScheduleFormComponent implements OnInit {
       isShowCountAsBridge = this.scheduleDays[index-1].is_off || this.scheduleDays[index+1].is_off
     }
     else {
-      isShowCountAsBridge = index == 0 ?  this.scheduleDays[index+1].is_off : this.scheduleDays[index-1].is_off
+      isShowCountAsBridge = index == 0 ?  (this.scheduleDays[index+1].is_off || this.scheduleDays[6].is_off) : (this.scheduleDays[index-1].is_off || this.scheduleDays[0].is_off);
     }
     return  (!day.is_off) && isShowCountAsBridge
   }
