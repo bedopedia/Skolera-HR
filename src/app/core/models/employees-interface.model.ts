@@ -13,8 +13,12 @@ export interface Employee {
     biometric_id: number;
     isSelected?: boolean
     time_group_schedule?: TimeGroupSchedule[]
-    time_group?:any
-
+    time_group?:TimeGroup
+}
+export interface TimeGroup{
+    name?: any,
+    group_type: string
+    id: number
 }
 export interface EmployeesAttributes {
     id: number,
