@@ -76,11 +76,11 @@ export class EditTimeGroupComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.timeGroupId = params.id
     })
-
-    this.getEmployees();
+    this.getTimeGroup(this.timeGroupId);
     this.getRules();
     this.getDepartments();
-    this.getTimeGroup(this.timeGroupId);
+   
+    
   }
 
 
@@ -88,6 +88,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
       this.timeGroup = response;
       this.currentTimeGroup = this.timeGroup.name
+      this.getEmployees();
       this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
       if (this.timeGroup.group_type == 'fixed') {
         response.time_group_schedule.schedule_days_attributes = response.time_group_schedule.schedule_days;
@@ -211,7 +212,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
-        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.currentTimeGroup ? true : false
+        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.currentTimeGroup  ? true : false
       })
       this.employeesPaginationData = response.meta;
       this.employeesLoading = false
@@ -278,6 +279,8 @@ export class EditTimeGroupComponent implements OnInit {
               this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
               timegroupEmployee.isInsideCurrentTimeGroup = true
               this.timeGroup.employees?.push(timegroupEmployee)
+              this.employeesList = [];
+              this.getEmployees();
             }, error => {
               this.appNotificationService.push('There was an unexpected error, please reload', 'error');
               timegroupEmployee.isInsideCurrentTimeGroup = false
