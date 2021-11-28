@@ -1,4 +1,19 @@
 <div>
+  <div class="content-wrapper mb-3">
+    <div class="title-with-btn">
+        <span class="section-title mb-2-mob">
+             {{"tr_sync" | translate}}
+        </span>
+    </div>
+    <p class="mb-3 text-line steel-lighter">
+       {{'tr_sync_mesg' | translate}}
+    </p>
+    <div class="text-center mb-3">
+        <button class="s-btn btn-lg btn-primary" (click)="syncFedena()" 
+        [disabled]="isSyncing">{{syncButtonText}}</button>
+    </div>
+</div>
+
   <div class="content-shadow bg-white mb-5">
     <h2 class="size-body title-with-btn plr-4 ptb-4">
       <span class="page-title">{{'tr_employees' | translate }}</span>

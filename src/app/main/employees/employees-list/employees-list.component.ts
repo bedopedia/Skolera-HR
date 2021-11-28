@@ -3,6 +3,8 @@ import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { PaginationData } from '@core/models/skolera-interfaces.model'
 import { Department, Employee } from '@core/models/employees-interface.model'
 import { Subscription } from 'rxjs';
+import { FedenaSyncService } from '@skolera/services/fedenaSyncService.service';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -32,14 +34,21 @@ export class EmployeesListComponent implements OnInit {
   paginationData: PaginationData
   departmentsPagination: PaginationData
   private subscriptions: Subscription[] = [];
+  syncButtonText = "Sync";
+
+  isSyncing = true;
+  intervalTime = 0; 
 
   constructor(
     private employeesService: EmployeesSerivce,
+    private fedenaSyncService: FedenaSyncService,
+    private appNotificationService:AppNotificationService
   ) { }
 
   ngOnInit(): void {
     this.getEmployees();
     this.getDepartments();
+    this.getSyncStatus(true);
   }
   getEmployees() {
     this.employeesLoading = true;
@@ -85,6 +94,54 @@ export class EmployeesListComponent implements OnInit {
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
     this.getEmployees();
   }
+  checkSyncStatus () {
+    setTimeout(() => {
+       this.getSyncStatus()
+    }, this.intervalTime)
+}
+getSyncStatus(initialCheck: boolean = false) {
+  this.fedenaSyncService.getSyncStatus().subscribe(
+       (response: any) => {
+           let syncStatus = response.status;
+           this.isSyncing = syncStatus == 'started';
+           if (syncStatus == 'succeeded' ){
+               this.syncButtonText = "Sync";
+               if (initialCheck == false)
+                   this.appNotificationService.push("Sync successfully finished", 'success');
+           }
+           else if (syncStatus == 'failed' ){
+               this.syncButtonText = "Sync";
+               if (initialCheck == false)
+                   this.appNotificationService.push("Sync failed", 'error');
+           }
+           else if (syncStatus == 'started' ){
+               this.syncButtonText = "Syncing.."
+               this.intervalTime = 1000*60*5; // 5 minutes
+               this.checkSyncStatus();
+           }
+       },
+       error => {
+           this.isSyncing = false;
+           this.appNotificationService.push(error.statusText, 'error');
+       }); 
+}
+  syncFedena() {
+    this.fedenaSyncService.sync().subscribe(
+      (response: any) => {
+        console.log("da5l");
+        
+          this.intervalTime = 1000*60*10; // 10 minutes Initial time
+          this.isSyncing = true;
+          this.syncButtonText = "Syncing.."
+          this.appNotificationService.push('Sync started', 'success')
+          this.checkSyncStatus();
+      },
+      error => {
+          this.isSyncing = false;
+          this.appNotificationService.push(error.error.message, 'error');
+      }); 
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach(s => s && s.unsubscribe())
   }

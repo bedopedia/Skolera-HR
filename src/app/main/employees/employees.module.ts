@@ -4,6 +4,7 @@ import { EmployeesRoutingModule } from './employees-routing.module';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { SharedModule } from '@shared/shared.module';
+import { FedenaSyncService } from '@skolera/services/fedenaSyncService.service';
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import { SharedModule } from '@shared/shared.module';
     EmployeesRoutingModule,
     SharedModule
   ],
-  providers: [EmployeesSerivce]
+  providers: [EmployeesSerivce,FedenaSyncService]
 })
 export class EmployeesModule { }
