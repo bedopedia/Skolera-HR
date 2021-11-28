@@ -75,7 +75,6 @@ export class EditTimeGroupComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.timeGroupId = params.id
-      // this.employessParams.by_time_group_with_unassigned =  this.timeGroupId ;
     })
 
     this.getEmployees();
@@ -204,26 +203,29 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
 
-  public getEmployees(type?:string) {
-    if(type == "search"){
+  public getEmployees(type?: string) {
+    if (type == "search") {
       this.employeesList = []
     }
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
+      this.employeesList.forEach(employee => {
+        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.currentTimeGroup ? true : false
+      })
       this.employeesPaginationData = response.meta;
       this.employeesLoading = false
     }, error=> {
       this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
      })
   }
+
   public updateTimeGroupEmployees() {
     const updateParams = {
       'time_group': {
         "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
       }
     }
-    // this.filterEmployees('')
     this.subscriptions.push(
       this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
         this.appNotificationService.push(this.translate.instant('tr_time_group_employees_updated_successfully'), 'success');
@@ -231,6 +233,9 @@ export class EditTimeGroupComponent implements OnInit {
         this.appNotificationService.push(error.error.name, 'error');
         this.isFormSubmitted = false;
       }))
+  }
+  checkIsInsideCurrentTimeGroup(employee: Employee) {
+    return employee.isInsideCurrentTimeGroup
   }
   public assignEmployeeIngroup(event: any, timegroupEmployee: Employee) {
 
@@ -271,10 +276,18 @@ export class EditTimeGroupComponent implements OnInit {
             }
             this.subscriptions.push(this.employeesService.unassignEmployee(timegroupEmployee.time_group!.id, params).subscribe((response: any) => {
               this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
+              timegroupEmployee.isInsideCurrentTimeGroup = true
               this.timeGroup.employees?.push(timegroupEmployee)
             }, error => {
               this.appNotificationService.push('There was an unexpected error, please reload', 'error');
+              timegroupEmployee.isInsideCurrentTimeGroup = false
+              event.target.checked = false
             }))
+
+          }
+          else {
+            timegroupEmployee.isInsideCurrentTimeGroup = false;
+            event.target.checked = false
 
           }
         })
@@ -285,21 +298,21 @@ export class EditTimeGroupComponent implements OnInit {
 
     }
     else {
+      timegroupEmployee.isInsideCurrentTimeGroup = false
       this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timegroupEmployee.name)
     }
     this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
   }
 
   public filterEmployees(term: any, searchKey?: string) {
-    if ( searchKey != 'by_department_id' && (term == '' || term.target.value == '')) {
+    if (searchKey != 'by_department_id' && (term == '' || term.target.value == '')) {
       this.timeGroup.employees = this.timeGroupEmployees;
-      console.log("this.timeGroup.employees ", this.timeGroup.employees);
       delete this.employessParams.by_name
       delete this.employessParams.by_department_id
       delete this.employessParams.by_number
       this.selectedName = '';
       this.selectedNumber = '';
-      this.selectedDepartment =''
+      this.selectedDepartment = ''
 
     }
     else {
@@ -314,8 +327,6 @@ export class EditTimeGroupComponent implements OnInit {
       }
       else if (searchKey == 'by_name') {
         term = term.target.value
-        console.log("term",term);
-        
         delete this.employessParams.by_number
         delete this.employessParams.by_department_id
         this.selectedDepartment = ''
