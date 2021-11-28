@@ -182,7 +182,7 @@
                   <td>
                     <div class="flex flex-middle">
                       <span class="s-checkbox">
-                        <input type="checkbox" id="employee-id-{{i}}" name="employee" [checked]="employee.time_group?.name! === currentTimeGroup"
+                        <input type="checkbox" id="employee-id-{{i}}" name="employee"  [checked]="employee.isInsideCurrentTimeGroup"
                           (change)="assignEmployeeIngroup($event,employee)">
                         <label for="employee-id-{{i}}"></label>
                       </span>

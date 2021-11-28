@@ -22,9 +22,9 @@ export class EmployeesSerivce {
     return this.http.post(baseUrl + `api/hr/employees_attendances`, params);
    }
    saveUploadedFile(params:any) {
-    return this.http.post(`${baseUrl}/api/upload_file`, params);
+    return this.http.post(`${baseUrl}api/upload_file`, params);
     }
     unassignEmployee(timeGroupId:number, params:any){
-        return this.http.put(`${baseUrl}/api//hr/time_groups/${timeGroupId}/update_employeese`, params);
+        return this.http.put(`${baseUrl}api//hr/time_groups/${timeGroupId}/update_employeese`, params);
     }
 }
