@@ -22,7 +22,7 @@ export class SheetsListComponent implements OnInit {
   sheets:AttendanceSheet[] = [];
   constructor(
     private dialog: MatDialog,
-    private EmployeesSerivce: EmployeesSerivce,
+    private employeesSerivce: EmployeesSerivce,
     private appNotificationService:AppNotificationService
   ) { }
 
@@ -32,7 +32,7 @@ export class SheetsListComponent implements OnInit {
 
   getSheets(){
     this.sheetsLoading = true;
-    this.EmployeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any)=> {
+    this.employeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any)=> {
       this.sheets = response.employees_attendnaces
       this.paginationData = response.meta;
       this.sheetsLoading = false;
@@ -57,4 +57,9 @@ export class SheetsListComponent implements OnInit {
   })
   }
 
+  public startSync(sheet: AttendanceSheet){
+    this.employeesSerivce.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
+      sheet.state = "syncing"
+    })
+  }
 }
