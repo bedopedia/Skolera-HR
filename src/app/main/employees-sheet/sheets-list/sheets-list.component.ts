@@ -4,6 +4,7 @@ import { AttendanceSheet } from '@core/models/attendance-sheets-interface.model'
 import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
+import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
 import { SheetFormComponent } from '../sheet-form/sheet-form.component';
 
 @Component({
@@ -23,7 +24,8 @@ export class SheetsListComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private employeesSerivce: EmployeesSerivce,
-    private appNotificationService:AppNotificationService
+    private appNotificationService:AppNotificationService,
+    private fedenaSyncService: FedenaSyncService
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class SheetsListComponent implements OnInit {
   }
 
   public startSync(sheet: AttendanceSheet){
-    this.employeesSerivce.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
+    this.fedenaSyncService.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
       sheet.state = "syncing"
     })
   }

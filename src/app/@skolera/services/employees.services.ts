@@ -24,7 +24,4 @@ export class EmployeesSerivce {
    saveUploadedFile(params:any) {
     return this.http.post(`${baseUrl}/api/upload_file`, params);
 }
-    syncAttendanceSheet(params: any){
-        return this.http.post(`${baseUrl}/api/fedena_sync/upload_attendance`, params)
-    }
 }
