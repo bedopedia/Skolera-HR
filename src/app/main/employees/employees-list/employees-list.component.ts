@@ -3,6 +3,8 @@ import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { PaginationData } from '@core/models/skolera-interfaces.model'
 import { Department, Employee } from '@core/models/employees-interface.model'
 import { Subscription } from 'rxjs';
+import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -34,7 +36,7 @@ export class EmployeesListComponent implements OnInit {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private employeesService: EmployeesSerivce,
+    private employeesService: EmployeesSerivce
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +87,7 @@ export class EmployeesListComponent implements OnInit {
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
     this.getEmployees();
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach(s => s && s.unsubscribe())
   }
