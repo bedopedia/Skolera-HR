@@ -3,7 +3,7 @@ import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { PaginationData } from '@core/models/skolera-interfaces.model'
 import { Department, Employee } from '@core/models/employees-interface.model'
 import { Subscription } from 'rxjs';
-import { FedenaSyncService } from '@skolera/services/fedenaSyncService.service';
+import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 
 @Component({

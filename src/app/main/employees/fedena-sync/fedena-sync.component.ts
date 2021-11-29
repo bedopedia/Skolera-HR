@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
-import { FedenaSyncService } from '@skolera/services/fedenaSyncService.service';
+import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
 
 @Component({
   selector: 'fedena-sync',
