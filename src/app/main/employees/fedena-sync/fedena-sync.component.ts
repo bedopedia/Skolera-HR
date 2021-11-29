@@ -51,7 +51,7 @@ getSyncStatus(initialCheck: boolean = false) {
        }); 
 }
   syncFedena() {
-    this.fedenaSyncService.sync().subscribe(
+    this.fedenaSyncService.hrSync().subscribe(
       (response: any) => {
           this.intervalTime = 1000*60*10; // 10 minutes Initial time
           this.isSyncing = true;
