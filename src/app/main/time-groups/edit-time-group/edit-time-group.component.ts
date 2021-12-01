@@ -55,9 +55,6 @@ export class EditTimeGroupComponent implements OnInit {
   processType: string = 'create';
   rulesLoading: boolean = true;
   rules: Rule[] = []
-  currentTimeGroup: string;
-  selectedNumber: string;
-  selectedName: string;
   @ViewChild('timeGroupForm') announcementForm: NgForm;
   filteredTimeGroupEmployees: Employee[];
 
@@ -88,7 +85,6 @@ export class EditTimeGroupComponent implements OnInit {
   private getTimeGroup(id: number) {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
       this.timeGroup = response;
-      this.currentTimeGroup = this.timeGroup.name
       this.filteredTimeGroupEmployees = this.timeGroup.employees || []
       this.getEmployees();
       this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
@@ -195,14 +191,18 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
   public nextpage() {
-    let nextPage = this.employeesPaginationData.next_page;
-    this.employessParams.page = nextPage;
-    if (nextPage) {
-      this.getEmployees()
+    if (this.employeesPaginationData.next_page) {
+      this.getEmployees("load", true)
     }
   }
 
-  public getEmployees(type?: string) {
+  public getEmployees(type?: string, isLoadMore?: boolean) {
+    if(isLoadMore){
+      let nextPage = this.employeesPaginationData.next_page;
+      this.employessParams.page = nextPage;
+    }else{
+      this.employessParams.page = 1
+    }
     if (type == "search") {
       this.employeesList = []
     }
@@ -210,7 +210,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
-        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.currentTimeGroup  ? true : false
+        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.timeGroup.name  ? true : false
         if(this.timeGroup.employees && this.timeGroup.employees.length > 0){
             employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
         }
