@@ -235,12 +235,8 @@ export class EditTimeGroupComponent implements OnInit {
     this.subscriptions.push(
       this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
         this.appNotificationService.push(this.translate.instant('tr_time_group_employees_updated_successfully'), 'success');
-        this.employeesList = this.employeesList.map(employee =>{
-          if(employee.isInsideCurrentTimeGroup){
-            employee.time_group = this.timeGroup
-          }
-          return employee;
-        })
+        this.employeesList = []
+        this.getEmployees()
       }, error => {
         this.appNotificationService.push(error.error.name, 'error');
         this.isFormSubmitted = false;
@@ -284,6 +280,7 @@ export class EditTimeGroupComponent implements OnInit {
               this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
               timegroupEmployee.isInsideCurrentTimeGroup = true
               this.timeGroup.employees?.push(timegroupEmployee)
+              this.filterTimeGroupEmployees()
               this.employeesList = [];
               this.getEmployees();
             }, error => {
@@ -296,11 +293,12 @@ export class EditTimeGroupComponent implements OnInit {
           else {
             timegroupEmployee.isInsideCurrentTimeGroup = false;
             event.target.checked = false
-
+            
           }
         })
       }
       else {
+        timegroupEmployee.isInsideCurrentTimeGroup = true;
         this.timeGroup.employees?.push(timegroupEmployee)
       }
 
@@ -308,6 +306,7 @@ export class EditTimeGroupComponent implements OnInit {
     else {
       timegroupEmployee.isInsideCurrentTimeGroup = false
       this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timegroupEmployee.name)
+      this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees!.filter(employee => employee.name != timegroupEmployee.name)
     }
     this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
   }
@@ -322,10 +321,10 @@ export class EditTimeGroupComponent implements OnInit {
     }
     this.employeesList = [];
     this.getEmployees('search');
-    this.filterTimeGroupEmployees(term, searchKey)
+    this.filterTimeGroupEmployees()
   }
     
-    filterTimeGroupEmployees(term: any = "", searchKey: string){
+    filterTimeGroupEmployees(){
     var filteredEmployees: Employee[] = this.timeGroup.employees || []
     if(this.employessParams['by_name']){
       filteredEmployees = filteredEmployees!.filter(employee => employee.name.toLowerCase().includes(this.employessParams['by_name'].toLowerCase()))
