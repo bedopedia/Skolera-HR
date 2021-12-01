@@ -1,4 +1,4 @@
-import { TimeGroupSchedule } from "./time-groups-interface.model";
+import { TimeGroup, TimeGroupSchedule } from "./time-groups-interface.model";
 
 export interface Department {
     name: string,
@@ -9,17 +9,12 @@ export interface Employee {
     id?: number
     number: string;
     name: string;
-    department_name: number;
+    department_name: string;
     biometric_id: number;
     isSelected?: boolean
     time_group_schedule?: TimeGroupSchedule[]
     time_group?:TimeGroup,
     isInsideCurrentTimeGroup?: boolean
-}
-export interface TimeGroup{
-    name?: any,
-    group_type: string
-    id: number
 }
 export interface EmployeesAttributes {
     id: number,
