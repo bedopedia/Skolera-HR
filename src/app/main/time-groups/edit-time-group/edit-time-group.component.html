@@ -232,8 +232,8 @@
                   {{'tr_time_schedule' | translate}}
                 </th>
               </thead>
-              <tbody *ngIf="timeGroup.employees!.length > 0">
-                <tr *ngFor="let timegroupEmployee of timeGroup.employees!; let i=index">
+              <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
+                <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
                   <td>{{timegroupEmployee.name}}</td>
                   <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                     <button class="s-btn btn-link" type="button" (click)="openTimeScheduleModal(timegroupEmployee)">
@@ -243,7 +243,7 @@
               </tbody>
             </table>
             <div class="text-center flex flex-middle flex-center"
-            *ngIf="!timeGroupLoading && timeGroup.employees?.length ==0">
+            *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
             <div class="ptb-2 plr-2">
               <img src="assets/images/placeholders/zones.svg" width="80" alt="">
               <p class="size-tiny weight-bold mt-3">

@@ -24,7 +24,7 @@ export class EmployeesSerivce {
    saveUploadedFile(params:any) {
     return this.http.post(`${baseUrl}api/upload_file`, params);
     }
-    unassignEmployee(timeGroupId:number, params:any){
-        return this.http.put(`${baseUrl}api//hr/time_groups/${timeGroupId}/update_employees`, params);
+    updateEmployee(employeeId: number = 0, params: any){
+        return this.http.put(baseUrl + `api/hr/employees/${employeeId}`, params);
     }
 }
