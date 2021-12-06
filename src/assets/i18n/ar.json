@@ -201,5 +201,6 @@
     "tr_applies_to":"Applies to*",
     "tr_assign_message":"Assign schedule to each employee individually*",
     "tr_sync_message":" When you click on the sync button, it will be disabled until the sync finishes. You can then check the sync stats from Slack. The button will be automatically enabled again when the sync finishes, without having to refresh the page every second.*",
-    "tr_syncing": "Syncing*"
+    "tr_syncing": "Syncing*",
+    "tr_unexpected_error_message": "An unexpected error happened, please reload.*"
 }

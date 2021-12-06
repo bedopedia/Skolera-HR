@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceSheet } from '@core/models/attendance-sheets-interface.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
+import { TranslateService } from '@ngx-translate/core';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
@@ -25,7 +26,8 @@ export class SheetsListComponent implements OnInit {
     private dialog: MatDialog,
     private employeesSerivce: EmployeesSerivce,
     private appNotificationService:AppNotificationService,
-    private fedenaSyncService: FedenaSyncService
+    private fedenaSyncService: FedenaSyncService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class SheetsListComponent implements OnInit {
       this.sheetsLoading = false;
       
     },error=> {
-      this.appNotificationService.push('There was an unexpected error, please reload', 'error');
+      this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
     })
   }
   paginationUpdate(page: number) {
@@ -62,6 +64,8 @@ export class SheetsListComponent implements OnInit {
   public startSync(sheet: AttendanceSheet){
     this.fedenaSyncService.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
       sheet.state = "syncing"
+    },error=> {
+      this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
     })
   }
 }
