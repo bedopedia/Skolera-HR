@@ -17,5 +17,7 @@ export class FedenaSyncService {
   getSyncStatus() {
     return this.http.get(`${baseUrl}api/sync_stats`);
   }
-
+  syncAttendanceSheet(params: any){
+    return this.http.post(`${baseUrl}/api/fedena_sync/upload_attendance`, params)
+  }
 }
