@@ -40,8 +40,8 @@ export class SheetsListComponent implements OnInit {
       this.sheets = response.employees_attendnaces
       this.paginationData = response.meta;
       this.sheetsLoading = false;
-      
     },error=> {
+      this.sheetsLoading = false;
       this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
     })
   }
@@ -64,7 +64,9 @@ export class SheetsListComponent implements OnInit {
   public startSync(sheet: AttendanceSheet){
     this.fedenaSyncService.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
       sheet.state = "syncing"
+      this.appNotificationService.push(this.translateService.instant('tr_hr_sync_started'), 'success')
     },error=> {
+      sheet.state = "sync_failed"
       this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
     })
   }
