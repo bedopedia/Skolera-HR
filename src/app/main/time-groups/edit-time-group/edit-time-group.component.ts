@@ -208,7 +208,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
-        employee.isInsideCurrentTimeGroup = employee.time_group?.name === this.timeGroup.name
+        employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroup.id
         if(this.timeGroup.employees && this.timeGroup.employees.length > 0){
             employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
         }
