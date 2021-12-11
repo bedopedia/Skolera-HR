@@ -305,6 +305,7 @@ export class EditTimeGroupComponent implements OnInit {
           timeGroupEmployee.isInsideCurrentTimeGroup = true
           this.timeGroup.employees?.push(timeGroupEmployee)
           this.filterTimeGroupEmployees()
+          this.updateTimeGroupEmployees()
           this.getEmployees('search');
         }, error => {
           this.appNotificationService.push('There was an unexpected error, please reload', 'error');
