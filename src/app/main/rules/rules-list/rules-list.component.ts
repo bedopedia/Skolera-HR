@@ -90,7 +90,7 @@ export class RulesListComponent implements OnInit {
           this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
           this.getRules();
          }, error=> {
-          this.appNotificationService.push('There was an unexpected error, please reload', 'error');
+          this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
          }))
 
       }

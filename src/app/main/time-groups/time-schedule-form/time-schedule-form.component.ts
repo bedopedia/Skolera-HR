@@ -22,8 +22,8 @@ export class TimeScheduleFormComponent implements OnInit {
     if (day.clock_in == '' || day.clock_out == '') {
       return
     }
-    let clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-    let clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
+    const clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
+    const clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     day.invalidTime = (clockIn > clockOut) ? true : false;
     this.invalidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
     this.returnedScheduleDays.emit(this.scheduleDays);
