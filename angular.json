@@ -70,6 +70,27 @@
               ],
               "outputHashing": "all"
             },
+            "testing": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.testing.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -89,6 +110,9 @@
             },
             "development": {
               "browserTarget": "Skolera-HR:build:development"
+            },
+            "testing": {
+              "browserTarget": "Skolera-HR:build:testing"
             }
           },
           "defaultConfiguration": "development"
