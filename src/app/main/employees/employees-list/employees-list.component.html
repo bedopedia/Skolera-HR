@@ -1,134 +1,134 @@
-<div>
-  <fedena-sync></fedena-sync>
-  <div class="content-shadow bg-white mb-5">
-    <h2 class="size-body title-with-btn plr-4 ptb-4">
-      <span class="page-title">{{'tr_employees' | translate }}</span>
-      <button class="s-btn btn-secondary size-body" (click)="isFilterOpen=!isFilterOpen">
-        <i class="fa fa-filter text-primary" aria-hidden="false"></i>
-      </button>
-    </h2>
-    <div class="isFilterOpens-card bg-secondary plr-4 ptb-2 mlr-2" *ngIf="isFilterOpen">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>{{'tr_number' | translate}}</label>
-            <div class="input-with-icon bg-white width-100">
-              <input class="text" [pattern]="" (keyup)="filterEmployees($event,'by_number')" class="s-control"
-                placeholder="{{'tr_search_by_number' | translate}}">
-            </div>
+<div class="content-shadow bg-white mb-5">
+  <h2 class="size-body title-with-btn plr-4 ptb-4">
+    <span class="page-title">{{'tr_employees' | translate }}</span>
+    <button class="s-btn btn-secondary size-body" (click)="isFilterOpen=!isFilterOpen">
+      <i class="fa fa-filter text-primary" aria-hidden="false"></i>
+    </button>
+  </h2>
+  <div class="isFilterOpens-card bg-secondary plr-4 ptb-2 mlr-2" *ngIf="isFilterOpen">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_number' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <input class="text" [pattern]="" (keyup)="filterEmployees($event,'by_number')" class="s-control"
+              placeholder="{{'tr_search_by_number' | translate}}">
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>{{'tr_name' | translate}}</label>
-            <div class="input-with-icon bg-white width-100">
-              <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
-                placeholder="{{'tr_search_by_name' | translate}}">
-            </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_name' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
+              placeholder="{{'tr_search_by_name' | translate}}">
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>{{'tr_biometric_id' | translate}}</label>
-            <div class="input-with-icon bg-white width-100">
-              <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
-                placeholder="{{'tr_search_by_biometric_id' | translate}}">
-            </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_biometric_id' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
+              placeholder="{{'tr_search_by_biometric_id' | translate}}">
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>{{'tr_department' | translate}}</label>
-            <div class="input-with-icon bg-white width-100">
-              <ng-select class="s-control s-select" (change)="filterEmployees(selectedDepartment,'by_department_id')"
-                bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
-                placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
-                (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
-                [items]="departments" name="department">
-                <ng-template ng-header-tmp>
-                  <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
-                    {{'tr_there_are_no_departments' | translate}}
-                  </div>
-                </ng-template>
-                <ng-template ng-footer-tmp>
-                  <div class="mb-2" *ngIf="departmentsLoading">
-                    <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
-                  </div>
-                </ng-template>
-              </ng-select>
-              <i class="fa fa-caret-down input-icon"></i>
-            </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_department' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <ng-select class="s-control s-select" (change)="filterEmployees(selectedDepartment,'by_department_id')"
+              bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
+              placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
+              (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
+              [items]="departments" name="department">
+              <ng-template ng-header-tmp>
+                <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
+                  {{'tr_there_are_no_departments' | translate}}
+                </div>
+              </ng-template>
+              <ng-template ng-footer-tmp>
+                <div class="mb-2" *ngIf="departmentsLoading">
+                  <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                </div>
+              </ng-template>
+            </ng-select>
+            <i class="fa fa-caret-down input-icon"></i>
           </div>
         </div>
       </div>
     </div>
-    <div>
+  </div>
+  <div>
 
-      <div class="plr-4" *ngIf="!employeesLoading">
-        <div class="table-container" id="table-container" *ngIf="employeesList.length > 0">
-          <table class="s-table table layout-fixed">
-            <thead>
-              <th>
-                <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
-                  {{ 'tr_number' | translate }}
-                </div>
-              </th>
-              <th>
-                <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'" [orderBy]="'name'">
-                  {{'tr_name' | translate}}
-                </div>
-              </th>
-              <th>
-                <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder" [type]="'department'" [orderBy]="'department'">
-                  {{'tr_department' | translate}}
-                </div>
-              </th>
-              <th>
-                <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder"  [orderBy]="'biometric_id'">
-                  {{'tr_biometric_id' | translate}}
-                </div>
-              </th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let employee of employeesList; let i=index">
-                <td>
-                  <ng-container> {{employee.number}}</ng-container>
-                </td>
-                <td>
-                  <ng-container> {{employee.name}}</ng-container>
-                </td>
-                <td>
-                  <ng-container> {{employee.department_name}}</ng-container>
-                </td>
-                <td>
-                  <ng-container> {{employee.biometric_id}}</ng-container>
-                </td>
+    <div class="plr-4" *ngIf="!employeesLoading">
+      <div class="table-container" id="table-container" *ngIf="employeesList.length > 0">
+        <table class="s-table table layout-fixed">
+          <thead>
+            <th>
+              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
+                {{ 'tr_number' | translate }}
+              </div>
+            </th>
+            <th>
+              <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'"
+                [orderBy]="'name'">
+                {{'tr_name' | translate}}
+              </div>
+            </th>
+            <th>
+              <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder"
+                [type]="'department'" [orderBy]="'department'">
+                {{'tr_department' | translate}}
+              </div>
+            </th>
+            <th>
+              <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder"
+                [orderBy]="'biometric_id'">
+                {{'tr_biometric_id' | translate}}
+              </div>
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employeesList; let i=index">
+              <td>
+                <ng-container> {{employee.number}}</ng-container>
+              </td>
+              <td>
+                <ng-container> {{employee.name}}</ng-container>
+              </td>
+              <td>
+                <ng-container> {{employee.department_name}}</ng-container>
+              </td>
+              <td>
+                <ng-container> {{employee.biometric_id}}</ng-container>
+              </td>
 
-              </tr>
-            </tbody>
+            </tr>
+          </tbody>
 
-          </table>
+        </table>
 
-        </div>
-        <div class="empty-state-here text-center mtb-8" *ngIf="employeesList.length == 0">
-          <img class="placeholder-icon" src="assets/images/placeholders/announcments.svg" alt="">
-          <p> {{'tr_empty_state' | translate}}</p>
-        </div>
-
-        <div class="plr-4 ptb-4">
-          <skolera-pagination [paginationData]="paginationData" [perPage]="paginationPerPage"
-            (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
-        </div>
+      </div>
+      <div class="empty-state-here text-center mtb-8" *ngIf="employeesList.length == 0">
+        <img class="placeholder-icon" src="assets/images/placeholders/announcments.svg" alt="">
+        <p> {{'tr_empty_state' | translate}}</p>
       </div>
 
-
-
-      <div *ngIf="employeesLoading">
-        <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
+      <div class="plr-4 ptb-4">
+        <skolera-pagination [paginationData]="paginationData" [perPage]="paginationPerPage"
+          (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
       </div>
-
-
-
     </div>
+
+
+
+    <div *ngIf="employeesLoading">
+      <app-ghost-line [length]="12" [type]="'table'"></app-ghost-line>
+    </div>
+
+
+
   </div>
 </div>
