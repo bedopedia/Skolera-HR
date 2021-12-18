@@ -5,8 +5,15 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build-testing": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli @angular-devkit/build-angular typescript",
+    "postinstall": "npm audit fix",
+    "post-build": "node ./build/post-build.js",
+    "post-build-new-infra": "node ./build/post-build-new-infra.js",
+    "watch": "ng build --watch --configuration development"
   },
   "private": true,
   "dependencies": {

@@ -93,7 +93,9 @@ export class EditTimeGroupComponent implements OnInit {
       }
       this.timeGroupLoading = false;
 
-    })
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     })
   }
 
   public openTimeScheduleModal(employee: Employee) {
@@ -161,7 +163,9 @@ export class EditTimeGroupComponent implements OnInit {
       this.departmentsPagination = response.meta;
       this.departments = this.departments.concat(response.employee_departments);
       this.departmentsLoading = false
-    }))
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     }))
   }
   public getRules() {
     this.rulesLoading = true;
@@ -201,10 +205,12 @@ export class EditTimeGroupComponent implements OnInit {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesPaginationData = response.meta;
       this.employeesLoading = false
-    })
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     })
   }
   public updateTimeGroupEmployees() {
-    let updateParams = {
+    const updateParams = {
       'time_group': {
         "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
       }

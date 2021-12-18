@@ -69,7 +69,7 @@ export class SheetFormComponent implements OnInit {
     this.isFileUpdating = true;
     this.isFileHasError = false;
     this.sheetFile = event.target.files[0];
-    let params = {
+    const params = {
       name: this.sheetFile.name,
       fileable_type: 'EmployeesAttendance',
       public_url: ''
@@ -108,7 +108,7 @@ export class SheetFormComponent implements OnInit {
     }
     delete this.sheet.state;
     delete this.sheet.uploaded_file
-    let params = {
+    const params = {
       employees_attendance: this.sheet
     }
     this.employeesSerivce.createAttendanceSheet(params).subscribe(response => {
