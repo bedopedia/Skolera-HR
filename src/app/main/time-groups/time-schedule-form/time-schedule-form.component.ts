@@ -22,11 +22,21 @@ export class TimeScheduleFormComponent implements OnInit {
     if (day.clock_in == '' || day.clock_out == '') {
       return
     }
-    let clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
-    let clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
+    const clockIn = moment(day.clock_in, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
+    const clockOut = moment(day.clock_out, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds');
     day.invalidTime = (clockIn > clockOut) ? true : false;
     this.invalidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
     this.returnedScheduleDays.emit(this.scheduleDays);
+  }
+  showCalculateBridge(day: TimeGroupSchedule,index: number){
+    let isShowCountAsBridge;
+    if(index >0 && index <6){
+      isShowCountAsBridge = this.scheduleDays[index-1].is_off || this.scheduleDays[index+1].is_off
+    }
+    else {
+      isShowCountAsBridge = index == 0 ?  (this.scheduleDays[index+1].is_off || this.scheduleDays[6].is_off) : (this.scheduleDays[index-1].is_off || this.scheduleDays[0].is_off);
+    }
+    return  (!day.is_off) && isShowCountAsBridge
   }
   
 }

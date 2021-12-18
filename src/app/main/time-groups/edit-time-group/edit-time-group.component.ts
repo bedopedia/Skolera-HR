@@ -96,7 +96,9 @@ export class EditTimeGroupComponent implements OnInit {
       }
       this.timeGroupLoading = false;
 
-    })
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     })
   }
 
   public openTimeScheduleModal(employee: Employee) {
@@ -164,7 +166,9 @@ export class EditTimeGroupComponent implements OnInit {
       this.departmentsPagination = response.meta;
       this.departments = this.departments.concat(response.employee_departments);
       this.departmentsLoading = false
-    }))
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     }))
   }
   public getRules() {
     this.rulesLoading = true;
@@ -215,11 +219,13 @@ export class EditTimeGroupComponent implements OnInit {
       })
       this.employeesPaginationData = response.meta;
       this.employeesLoading = false
-    })
+    }, error=> {
+      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
+     })
   }
 
   public updateTimeGroupEmployees() {
-    let updateParams = {
+    const updateParams = {
       'time_group': {
         "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
       }
@@ -281,7 +287,6 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   unassignEmployee(event: any, timeGroupEmployee: Employee) {
-
     const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
       width: '400px',
       data: this.unassignEmployeeDialogData(),
@@ -299,6 +304,7 @@ export class EditTimeGroupComponent implements OnInit {
           timeGroupEmployee.isInsideCurrentTimeGroup = true
           this.timeGroup.employees?.push(timeGroupEmployee)
           this.filterTimeGroupEmployees()
+          this.updateTimeGroupEmployees()
           this.getEmployees('search');
         }, error => {
           this.appNotificationService.push('There was an unexpected error, please reload', 'error');
@@ -310,7 +316,6 @@ export class EditTimeGroupComponent implements OnInit {
       else {
         timeGroupEmployee.isInsideCurrentTimeGroup = false;
         event.target.checked = false
-
       }
     })
   }
@@ -336,7 +341,6 @@ export class EditTimeGroupComponent implements OnInit {
     timeGroupEmployee.isInsideCurrentTimeGroup = false
     this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timeGroupEmployee.name)
     this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees!.filter(employee => employee.name != timeGroupEmployee.name)
-
   }
 
   ngOnDestroy() {
