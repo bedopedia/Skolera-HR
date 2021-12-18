@@ -161,12 +161,12 @@
         </div>
 
         <div class="row border-bottom mt-4">
-          <div class="col-md-8 mb-2" *ngIf="employeesLoading">
+          <div class="col-md-7 mb-2" *ngIf="employeesLoading">
             <div>
               <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
             </div>
           </div>
-          <div class="col-md-8" *ngIf="!employeesLoading">
+          <div class="col-md-7" *ngIf="!employeesLoading">
             <table class="table s-table employees-table border-right layout-fixed">
               <thead>
                 <th>
@@ -222,11 +222,11 @@
             </div>
 
           </div>
-          <div class="col-md-4" *ngIf="!timeGroupLoading">
+          <div class="col-md-5" *ngIf="!timeGroupLoading">
             <table class="table s-table employees-table layout-fixed">
               <thead>
                 <th>
-                  {{'tr_employees' | translate}}
+                  {{'tr_assigned_employees' | translate}}
                 </th>
                 <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                   {{'tr_time_schedule' | translate}}
@@ -253,7 +253,7 @@
           </div>
 
           </div>
-          <div class="col-md-4 mb-2" *ngIf="timeGroupLoading">
+          <div class="col-md-5 mb-2" *ngIf="timeGroupLoading">
             <div>
               <app-ghost-line [length]="2" [type]="'table'"></app-ghost-line>
             </div>

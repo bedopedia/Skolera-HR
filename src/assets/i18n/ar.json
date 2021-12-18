@@ -202,6 +202,7 @@
     "tr_assign_message":"Assign schedule to each employee individually*",
     "tr_time_group":"Time Group*",
     "tr_unassign_message":"This Employee is assigned to another time group, do you want to change the time group and delete this employee's time schedule?*",
-    "tr_unassign_time_group_successfully":"Unassigned employee from time group successfully*"
+    "tr_unassign_time_group_successfully":"Unassigned employee from time group successfully*",
+    "tr_assigned_employees":"Assigned employees*"
     
 }

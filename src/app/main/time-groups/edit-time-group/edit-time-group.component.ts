@@ -77,8 +77,8 @@ export class EditTimeGroupComponent implements OnInit {
     this.getTimeGroup(this.timeGroupId);
     this.getRules();
     this.getDepartments();
-   
-    
+
+
   }
 
 
@@ -195,10 +195,10 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public getEmployees(type?: string, isLoadMore?: boolean) {
-    if(isLoadMore){
+    if (isLoadMore && type != "search") {
       const nextPage = this.employeesPaginationData.next_page;
       this.employessParams.page = nextPage;
-    }else{
+    } else {
       this.employessParams.page = 1
     }
     if (type == "search") {
@@ -209,8 +209,8 @@ export class EditTimeGroupComponent implements OnInit {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
         employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroup.id
-        if(this.timeGroup.employees && this.timeGroup.employees.length > 0){
-            employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
+        if (this.timeGroup.employees && this.timeGroup.employees.length > 0) {
+          employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
         }
       })
       this.employeesPaginationData = response.meta;
@@ -255,25 +255,25 @@ export class EditTimeGroupComponent implements OnInit {
 
   public filterEmployees(term: any, searchKey: string) {
 
-    if(!term || (searchKey != 'by_department_id' && (term == '' || term.target.value == ''))){
+    if (!term || (searchKey != 'by_department_id' && (term == '' || term.target.value == ''))) {
       delete this.employessParams[searchKey]
-    }else{
+    } else {
       const searchTerm = (searchKey == 'by_department_id') ? term.id : term.target.value
       this.employessParams[searchKey] = searchTerm;
     }
     this.getEmployees('search');
     this.filterTimeGroupEmployees()
   }
-    
-    filterTimeGroupEmployees(){
+
+  filterTimeGroupEmployees() {
     var filteredEmployees: Employee[] = this.timeGroup.employees || []
-    if(this.employessParams['by_name']){
+    if (this.employessParams['by_name']) {
       filteredEmployees = filteredEmployees!.filter(employee => employee.name.toLowerCase().includes(this.employessParams['by_name'].toLowerCase()))
     }
-    if(this.employessParams['by_number']){
+    if (this.employessParams['by_number']) {
       filteredEmployees = filteredEmployees!.filter(employee => employee.number.toLowerCase().includes(this.employessParams['by_number']))
     }
-    if(this.employessParams['by_department_id']){
+    if (this.employessParams['by_department_id']) {
       const departmentName = this.departments.find(department => department.id == this.employessParams['by_department_id'])!.name
       filteredEmployees = filteredEmployees!.filter(employee => employee.department_name == departmentName)
     }
@@ -281,7 +281,7 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   unassignEmployee(event: any, timeGroupEmployee: Employee) {
-    
+
     const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
       width: '400px',
       data: this.unassignEmployeeDialogData(),
@@ -310,7 +310,7 @@ export class EditTimeGroupComponent implements OnInit {
       else {
         timeGroupEmployee.isInsideCurrentTimeGroup = false;
         event.target.checked = false
-        
+
       }
     })
   }
@@ -336,7 +336,7 @@ export class EditTimeGroupComponent implements OnInit {
     timeGroupEmployee.isInsideCurrentTimeGroup = false
     this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timeGroupEmployee.name)
     this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees!.filter(employee => employee.name != timeGroupEmployee.name)
-  
+
   }
 
   ngOnDestroy() {
