@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.authenticationService.resetHeaders();
         if (this.authenticationService.getCurrentUser()) {
-            this.router.navigate(['employees']);
+            this.router.navigate(['home']);
         }
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'employees';       
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';       
     }
 
     onSubmit() {

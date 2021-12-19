@@ -5,13 +5,11 @@ import { EmployeesListComponent } from './employees-list/employees-list.componen
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { SharedModule } from '@shared/shared.module';
 import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
-import { FedenaSyncComponent } from './fedena-sync/fedena-sync.component';
 
 
 @NgModule({
   declarations: [
-    EmployeesListComponent,
-    FedenaSyncComponent
+    EmployeesListComponent
   ],
   imports: [
     CommonModule,
