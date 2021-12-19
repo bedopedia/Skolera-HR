@@ -22,6 +22,9 @@ export class EmployeesSerivce {
     return this.http.post(baseUrl + `api/hr/employees_attendances`, params);
    }
    saveUploadedFile(params:any) {
-    return this.http.post(`${baseUrl}/api/upload_file`, params);
-}
+    return this.http.post(baseUrl + `api/upload_file`, params);
+    }
+    updateEmployee(employeeId: number = 0, params: any){
+        return this.http.put(baseUrl + `api/hr/employees/${employeeId}`, params);
+    }
 }

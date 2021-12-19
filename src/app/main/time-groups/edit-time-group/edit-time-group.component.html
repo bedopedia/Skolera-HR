@@ -1,5 +1,5 @@
 <div class="">
-  <form action="" #timeGroupForm="ngForm" (ngSubmit)="updateTimeGroup()">
+  <form #timeGroupForm="ngForm" (ngSubmit)="updateTimeGroup()">
     <div class="bg-white mb-4 plr-4 ptb-4 content-shadow">
       <h3 class="steel weight-bold size-default m-0 title-with-btn">
         {{'tr_edit_time_group' | translate}}
@@ -79,19 +79,22 @@
           <app-ghost-line [height]="10" [width]="100" [type]="'line'"></app-ghost-line>
         </div>
       </div>
-      <div class="border-box plr-4 ptb-2 mb-4" *ngIf="timeGroup.group_type == 'fixed'">
-        <div *ngIf="!timeGroupLoading">
-          <h3 class="steel weight-bold size-default mb-2"> {{'tr_edit_time_schedule' | translate}}</h3>
-          <div class="pr-6">
-  
-            <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
-              [invalidAllDaysTime]="invalidAllDaysTime"
-              [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
-              [timeScheduleLoading]="timeGroupLoading">
-            </app-time-schedule-form>
+      <div *ngIf="!timeGroupLoading">
+        <div class="border-box plr-4 ptb-2 mb-4" *ngIf="timeGroup.group_type == 'fixed'">
+          <div>
+            <h3 class="steel weight-bold size-default mb-2"> {{'tr_edit_time_schedule' | translate}}</h3>
+            <div class="pr-6">
+    
+              <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
+                [invalidAllDaysTime]="invalidAllDaysTime"
+                [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
+                [timeScheduleLoading]="timeGroupLoading">
+              </app-time-schedule-form>
+            </div>
           </div>
         </div>
       </div>
+    
     </div>
  
     <div class="bg-white plr-4 ptb-4 mb-4 content-shadow">
@@ -111,28 +114,30 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
-                <label>{{'tr_number' | translate}}</label>
-                <div class="input-with-icon bg-white width-100">
-                  <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
-                    placeholder="{{'tr_search_by_number' | translate}}">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
                 <label>{{'tr_name' | translate}}</label>
                 <div class="input-with-icon bg-white width-100">
-                  <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
+                  <input class="text" type="text" class="s-control"  name ="employeeName" (input)="filterEmployees($event,'by_name')"
                     placeholder="{{'tr_search_by_name' | translate}}">
                 </div>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
+                <label>{{'tr_number' | translate}}</label>
+                <div class="input-with-icon bg-white width-100">
+                  <input class="text" type="text" (input)="filterEmployees($event,'by_number')" name ="employeeNumber" class="s-control"
+                    placeholder="{{'tr_search_by_number' | translate}}">
+                </div>
+              </div>
+            </div>
+         
+            
+            <div class="col-md-3">
+              <div class="form-group">
                 <label>{{'tr_department' | translate}}</label>
                 <div class="input-with-icon bg-white width-100">
                   <ng-select class="s-control s-select"
-                    (change)="filterEmployees(selectedDepartment,'by_department_id')" bindValue="id"
+                    (change)="filterEmployees(selectedDepartment,'by_department_id')" 
                     (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
                     placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
                     (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
@@ -156,48 +161,79 @@
         </div>
 
         <div class="row border-bottom mt-4">
-          <div class="col-md-6">
-            <div class="weight-bold">{{'tr_employees' | translate}}</div>
+          <div class="col-md-7 mb-2" *ngIf="employeesLoading">
+            <div>
+              <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
+            </div>
+          </div>
+          <div class="col-md-7" *ngIf="!employeesLoading">
+            <table class="table s-table employees-table border-right layout-fixed">
+              <thead>
+                <th>
+                  <div class="weight-bold">{{'tr_employees' | translate}}</div>
+                </th>
+                <th>
+                  {{'tr_time_group' | translate}}
+                </th>
+                <th>{{'tr_department' | translate}}</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let employee of employeesList; let i=index">
+                  <td>
+                    <div class="flex flex-middle">
+                      <span class="s-checkbox">
+                        <input type="checkbox" id="employee-id-{{i}}" name="employee"  [checked]="employee.isInsideCurrentTimeGroup"
+                          (change)="assignEmployeeIngroup($event,employee)">
+                        <label for="employee-id-{{i}}"></label>
+                      </span>
+                      <h1 class="size-small ml-1">{{employee.name}}</h1>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="employee.time_group">
+                      {{employee.time_group.name}}
+                    </div>
+                    
+                  </td>
+                  <td>
+                    {{employee.department_name}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+            *ngIf="employeesPaginationData.next_page && employeesPaginationData.total_count > employeesList.length && employeesList.length > 0"
+            class="text-link text-center pb-4 pl-2 pointer " (click)="nextpage()">
+            {{'tr_load_more' | translate}}
+          </div>
+
             <div class="text-center flex flex-middle flex-center"
               *ngIf="!employeesLoading && employeesList.length <= 0">
               <div class="ptb-2 plr-2">
-                <img src="assets/images/placeholders/zones.svg" alt="">
+                <img src="assets/images/placeholders/zones.svg" width="80" alt="">
                 <p class="size-tiny weight-bold mt-3">
                   {{'tr_empty_state' | translate}}
                 </p>
               </div>
             </div>
-            <div class="mt-4 employees-container" *ngIf="!employeesLoading">
-              <div class="flex flex-middle mb-4" *ngFor="let employee of employeesList; let i=index">
-                <span class="s-checkbox">
-                  <input type="checkbox" id="employee-id-{{i}}" name="employee" [checked]="employee.time_group!"
-                    (change)="assignEmployeeIngroup($event,employee)">
-                  <label for="employee-id-{{i}}"></label>
-                </span>
-                <h1 class="size-small ml-1">{{employee.name}}</h1>
-              </div>
-              <div
-                *ngIf="employeesPaginationData.next_page && employeesPaginationData.total_count > employeesList.length && employeesList.length > 0"
-                class="text-link text-center pb-4 pl-2 pointer " (click)="nextpage()">
-                {{'tr_load_more' | translate}}
-              </div>
-            </div>
+
             <div class="mtb-4" *ngIf="employeesLoading">
               <app-ghost-line [height]="10" [length]="20" [width]="300" [type]="'list'"></app-ghost-line>
             </div>
+
           </div>
-          <div class="col-md-6" *ngIf="!employeesLoading">
+          <div class="col-md-5" *ngIf="!timeGroupLoading">
             <table class="table s-table employees-table layout-fixed">
               <thead>
                 <th>
-                  {{'tr_employees' | translate}}
+                  {{'tr_assigned_employees' | translate}}
                 </th>
                 <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                   {{'tr_time_schedule' | translate}}
                 </th>
               </thead>
-              <tbody *ngIf="timeGroup.employees!.length > 0">
-                <tr *ngFor="let timegroupEmployee of timeGroup.employees!; let i=index">
+              <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
+                <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
                   <td>{{timegroupEmployee.name}}</td>
                   <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
                     <button class="s-btn btn-link" type="button" (click)="openTimeScheduleModal(timegroupEmployee)">
@@ -206,8 +242,22 @@
                 </tr>
               </tbody>
             </table>
+            <div class="text-center flex flex-middle flex-center"
+            *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
+            <div class="ptb-2 plr-2">
+              <img src="assets/images/placeholders/zones.svg" width="80" alt="">
+              <p class="size-tiny weight-bold mt-3">
+                {{'tr_empty_state' | translate}}
+              </p>
+            </div>
+          </div>
 
-
+          </div>
+          <div class="col-md-5 mb-2" *ngIf="timeGroupLoading">
+            <div>
+              <app-ghost-line [length]="2" [type]="'table'"></app-ghost-line>
+            </div>
+            
           </div>
         </div>
       </div>
