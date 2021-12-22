@@ -59,7 +59,7 @@ export class RulesListComponent implements OnInit {
     })
   }
   deleteRule(rule: Rule){
-    if(rule.time_groups! ){
+    if(rule.time_groups.length > 0 ){
       this.appNotificationService.push(this.translateService.instant('tr_rule_deleting_message'), 'error');
       return
     }
