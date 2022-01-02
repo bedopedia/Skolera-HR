@@ -18,13 +18,10 @@ export class AppComponent {
 
 
     constructor(
-        private translate: TranslateService,
         private globals: Globals,
-        private usersService: UserSerivce,
-        private versionCheckService: VersionCheckService
+        private versionCheckService: VersionCheckService,
+        private translate: TranslateService
     ) {
-      translate.setDefaultLang('en');
-      this.setSchoolConfig();
     }
 
     ngOnInit() {
@@ -42,8 +39,9 @@ export class AppComponent {
             this.globals.systemAlerts.noConnection = true;
           }));
       this.globals.currentUser = JSON.parse(localStorage.getItem('currentUser')||'');
+      this.translate.use(this.globals.currentUser.locale);
       this.globals.sessionHeaders = JSON.parse(localStorage.getItem('sessionHeaders')||'{}');
-      
+
     }
 
    
@@ -116,7 +114,7 @@ export class AppComponent {
         menu.querySelectorAll('.options-menu-container')[0].style.maxHeight = 'none';
         menu.classList.remove('reverse-h');
         let offsetAndHeight = menu.querySelectorAll('.options-menu-container')[0].offsetHeight + menu.offsetTop;
-        let widnowHeight = document.body.clientHeight;
+        let widnowHeight = window.innerHeight
         let outOfWindowVertically = offsetAndHeight - widnowHeight > 0 ? true : false;
         if (outOfWindowVertically) {
             menu.classList.add('reverse-v')
@@ -124,25 +122,6 @@ export class AppComponent {
         }
     }
 
-    setSchoolConfig() {
-        if (localStorage.getItem('schoolConfig')) {
-            this.globals.currentSchool = JSON.parse(localStorage.getItem('schoolConfig')|| '{}');
-            console.log(this.globals.currentSchool );
-            
-            return
-        } else {
-            this.globals.showMessage('loading', '');
-            this.usersService.getSchoolConfig().subscribe(
-                (response: any) => {
-                    localStorage.setItem('schoolConfig', JSON.stringify(response));
-                    this.globals.currentSchool = response;
-                    console.log(this.globals.currentSchool );
-                    this.globals.hideMessage();
-                    return;
-                }
-            );
-        }
-    }
     ngOnDestroy(): void {
         this.subscriptions.forEach(subscription => subscription.unsubscribe());
     }

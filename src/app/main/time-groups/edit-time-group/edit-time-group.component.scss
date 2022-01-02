@@ -1,0 +1,56 @@
+@import 'color_scheme';
+@import 'mixins';
+
+
+.time-group {
+
+    border-spacing: 0 10px !important;
+    border-collapse: separate !important;
+
+    tr th,
+    tr td {
+        border: 1px solid $light_gray;
+        padding: 0.5rem 1rem !important;
+    }
+
+    td, th {
+        border-bottom: 2px solid #f3f5ff;
+
+        &:nth-child(1){
+            width: 8rem;
+        }
+        &:nth-child(2){
+            width: 4rem;
+        }
+        &:nth-child(3){
+            width: 9rem;
+        }
+        &:nth-child(4){
+            width: auto
+        }
+        &:nth-child(4){
+            width: auto
+        }
+     }
+
+}
+   
+.s-control.time-control {
+    height: 1.7rem !important;
+}
+
+.employees-table{
+    &.border-right {
+        border-right: 3px solid #39066e73;
+    }
+    th,td {
+        padding: 0.3rem 1rem !important;
+        border-bottom: none !important;
+    } 
+}
+
+.employees-container{
+    max-height: 350px;
+    min-height: 350px;
+    overflow: auto;
+}

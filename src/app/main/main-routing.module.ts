@@ -14,12 +14,24 @@ const routes: Routes = [
         loadChildren: () => import('./employees/employees.module').then(m => m.EmployeesModule)
       },
       {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+      },
+      {
         path: 'time-groups',
         loadChildren: () => import('./time-groups/time-groups.module').then(m => m.TimeGroupsModule)
       },
+      {
+        path: 'rules',
+        loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)
+      },
+      {
+        path: 'sheets',
+        loadChildren: () => import('./employees-sheet/employees-sheet.module').then(m => m.EmployeesSheetModule)
+      },
 
       {
-        path: '**', loadChildren: () => import('./employees/employees.module').then(m => m.EmployeesModule)
+        path: '**',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
       },
 
     ]

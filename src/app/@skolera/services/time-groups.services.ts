@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
-import { TimeGroup } from '@core/models/skolera-interfaces.model';
-
-
 
 @Injectable()
 export class TimeGroupsSerivce {
@@ -31,5 +28,8 @@ export class TimeGroupsSerivce {
     }
     deleteTimeGroupBatch(ids: number[]){
         return this.http.post(baseUrl + `api/hr/time_groups/batch_destroy`,{'batch_ids': ids});
+    }
+    updateTimeGroupEmployees(timeGroupId:number,employees: any){
+        return this.http.put(baseUrl + `/api/hr/time_groups/${timeGroupId}/update_employees`,employees)
     }
 }

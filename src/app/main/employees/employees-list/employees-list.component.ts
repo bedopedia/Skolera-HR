@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { EmployeesSerivce } from '@skolera/services/employees.services';
-import { Department, Employee, PaginationData } from '@core/models/skolera-interfaces.model'
+import { PaginationData } from '@core/models/skolera-interfaces.model'
+import { Department, Employee } from '@core/models/employees-interface.model'
+import { Subscription } from 'rxjs';
+import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -19,6 +22,7 @@ export class EmployeesListComponent implements OnInit {
   departmentsLoading: boolean = false;
   fullscreenEnabled = false;
   searchTerm: string;
+  currentOrder: string = ''
   params: any = {
     page: 1,
     per_page: this.paginationPerPage,
@@ -29,9 +33,10 @@ export class EmployeesListComponent implements OnInit {
   };
   paginationData: PaginationData
   departmentsPagination: PaginationData
+  private subscriptions: Subscription[] = [];
 
   constructor(
-    private employeesService: EmployeesSerivce,
+    private employeesService: EmployeesSerivce
   ) { }
 
   ngOnInit(): void {
@@ -40,19 +45,19 @@ export class EmployeesListComponent implements OnInit {
   }
   getEmployees() {
     this.employeesLoading = true;
-    this.employeesService.getEmployees(this.params).subscribe((response: any) => {
+    this.subscriptions.push(this.employeesService.getEmployees(this.params).subscribe((response: any) => {
       this.employeesList = response.employees
       this.paginationData = response.meta;
       this.employeesLoading = false
-    })
+    }))
   }
   getDepartments() {
     this.departmentsLoading = true
-    this.employeesService.getDepartments(this.dePartmentsParams).subscribe((response: any) => {
+    this.subscriptions.push(this.employeesService.getDepartments(this.dePartmentsParams).subscribe((response: any) => {
       this.departmentsPagination = response.meta;
       this.departments = this.departments.concat(response.employee_departments);
       this.departmentsLoading = false
-    })
+    }))
   }
   nextBatch() {
     if (this.departmentsPagination.next_page) {
@@ -62,19 +67,29 @@ export class EmployeesListComponent implements OnInit {
     }
   }
 
-  filterEmployees(term: any, serchKey: string) {
-    term = (serchKey == 'by_department_name') ? term : term.target.value
-    if (term.trim() === serchKey) {
-      delete this.params[serchKey];
-    }
-    else {
-      this.params[serchKey] = term;
-    }
+  filterEmployees(term: any, searchKey: string) {
+    term = (searchKey == 'by_department_id') ? term : term.target.value
+    this.params[searchKey] = term;
     this.getEmployees();
   }
   paginationUpdate(page: number) {
     this.params.page = page;
     this.getEmployees();
+  }
+  onOrder(event: string, orderType: string) {
+    if (event == 'not-me') {return}
+    this.currentOrder = event
+    delete this.params.order_by_name;
+    delete this.params.order_by_number;
+    delete this.params.order_by_department;
+    delete this.params.order_biometric_id;
+    orderType = 'order_by_' + orderType;
+    this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
+    this.getEmployees();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s && s.unsubscribe())
   }
 
 }

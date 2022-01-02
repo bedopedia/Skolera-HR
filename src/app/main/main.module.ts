@@ -23,6 +23,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '@shared/shared.module';
 import { SystemAlertsComponent } from './system-alerts/system-alerts.component';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
+import { RulesSerivce } from '@skolera/services/rules.services';
+import { EmployeesSerivce } from '@skolera/services/employees.services';
+import { UploadFilesWithPreSignedUrlService } from '@skolera/services/upload_files_with_presigned_Url.service';
 
 
 @NgModule({
@@ -62,7 +65,10 @@ providers: [
     UserSerivce,
     AuthenticationService,
     AppNotificationService,
-    TimeGroupsSerivce
+    TimeGroupsSerivce,
+    RulesSerivce,
+    EmployeesSerivce,
+    UploadFilesWithPreSignedUrlService
 ],
 
 })

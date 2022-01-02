@@ -11,11 +11,16 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { VersionCheckService } from '@skolera/services/version-check.service';
 import { SkoleraConfirmationComponent } from './components/skolera-confirmation/skolera-confirmation.component';
 import { SkoleraMultiCheckboxComponent } from './components/skolera-multi-checkbox/skolera-multi-checkbox.component';
+import { UpdateService } from '@skolera/services/update.service';
+import { SkoleraOrderByComponent } from './components/skolera-order-by/skolera-order-by.component';
+import { ImagePreloadDirective } from './components/image/image.directive';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
 @NgModule({
-  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent,SkoleraMultiCheckboxComponent],
+  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent,SkoleraMultiCheckboxComponent,SkoleraOrderByComponent,ImagePreloadDirective],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -33,8 +38,12 @@ import { SkoleraMultiCheckboxComponent } from './components/skolera-multi-checkb
     FormsModule,
     LoadingBarHttpClientModule,
     SkoleraConfirmationComponent,
-    SkoleraMultiCheckboxComponent
+    SkoleraMultiCheckboxComponent,
+    SkoleraOrderByComponent,
+    ImagePreloadDirective,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [VersionCheckService]
+  providers: [VersionCheckService,UpdateService]
 })
 export class SharedModule { }

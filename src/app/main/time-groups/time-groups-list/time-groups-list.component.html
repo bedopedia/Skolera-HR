@@ -3,7 +3,7 @@
     <h2 class="size-body title-with-btn plr-4 ptb-4">
       <span class="page-title">{{'tr_time_groups' | translate }}</span>
       <div class="btn-group inline-flex mt-2-mob">
-        <button class="s-btn size-small btn-secondary" (click)="createTimeGroup('create')">
+        <button class="s-btn size-small btn-secondary" (click)="createTimeGroup()">
           <i class="fa fa-plus mr-2"></i>
           {{ 'tr_add_new_time_group' | translate }}
         </button>
@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
-            <label>{{'tr_number' | translate}}</label>
+            <label>{{'tr_name' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
               <input class="text" (keyup)="filterTimeGroups($event,'by_name')" class="s-control"
                 placeholder="{{'tr_search_by_name' | translate}}">
@@ -63,16 +63,9 @@
                   [id]="'selectAll'"></skolera-multi-checkbox>
               </th>
               <th>{{'tr_name' | translate}}</th>
-              <th>{{'tr_time_group_type' | translate}}</th>
+              <th>{{'tr_type' | translate}}</th>
               <th>{{'tr_number_of_employees' | translate}}</th>
-              <th> <span class="options-menu">
-                  <i class="fa fa-ellipsis-v"></i>
-                  <div class="options-menu-container">
-                    <div class="single-option text-error" (click)="deleteTimeGroup('all')">
-                      {{ 'tr_action.delete' | translate }}
-                    </div>
-                  </div>
-                </span></th>
+              <th></th>
             </thead>
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
@@ -94,10 +87,10 @@
                   <span class="options-menu">
                     <i class="text-small fa fa-ellipsis-v"></i>
                     <div class="options-menu-container">
-                      <div class="single-option border-bottom" (click)="createTimeGroup('edit',timeGroup)">
-                        {{ 'tr_action.edit' | translate }}
+                      <div class="single-option border-bottom width-100" [routerLink]="timeGroup.id + '/edit'">
+                          {{ 'tr_action.edit' | translate }}
                       </div>
-                      <div class="single-option text-error" (click)="deleteTimeGroup('single',timeGroup)">
+                      <div class="single-option text-error" (click)="deleteTimeGroup(timeGroup)">
                         {{ 'tr_action.delete' | translate }}
                       </div>
                     </div>
