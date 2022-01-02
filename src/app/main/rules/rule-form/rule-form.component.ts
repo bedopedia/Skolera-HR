@@ -146,7 +146,7 @@ export class RuleFormComponent implements OnInit {
     return invalidRuleForm;
   }
   deleteTardinessRule(deletedTardinessRule: TardinessRule ) {
-    let data = {
+    const data = {
       title: this.translate.instant("tr_sure_message"),
       buttons: [
         {

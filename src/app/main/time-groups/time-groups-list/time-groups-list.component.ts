@@ -62,7 +62,7 @@ export class TimeGroupsListComponent implements OnInit {
       return
     }
 
-    let data = {
+    const data = {
       title: this.translateService.instant("tr_time_group_confirmation_message"),
       buttons: [
         {

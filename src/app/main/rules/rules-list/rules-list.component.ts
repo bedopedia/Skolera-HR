@@ -43,8 +43,9 @@ export class RulesListComponent implements OnInit {
       this.rulesList = response.rules;
       this.paginationData = response.meta;
       this.rulesLoading = false;
-      
-    }))
+    }, error=> {
+      this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+     }))
   }
   openRuleForm(type: string, rule?:Rule){
     const dialogRef = this.dialog.open(RuleFormComponent, {
@@ -63,7 +64,7 @@ export class RulesListComponent implements OnInit {
       this.appNotificationService.push(this.translateService.instant('tr_rule_deleting_message'), 'error');
       return
     }
-    let data = {
+    const data = {
       title: this.translateService.instant("tr_rule_confirmation_message"),
       buttons: [
         {
