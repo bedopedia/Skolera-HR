@@ -29,7 +29,4 @@ export class TimeGroupsSerivce {
     updateTimeGroupEmployees(timeGroupId:number,employees: any){
         return this.http.put(baseUrl + `/api/hr/time_groups/${timeGroupId}/update_employees`,employees)
     }
-    updateTimeGroupEmployees(timeGroupId:number,employees: any){
-        return this.http.put(baseUrl + `/api/hr/time_groups/${timeGroupId}/update_employees`,employees)
-    }
 }
