@@ -38,7 +38,7 @@ export class SheetsListComponent implements OnInit {
   getSheets() {
     this.sheetsLoading = true;
     this.employeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any) => {
-      this.sheets = response.employees_attendnaces.map((x: any) => { x.logs = JSON.parse(x.logs); return x; })
+      this.sheets = response.employees_attendnaces.map((attendance: any) => { attendance.logs = JSON.parse(attendance.logs); return attendance; })
       this.paginationData = response.meta;
       this.sheetsLoading = false;
     }, error => {
