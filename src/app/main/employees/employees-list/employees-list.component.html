@@ -67,24 +67,24 @@
         <table class="s-table table layout-fixed">
           <thead>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
+              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder['number']" [type]="'number'" [orderBy]="'number'">
                 {{ 'tr_number' | translate }}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'"
+              <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder['name']" [type]="'name'"
                 [orderBy]="'name'">
                 {{'tr_name' | translate}}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder"
+              <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder['department']"
                 [type]="'department'" [orderBy]="'department'">
                 {{'tr_department' | translate}}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder"
+              <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder['biometric_id']"  [type]="'biometric_id'"
                 [orderBy]="'biometric_id'">
                 {{'tr_biometric_id' | translate}}
               </div>

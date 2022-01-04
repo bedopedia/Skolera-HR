@@ -20,7 +20,12 @@ export class EmployeesListComponent implements OnInit {
   departmentsLoading: boolean = false;
   fullscreenEnabled = false;
   searchTerm: string;
-  currentOrder: string = ''
+  currentOrder: any = {
+    number: '',
+    name: '',
+    department: '',
+    biometric_id: ''
+  }
   params: any = {
     page: 1,
     per_page: this.paginationPerPage,
@@ -77,7 +82,8 @@ export class EmployeesListComponent implements OnInit {
   }
   onOrder(event: string, orderType: string) {
     if (event == 'not-me') {return}
-    this.currentOrder = event
+    this.resetCurrentOrder();
+    this.currentOrder[orderType] = event;
     delete this.params.order_by_name;
     delete this.params.order_by_number;
     delete this.params.order_by_department;
@@ -86,6 +92,15 @@ export class EmployeesListComponent implements OnInit {
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
     this.params.page = 1;
     this.getEmployees();
+  }
+
+  resetCurrentOrder(){
+    this.currentOrder = {
+      number: '',
+      name: '',
+      department: '',
+      biometric_id: ''
+    }
   }
 
   ngOnDestroy() {
