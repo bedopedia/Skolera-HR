@@ -36,6 +36,8 @@ export class EmployeesListComponent implements OnInit {
   };
   paginationData: PaginationData
   departmentsPagination: PaginationData
+  searchTimeout: any;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -71,10 +73,13 @@ export class EmployeesListComponent implements OnInit {
   }
 
   filterEmployees(term: any, searchKey: string) {
-    term = (searchKey == 'by_department_id') ? term : term.target.value
-    this.params[searchKey] = term;
-    this.params.page = 1;
-    this.getEmployees();
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      term = (searchKey == 'by_department_id') ? term : term.target.value
+      this.params[searchKey] = term;
+      this.params.page = 1;
+      this.getEmployees();
+    }, 500);
   }
   paginationUpdate(page: number) {
     this.params.page = page;
