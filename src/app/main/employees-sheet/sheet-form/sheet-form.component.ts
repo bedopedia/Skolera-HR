@@ -115,6 +115,7 @@ export class SheetFormComponent implements OnInit {
     delete this.sheet.uploaded_file
     this.sheet.start_date = moment(this.sheet.start_date).format('YYYY-MM-DD')
     this.sheet.end_date = moment(this.sheet.end_date).format('YYYY-MM-DD')
+    this.sheet.national_holidays_attributes = this.sheet.national_holidays;
     const params = {
       employees_attendance: this.sheet
     }
