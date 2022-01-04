@@ -180,7 +180,7 @@
     "tr_choose_a_date": "Choose a date*",
     "tr_edit_time_schedule": "تحرير / تعديل الجدول",
     "tr_validation_failed": "لم نتمكن من التحقيق",
-    "tr_validation_succedded":"تم التحقق من الصحة بنجاح",
+    "tr_validation_succeeded":"تم التحقق من الصحة بنجاح",
     "tr_start_date":"Start Date*",
     "tr_end_date":"End Date*",
     "tr_state":"State*",
@@ -207,5 +207,6 @@
     "tr_sync_message":"سيتم تعطيل زر المزانة حتى انتهاء العملية السابقة",
     "tr_syncing": "التزامن جارى",
     "tr_unexpected_error_message": "تم إلغاء تعيين الموظف من مجموعة الوقت بنجاح",
-    "tr_hr_sync_started": "HR Sync Started*"
+    "tr_hr_sync_started": "HR Sync Started*",
+    "tr_logs": "Logs*"
 }
