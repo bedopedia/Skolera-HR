@@ -43,8 +43,8 @@ export class SheetFormComponent implements OnInit {
   public closeModal() {
     this.dialogRef.close();
   }
-  validateNationalHolidays(holidayDate: Date){
-   return  this.sheet.national_holidays.filter(nationalDay => nationalDay.day.toString() == holidayDate.toString()).length > 0
+  validateNationalHolidays(holidayDate: Date) {
+    return this.sheet.national_holidays.filter(nationalDay => nationalDay.day.toString() == holidayDate.toString()).length > 0
   }
   addHoliday(holidayDate: any) {
     holidayDate = moment(holidayDate).format('YYYY-MM-DD');
@@ -100,6 +100,11 @@ export class SheetFormComponent implements OnInit {
       this.isFileUpdating = false;
     }
     ))
+  }
+
+  resetNationalHolidays() {
+    this.sheet.national_holidays = [];
+    this.nationalHolidayDate = '';
   }
 
   submitForm() {
