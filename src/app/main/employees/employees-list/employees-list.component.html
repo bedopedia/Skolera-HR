@@ -11,7 +11,7 @@
         <div class="form-group">
           <label>{{'tr_number' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
-            <input class="text" [pattern]="" (keyup)="filterEmployees($event,'by_number')" class="s-control"
+            <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
               placeholder="{{'tr_search_by_number' | translate}}">
           </div>
         </div>

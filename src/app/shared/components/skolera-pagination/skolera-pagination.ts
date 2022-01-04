@@ -1,5 +1,6 @@
 import { Component, Injectable, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import {PaginationData} from '@core/models/skolera-interfaces.model'
+import { UpdateService } from '@skolera/services/update.service';
 
 @Injectable()
 @Component({
@@ -52,7 +53,10 @@ export class SkoleraPagination implements OnChanges {
     remainingPages: number = this.step;
     isLoading: boolean = true;
 
-    constructor() { }
+    constructor(
+        private updateService: UpdateService
+    ) { }
+    
     ngOnChanges(change: SimpleChanges) {
         this.activeCell = this.paginationData.current_page;
         this.updateAll();
@@ -108,12 +112,14 @@ export class SkoleraPagination implements OnChanges {
     }
 
     updateStartingCell() {
+        this.startCell = this.updateService.getPaginationStartCell();
         if (this.activeCell < this.startCell) {
             this.startCell -= this.step;
         }
-        if (this.activeCell > this.startCell - 1 + this.step) {
+        if (this.activeCell > this.startCell - 1 + this.step  ) {
             this.startCell = this.startCell + this.step;
         }
+        this.updateService.updatePaginationStartCell(this.startCell)  
     }
 
     updateRemaining() {

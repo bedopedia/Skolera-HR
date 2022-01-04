@@ -68,6 +68,7 @@ export class EmployeesListComponent implements OnInit {
   filterEmployees(term: any, searchKey: string) {
     term = (searchKey == 'by_department_id') ? term : term.target.value
     this.params[searchKey] = term;
+    this.params.page = 1;
     this.getEmployees();
   }
   paginationUpdate(page: number) {
@@ -83,6 +84,7 @@ export class EmployeesListComponent implements OnInit {
     delete this.params.order_biometric_id;
     orderType = 'order_by_' + orderType;
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
+    this.params.page = 1;
     this.getEmployees();
   }
 
