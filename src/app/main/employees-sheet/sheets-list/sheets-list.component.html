@@ -7,10 +7,10 @@
         <i class="fa fa-plus mr-2"></i>
         {{ 'tr_upload_sheet' | translate }}
       </button>
-      <button class="s-btn size-small btn-secondary">
+      <a class="s-btn size-small btn-secondary" href="https://skolera-publicnew.s3.eu-west-1.amazonaws.com/Demo+Template.xlsx">
         <i class="fa fa-download mr-2"></i>
         {{ 'tr_download_template' | translate }}
-      </button>
+      </a>
 
     </div>
 
@@ -46,52 +46,56 @@
             </td>
 
             <td>
-              {{sheet.start_date  | date: 'dd/MM/yyyy' }}
+              {{sheet.start_date | date: 'dd/MM/yyyy' }}
             </td>
             <td>
-              {{sheet.end_date  | date: 'dd/MM/yyyy' }}
+              {{sheet.end_date | date: 'dd/MM/yyyy' }}
             </td>
-            <td> 
+            <td>
               <div class="flex flex-middle flex-wrap">
                 <span class="selected-item-no-border ml-1 plr-1 bg-secondary"
-                *ngFor="let nationalHoliday of sheet.national_holidays | slice:0:2">
-                {{nationalHoliday.day}}
-              </span>
-              <span class="options-menu ml-2">
-                <div *ngIf="sheet.national_holidays.length > 2">
-                  + {{sheet.national_holidays.length - 2}}
+                  *ngFor="let nationalHoliday of sheet.national_holidays | slice:0:2">
+                  {{nationalHoliday.day}}
+                </span>
+                <span class="options-menu ml-2">
+                  <div *ngIf="sheet.national_holidays.length > 2">
+                    + {{sheet.national_holidays.length - 2}}
+                  </div>
+                  <div class="options-menu-container">
+                    <div class="single-option"
+                      *ngFor="let nationalHoliday of sheet.national_holidays | slice:2:sheet.national_holidays.length">
+                      <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day}}</div>
+                    </div>
+                  </div>
+                </span>
+
+              </div>
+
+            </td>
+            <td>
+
+
+
+              <span [ngClass]="{'options-menu': (sheet.state == 'validation_failed' || sheet.state == 'sync_failed' || sheet.state == 'sync_succeeded')}">
+
+                <div
+                  [ngClass]="{'text-error hover-link open-modal': (sheet.state == 'validation_failed' || sheet.state == 'sync_failed') ,'text-success': (sheet.state == 'validation_succeeded' || sheet.state == 'sync_succeeded')}">
+                  {{"tr_"+sheet.state | translate}}
                 </div>
-                <div class="options-menu-container">
-                  <div class="single-option"
-                    *ngFor="let nationalHoliday of sheet.national_holidays | slice:2:sheet.national_holidays.length">
-                    <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day}}</div>
+                <div class="options-menu-container" *ngIf="(sheet.state == 'validation_failed' || sheet.state == 'sync_failed' || sheet.state == 'sync_succeeded')">
+                  <div class="ptb-3 plr-2 options-menu-wrapper">
+                    <span class="weight-bold text-primary mb-1">{{ 'tr_logs' | translate }}</span>
+                    <p *ngFor="let sheetLog of sheet.logs" class="mb-1 weight-normal size-small">
+                      <span>{{ sheetLog }}</span>
+                    </p>
                   </div>
                 </div>
               </span>
 
-              </div>
-             
-            </td>
-            <td
-              >
-          
 
-
-          <span class="options-menu">
-
-             <div class="open-modal pointer hover-link" [ngClass]="{'text-error': sheet.state == 'validation_failed' ||sheet.state == 'sync_failed' ,'text-success': sheet.state == 'validation_success' ||sheet.state == 'sync_success' }" >
-              {{"tr_"+sheet.state | translate}}
-            </div>
-            <div class="options-menu-container plr-6" *ngIf="sheet.logs">
-              <span class="weight-bold text-primary mb-1"> {{'tr_logs' | translate}}</span>
-              {{sheet.logs}}
-            </div>
-          </span>
-           
-             
             </td>
             <td>
-              <button class="s-btn btn-secondary btn-sm" (click)="startSync(sheet)"
+              <button class="s-btn btn-secondary btn-sm" (click)="startSync(sheet)" [disabled]="isSyncing"
                 *ngIf="sheet.state=='validation_succeeded'">{{"tr_start_sync" | translate}}</button>
             </td>
             <td>
