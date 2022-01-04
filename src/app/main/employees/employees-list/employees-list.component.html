@@ -27,15 +27,6 @@
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label>{{'tr_biometric_id' | translate}}</label>
-          <div class="input-with-icon bg-white width-100">
-            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
-              placeholder="{{'tr_search_by_biometric_id' | translate}}">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
           <label>{{'tr_department' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
             <ng-select class="s-control s-select" (change)="filterEmployees(selectedDepartment,'by_department_id')"
@@ -55,6 +46,15 @@
               </ng-template>
             </ng-select>
             <i class="fa fa-caret-down input-icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_biometric_id' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
+              placeholder="{{'tr_search_by_biometric_id' | translate}}">
           </div>
         </div>
       </div>
