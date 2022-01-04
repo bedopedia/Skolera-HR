@@ -57,11 +57,6 @@
         <div class="table-container" id="table-container" *ngIf="timeGroupsList.length > 0">
           <table class="s-table table layout-fixed">
             <thead>
-              <th>
-                <skolera-multi-checkbox [isParent]="true" [(allChecked)]="allChecked"
-                  [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
-                  [id]="'selectAll'"></skolera-multi-checkbox>
-              </th>
               <th>{{'tr_name' | translate}}</th>
               <th>{{'tr_type' | translate}}</th>
               <th>{{'tr_number_of_employees' | translate}}</th>
@@ -69,11 +64,6 @@
             </thead>
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
-                <td>
-                  <skolera-multi-checkbox [isParent]="false" [(allChecked)]="allChecked"
-                    [(partiallyChecked)]="partiallyChecked" [(checkedCells)]="checkedCells" [cells]="cells"
-                    [id]="timeGroup.id!"></skolera-multi-checkbox>
-                </td>
                 <td>
                   <ng-container> {{timeGroup.name}}</ng-container>
                 </td>
