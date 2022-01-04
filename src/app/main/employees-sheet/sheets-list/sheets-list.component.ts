@@ -21,11 +21,12 @@ export class SheetsListComponent implements OnInit {
   };
   paginationData: PaginationData;
   sheetsLoading: boolean = true;
-  sheets:AttendanceSheet[] = [];
+  sheets: AttendanceSheet[] = [];
+  isSyncing:boolean = false;
   constructor(
     private dialog: MatDialog,
     private employeesSerivce: EmployeesSerivce,
-    private appNotificationService:AppNotificationService,
+    private appNotificationService: AppNotificationService,
     private fedenaSyncService: FedenaSyncService,
     private translateService: TranslateService
   ) { }
@@ -34,13 +35,13 @@ export class SheetsListComponent implements OnInit {
     this.getSheets();
   }
 
-  getSheets(){
+  getSheets() {
     this.sheetsLoading = true;
-    this.employeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any)=> {
-      this.sheets = response.employees_attendnaces
+    this.employeesSerivce.getEmployeeAttendance(this.params).subscribe((response: any) => {
+      this.sheets = response.employees_attendnaces.map((x: any) => { x.logs = JSON.parse(x.logs); return x; })
       this.paginationData = response.meta;
       this.sheetsLoading = false;
-    },error=> {
+    }, error => {
       this.sheetsLoading = false;
       this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
     })
@@ -49,25 +50,31 @@ export class SheetsListComponent implements OnInit {
     this.params.page = page;
     this.getSheets();
   }
- public uploadSheet(){
-  const dialogRef = this.dialog.open(SheetFormComponent, {
-    width: '650px',
-    disableClose: true
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if(result == 'update'){
-      this.getSheets();
-    }
-  })
+  public uploadSheet() {
+    const dialogRef = this.dialog.open(SheetFormComponent, {
+      width: '650px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'update') {
+        this.getSheets();
+      }
+    })
   }
 
-  public startSync(sheet: AttendanceSheet){
-    this.fedenaSyncService.syncAttendanceSheet({employees_attendance_id: sheet.id}).subscribe(response => {
+  public startSync(sheet: AttendanceSheet) {
+    this.isSyncing = true;
+    this.fedenaSyncService.syncAttendanceSheet({ employees_attendance_id: sheet.id }).subscribe(response => {
+      this.isSyncing = false;
       sheet.state = "syncing"
       this.appNotificationService.push(this.translateService.instant('tr_hr_sync_started'), 'success')
-    },error=> {
-      sheet.state = "sync_failed"
-      this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
+    }, error => {
+      this.isSyncing = false;
+      if (error.error && error.error.message) {
+        this.appNotificationService.push(error.error.message, 'error');
+      } else {
+        this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
+      }
     })
   }
 }

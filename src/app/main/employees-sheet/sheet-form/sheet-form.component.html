@@ -52,7 +52,7 @@
                 <label class="text-small"> {{'tr_start_date' | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
                   <input placeholder="{{'tr_choose_a_date' | translate}}" #startDate="ngModel" [max]="sheet.end_date" [(ngModel)]="sheet.start_date"
-                    [matDatepicker]="pickId2" class="s-control" name="startDate" required>
+                    [matDatepicker]="pickId2" class="s-control" name="startDate" (dateChange)="resetNationalHolidays()" required>
                   <mat-datepicker #pickId2></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId2"></mat-datepicker-toggle>
                 </div>
@@ -68,7 +68,7 @@
                 <label class="text-small"> {{'tr_end_date' | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
                   <input placeholder="{{'tr_choose_a_date' | translate}}" [min]="sheet.start_date" [(ngModel)]="sheet.end_date"
-                    [matDatepicker]="pickId" class="s-control" name="endDate" #endDate="ngModel" required>
+                    [matDatepicker]="pickId" class="s-control" name="endDate" #endDate="ngModel" (dateChange)="resetNationalHolidays()" required>
                   <mat-datepicker #pickId></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId"></mat-datepicker-toggle>
                 </div>
@@ -83,7 +83,7 @@
               <div class="form-group">
                 <label class="text-small"> {{"tr_national_holidays_dates" | translate}} </label>
                 <div class="input-with-icon inline-block width-100">
-                  <input placeholder="{{'tr_choose_a_date' | translate}}"  [(ngModel)]="nationalHolidayDate" [min]="sheet.start_date" [max]="sheet.end_date" [disabled]="!sheet.start_date && !sheet.end_date" (dateChange)="addHoliday($event.value)"
+                  <input placeholder="{{'tr_choose_a_date' | translate}}"  [(ngModel)]="nationalHolidayDate" [min]="sheet.start_date" [max]="sheet.end_date" [disabled]="!sheet.start_date || !sheet.end_date" (dateChange)="addHoliday($event.value)"
                     [matDatepicker]="pickId3" class="s-control" name="holidays_date" required>
                   <mat-datepicker #pickId3></mat-datepicker>
                   <mat-datepicker-toggle class="input-icon date-picker" [for]="pickId3"></mat-datepicker-toggle>
