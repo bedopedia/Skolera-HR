@@ -48,7 +48,8 @@ export class RuleFormComponent implements OnInit {
       this.rule = {
         name: '',
         leave_type_id: 1,
-        tardiness_rules_attributes:[]
+        tardiness_rules_attributes:[],
+        time_groups:[]
       }
     }
     else {
