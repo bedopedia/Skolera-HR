@@ -93,8 +93,8 @@ export class SkoleraPagination implements OnChanges {
     }
 
     updateAll() {
-        this.updateRemaining();
         this.updateStartingCell();
+        this.updateRemaining();
         this.drawCells();
         this.checkFastButtons();
     }
@@ -113,11 +113,15 @@ export class SkoleraPagination implements OnChanges {
 
     updateStartingCell() {
         this.startCell = this.updateService.getPaginationStartCell();
-        if (this.activeCell < this.startCell) {
-            this.startCell -= this.step;
-        }
-        if (this.activeCell > this.startCell - 1 + this.step  ) {
-            this.startCell = this.startCell + this.step;
+        if (this.activeCell == 1){
+            this.startCell = 1;
+        }else{
+            if (this.activeCell < this.startCell) {
+                this.startCell -= this.step;
+            }
+            if (this.activeCell > this.startCell - 1 + this.step  ) {
+                this.startCell = this.startCell + this.step;
+            }
         }
         this.updateService.updatePaginationStartCell(this.startCell)  
     }
