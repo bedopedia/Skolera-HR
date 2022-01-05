@@ -368,6 +368,11 @@ table {
     border-spacing: 0;
 }
 
+tr {
+    border-bottom-width: 0;
+    border-bottom: 1px solid #e9ebed;
+}
+
 .table {
     width: 100%;
     max-width: 100%;
