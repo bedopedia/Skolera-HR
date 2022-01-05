@@ -103,7 +103,7 @@ export class RuleFormComponent implements OnInit {
   }
   submitFrorm() {
     this.isFormSubmitted = true;
-    if (this.getIsInValidRule() || this.rule.name == '') {
+    if (this.getIsInValidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
       this.isFormSubmitted = false;
       return
     }
@@ -172,8 +172,6 @@ export class RuleFormComponent implements OnInit {
       if (result == 'delete') {
         this.rule.tardiness_rules_attributes?.forEach((tardinessRule, index) => {
           if (tardinessRule == deletedTardinessRule) {
-            console.log("deletedTardinessRule", deletedTardinessRule);
-
             if (deletedTardinessRule.id!) {
               tardinessRule._destroy = true;
               this.rule.deleted_tardiness_rules?.push(tardinessRule)

@@ -101,6 +101,7 @@ export class RulesListComponent implements OnInit {
   }
   filterRules(term: any){
     term =  term.target.value
+    this.params.page = 1;
     this.params['by_name'] = term;
     this.getRules();
   }
