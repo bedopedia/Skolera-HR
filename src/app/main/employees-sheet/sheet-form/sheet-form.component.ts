@@ -23,6 +23,7 @@ export class SheetFormComponent implements OnInit {
   isFileHasError: boolean = false;
   isFileSuccess: boolean = false;
   isFileUpdating: boolean = false;
+  isFileUploading: boolean = false;
   nationalHolidayDate: any;
   sheetFile: any;
   sheet: AttendanceSheet = new AttendanceSheet();
@@ -68,13 +69,13 @@ export class SheetFormComponent implements OnInit {
   fileInputChange(event: any) {
     this.isFileUpdating = true;
     this.isFileHasError = false;
+    this.isFileLoading = true;
     this.sheetFile = event.target.files[0];
     const params = {
       name: this.sheetFile.name,
       fileable_type: 'EmployeesAttendance',
       public_url: ''
     }
-    this.isFileLoading = true;
     this.subscriptions.push(this.uploadFilesWithPreSignedUrlService.getPreSignedUrl({
       presigned_url: {
         model_name: 'EmployeesAttendance',
@@ -111,6 +112,7 @@ export class SheetFormComponent implements OnInit {
     if (this.sheetFile == null || !this.sheet.start_date || !this.sheet.end_date) {
       return
     }
+    this.isFileUploading = true;
     delete this.sheet.state;
     delete this.sheet.uploaded_file
     this.sheet.start_date = moment(this.sheet.start_date).format('YYYY-MM-DD')
@@ -122,7 +124,9 @@ export class SheetFormComponent implements OnInit {
     this.employeesSerivce.createAttendanceSheet(params).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_attendance_sheet_created_successfully'), 'success');
       this.dialogRef.close('update');
+      this.isFileUploading = false;
     }, error => {
+      this.isFileUploading = false;
       this.appNotificationService.push(this.translate.instant('tr_something_went_wrong'), 'error');
     })
   }
