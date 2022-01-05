@@ -103,7 +103,7 @@
         <div class="modal-footer text-right">
           <button class="s-btn btn-primary mr-3" type="submit" [disabled]="isFileLoading || isFileUploading">
             {{'tr_action.save' | translate}}</button>
-          <button class="s-btn btn-secondary" type="reset" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
+          <button class="s-btn btn-secondary" type="reset" [disabled]="isFileUploading" (click)="closeModal()"> {{'tr_action.cancel'| translate}}</button>
         </div>
 
       </form>
