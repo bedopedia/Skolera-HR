@@ -20,7 +20,12 @@ export class EmployeesListComponent implements OnInit {
   departmentsLoading: boolean = false;
   fullscreenEnabled = false;
   searchTerm: string;
-  currentOrder: string = ''
+  currentOrder: any = {
+    number: '',
+    name: '',
+    department: '',
+    biometric_id: ''
+  }
   params: any = {
     page: 1,
     per_page: this.paginationPerPage,
@@ -31,6 +36,8 @@ export class EmployeesListComponent implements OnInit {
   };
   paginationData: PaginationData
   departmentsPagination: PaginationData
+  searchTimeout: any;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -66,9 +73,13 @@ export class EmployeesListComponent implements OnInit {
   }
 
   filterEmployees(term: any, searchKey: string) {
-    term = (searchKey == 'by_department_id') ? term : term.target.value
-    this.params[searchKey] = term;
-    this.getEmployees();
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      term = (searchKey == 'by_department_id') ? term : term.target.value
+      this.params[searchKey] = term;
+      this.params.page = 1;
+      this.getEmployees();
+    }, 500);
   }
   paginationUpdate(page: number) {
     this.params.page = page;
@@ -76,14 +87,25 @@ export class EmployeesListComponent implements OnInit {
   }
   onOrder(event: string, orderType: string) {
     if (event == 'not-me') {return}
-    this.currentOrder = event
+    this.resetCurrentOrder();
+    this.currentOrder[orderType] = event;
     delete this.params.order_by_name;
     delete this.params.order_by_number;
     delete this.params.order_by_department;
     delete this.params.order_biometric_id;
     orderType = 'order_by_' + orderType;
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
+    this.params.page = 1;
     this.getEmployees();
+  }
+
+  resetCurrentOrder(){
+    this.currentOrder = {
+      number: '',
+      name: '',
+      department: '',
+      biometric_id: ''
+    }
   }
 
   ngOnDestroy() {

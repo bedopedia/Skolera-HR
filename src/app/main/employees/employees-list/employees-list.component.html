@@ -11,7 +11,7 @@
         <div class="form-group">
           <label>{{'tr_number' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
-            <input class="text" [pattern]="" (keyup)="filterEmployees($event,'by_number')" class="s-control"
+            <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
               placeholder="{{'tr_search_by_number' | translate}}">
           </div>
         </div>
@@ -22,15 +22,6 @@
           <div class="input-with-icon bg-white width-100">
             <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
               placeholder="{{'tr_search_by_name' | translate}}">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label>{{'tr_biometric_id' | translate}}</label>
-          <div class="input-with-icon bg-white width-100">
-            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
-              placeholder="{{'tr_search_by_biometric_id' | translate}}">
           </div>
         </div>
       </div>
@@ -58,6 +49,15 @@
           </div>
         </div>
       </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>{{'tr_biometric_id' | translate}}</label>
+          <div class="input-with-icon bg-white width-100">
+            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_biometric_id')"
+              placeholder="{{'tr_search_by_biometric_id' | translate}}">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div>
@@ -67,24 +67,24 @@
         <table class="s-table table layout-fixed">
           <thead>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder" [orderBy]="'number'">
+              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder['number']" [type]="'number'" [orderBy]="'number'">
                 {{ 'tr_number' | translate }}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder" [type]="'name'"
+              <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder['name']" [type]="'name'"
                 [orderBy]="'name'">
                 {{'tr_name' | translate}}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder"
+              <div skolera-order-by (order)="onOrder($event,'department')" [current]="currentOrder['department']"
                 [type]="'department'" [orderBy]="'department'">
                 {{'tr_department' | translate}}
               </div>
             </th>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder"
+              <div skolera-order-by (order)="onOrder($event,'biometric_id')" [current]="currentOrder['biometric_id']"  [type]="'biometric_id'"
                 [orderBy]="'biometric_id'">
                 {{'tr_biometric_id' | translate}}
               </div>

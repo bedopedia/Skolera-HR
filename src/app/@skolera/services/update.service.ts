@@ -7,8 +7,10 @@ import { Subject, BehaviorSubject } from 'rxjs';
 })
 export class UpdateService {
 
-    orderUpdate: Subject<string> = new Subject<string>();
-   
+    orderUpdate: Subject<any> = new Subject<any>();
+    paginationStartCell: Subject<number> = new Subject<number>();
+    paginationStartCellNumber: number  = 1;
+
 
     constructor() {
     }
@@ -17,5 +19,17 @@ export class UpdateService {
     updateOrder(event:any) {
         this.orderUpdate.next(event);
     }
+    updatePaginationStartCell(event:number) {
+        this.paginationStartCell.next(event);
+    }
+    getPaginationStartCell(): number{
+        this.paginationStartCell.subscribe (
+            res => {
+              this.paginationStartCellNumber = res  
+            }
+        )
+        return this.paginationStartCellNumber
+    }
+  
 
 };
