@@ -67,14 +67,14 @@
         <table class="s-table table layout-fixed">
           <thead>
             <th>
-              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder['number']" [type]="'number'" [orderBy]="'number'">
-                {{ 'tr_number' | translate }}
-              </div>
-            </th>
-            <th>
               <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder['name']" [type]="'name'"
                 [orderBy]="'name'">
                 {{'tr_name' | translate}}
+              </div>
+            </th>
+            <th>
+              <div skolera-order-by (order)="onOrder($event,'number')" [current]="currentOrder['number']" [type]="'number'" [orderBy]="'number'">
+                {{ 'tr_number' | translate }}
               </div>
             </th>
             <th>
@@ -93,10 +93,10 @@
           <tbody>
             <tr *ngFor="let employee of employeesList; let i=index">
               <td>
-                <ng-container> {{employee.number}}</ng-container>
+                <ng-container> {{employee.name}}</ng-container>
               </td>
               <td>
-                <ng-container> {{employee.name}}</ng-container>
+                <ng-container> {{employee.number}}</ng-container>
               </td>
               <td>
                 <ng-container> {{employee.department_name}}</ng-container>
