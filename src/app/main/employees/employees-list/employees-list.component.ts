@@ -95,7 +95,6 @@ export class EmployeesListComponent implements OnInit {
     delete this.params.order_biometric_id;
     orderType = 'order_by_' + orderType;
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
-    this.params.page = 1;
     this.getEmployees();
   }
 
