@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LeaveType, Rule, TardinessRule  } from '@core/models/rules-interfaces.model';
+import { LeaveType, Rule, TardinessRule } from '@core/models/rules-interfaces.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { TranslateService } from '@ngx-translate/core';
 import { SkoleraConfirmationComponent } from '@shared/components/skolera-confirmation/skolera-confirmation.component';
@@ -48,8 +48,8 @@ export class RuleFormComponent implements OnInit {
       this.rule = {
         name: '',
         leave_type_id: 1,
-        tardiness_rules_attributes:[],
-        time_groups:[]
+        tardiness_rules_attributes: [],
+        time_groups: []
       }
     }
     else {
@@ -61,21 +61,19 @@ export class RuleFormComponent implements OnInit {
   }
   public addTardinessRule() {
     if (!this.rule.tardiness_rules_attributes!) {
-      this.rule.tardiness_rules_attributes! = [new TardinessRule ()]
+      this.rule.tardiness_rules_attributes! = [new TardinessRule()]
     }
     else {
-      this.rule.tardiness_rules_attributes?.push(new TardinessRule ());
+      this.rule.tardiness_rules_attributes?.push(new TardinessRule());
     }
   }
-  public validateStartAndEndTime(tardinessRule: TardinessRule ) {
-    if ((tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
+  public validateStartAndEndTime(tardinessRule: TardinessRule) {
+    if ((!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.invalidAllTardinessTime = true;
       tardinessRule.invalidTime = true
-    }
-    else if (!this.isFormSubmitted && (tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
+    } else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
       return
-    }
-    else {
+    } else {
       tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
     }
@@ -146,7 +144,7 @@ export class RuleFormComponent implements OnInit {
     }
     return invalidRuleForm;
   }
-  deleteTardinessRule(deletedTardinessRule: TardinessRule ) {
+  deleteTardinessRule(deletedTardinessRule: TardinessRule) {
     const data = {
       title: this.translate.instant("tr_sure_message"),
       buttons: [
