@@ -9,19 +9,19 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label>{{'tr_number' | translate}}</label>
+          <label>{{'tr_name' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
-            <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
-              placeholder="{{'tr_search_by_number' | translate}}">
+            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
+              placeholder="{{'tr_search_by_name' | translate}}">
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label>{{'tr_name' | translate}}</label>
+          <label>{{'tr_number' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
-            <input class="text" class="s-control" (keyup)="filterEmployees($event,'by_name')"
-              placeholder="{{'tr_search_by_name' | translate}}">
+            <input class="text" (keyup)="filterEmployees($event,'by_number')" class="s-control"
+              placeholder="{{'tr_search_by_number' | translate}}">
           </div>
         </div>
       </div>
