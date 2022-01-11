@@ -121,6 +121,7 @@ export class TimeGroupsListComponent implements OnInit {
     else {
       this.params[searchKey] = term;
     }
+    this.params['page'] = 1
     this.getTimeGroups();
   }
   paginationUpdate(page: number) {
