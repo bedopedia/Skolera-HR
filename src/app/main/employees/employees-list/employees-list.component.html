@@ -30,7 +30,7 @@
           <label>{{'tr_department' | translate}}</label>
           <div class="input-with-icon bg-white width-100">
             <ng-select class="s-control s-select" (change)="filterEmployees(selectedDepartment,'by_department_id')"
-              bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading"
+              bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name" [loading]="departmentsLoading" [searchable]="false"
               placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
               (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
               [items]="departments" name="department">
