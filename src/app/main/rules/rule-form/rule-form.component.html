@@ -127,16 +127,15 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <div class="form-group mtb-2">
+                        <div class="form-group mtb-2" [class.has-error]="(tardinessLop.invalid && tardinessLop.dirty) || (ruleForm.submitted && tardinessLop.invalid)">
                           <label>{{'tr_lop' | translate}}</label>
                           <div class="input-with-icon bg-white width-100">
                             <ng-select class="s-control s-select" placeholder="{{'tr_select' | translate}}"
-                              bindValue="value" bilndLabel="name" [(ngModel)]="tardinessRule.lop" name="tardinessRule_{{index}}"
-                              [items]="lops">
+                              bindValue="value" bilndLabel="name" #tardinessLop="ngModel" [(ngModel)]="tardinessRule.lop" name="tardinessRule_{{index}}"
+                              [items]="lops" required>
                             </ng-select>
                             <i class="fa fa-caret-down input-icon"></i>
                           </div>
-
                           <span class="text-error size-small ml-2 validator">
                             {{'tr_required_field' | translate}}
                           </span>
