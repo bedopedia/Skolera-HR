@@ -1,16 +1,16 @@
-table{
+.time-groups-table{
     td, th {
         &:nth-child(1){
-            width: 14rem;
+            width: 10rem;
         }
         &:nth-child(2){
-            width: 12rem;
+            width: 10rem;
         }
         &:nth-child(3){
-            width: auto;
+            width: 14rem;
         }
         &:nth-child(4){
-            width: 3rem;
+            width: 1rem;
         }
      }
 }
