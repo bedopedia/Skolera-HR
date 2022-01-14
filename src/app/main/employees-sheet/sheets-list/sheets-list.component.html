@@ -3,6 +3,9 @@
     <span class="page-title"> {{'tr_attendance_sheets' | translate }}</span>
 
     <div>
+      <button class="s-btn size-small mr-2" (click)="getSheets()">
+        <i class="fa fa-refresh"></i>
+      </button>
       <button class="s-btn size-small btn-primary mr-2" (click)="uploadSheet()">
         <i class="fa fa-plus mr-2"></i>
         {{ 'tr_upload_sheet' | translate }}
