@@ -100,13 +100,13 @@
                   <div class="border-top" *ngIf="tardinessRule.open">
                     <div class="row">
                       <div class="col-md-3">
-                        <div class="form-group mtb-2">
+                        <div class="form-group mtb-2" [class.has-error]="(leaveType.invalid && leaveType.dirty) || (ruleForm.submitted && leaveType.invalid)">
                           <label>{{'tr_leave_types' | translate}}</label>
                           <div class="input-with-icon bg-white width-100">
                             <ng-select class="s-control s-select" bindValue="id" (scrollToEnd)=nextBatch()
-                              bindLabel="name" [loading]="leaveTypesLoading" placeholder="{{'tr_select' | translate}}"
+                              bindLabel="name" [loading]="leaveTypesLoading"  #leaveType="ngModel" placeholder="{{'tr_select' | translate}}"
                               notFoundText="{{'tr_no_items_found' | translate}}" autofocus
-                              [(ngModel)]="tardinessRule.leave_type_id" [items]="leaveTypes" name="tardinessLeaveType_{{index}}">
+                              [(ngModel)]="tardinessRule.leave_type_id" [items]="leaveTypes" name="tardinessLeaveType_{{index}}" required>
                               <ng-template ng-header-tmp>
                                 <div class="pt-2 text-center" *ngIf="!leaveTypesLoading && !leaveTypes.length">
                                   {{'tr_there_are_no_leave_types' | translate}}
@@ -121,6 +121,9 @@
                             </ng-select>
                             <i class="fa fa-caret-down input-icon"></i>
                           </div>
+                          <span class="text-error size-small validator">
+                            {{'tr_required_field' | translate}}
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-3">
