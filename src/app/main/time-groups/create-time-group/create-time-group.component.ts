@@ -121,6 +121,12 @@ export class CreateTimeGroupComponent implements OnInit {
   public createTimeGroup() {
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
+    if (this.timeGroup.name == '' || isValidDays.includes(true)) {
+      this.isFormSubmitted = false;
+      this.invalidAllDaysTime = isValidDays.includes(true)
+      return
+    }
+
     if (this.timeGroup.group_type == 'fixed') {
 
       this.timeGroup.time_group_schedule_attributes!.schedule_days_attributes!.forEach(day => {
@@ -138,12 +144,7 @@ export class CreateTimeGroupComponent implements OnInit {
     else {
       delete this.timeGroup.time_group_schedule_attributes
     }
-    if (this.timeGroup.name == '' || isValidDays.includes(true)) {
-      this.isFormSubmitted = false;
-      this.invalidAllDaysTime = isValidDays.includes(true)
-      return
-    }
-
+ 
     this.subscriptions.push(this.timeGroupService.createTimeGroup({ time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_created_successfully'), 'success');
       this.dialogRef.close('update');
