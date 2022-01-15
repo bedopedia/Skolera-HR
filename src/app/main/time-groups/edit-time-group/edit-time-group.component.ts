@@ -201,19 +201,18 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public getEmployees(type?: string, isLoadMore?: boolean) {
-    console.log("this.employeesList",this.employeesList);
-    
     if (isLoadMore && type != "search") {
       const nextPage = this.employeesPaginationData.next_page;
       this.employessParams.page = nextPage;
     } else {
       this.employessParams.page = 1
     }
-    if (type == "search") {
-      this.employeesList = []
-    }
+   
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
+      if (type == "search") {
+        this.employeesList = []
+      }
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
         employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroup.id
@@ -221,6 +220,7 @@ export class EditTimeGroupComponent implements OnInit {
           employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
         }
       })
+      
       this.employeesPaginationData = response.meta;
       this.employeesLoading = false
     }, error=> {
