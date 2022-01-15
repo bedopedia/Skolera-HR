@@ -85,7 +85,8 @@ export class EditTimeGroupComponent implements OnInit {
   private getTimeGroup(id: number) {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
       this.timeGroup = response;
-      this.filteredTimeGroupEmployees = this.timeGroup.employees || []
+      this.filteredTimeGroupEmployees = this.timeGroup.employees || [];
+      this.employeesList = [];
       this.getEmployees();
       this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
       if (this.timeGroup.group_type == 'fixed') {
@@ -115,6 +116,7 @@ export class EditTimeGroupComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'update') {
+        this.employeesList = [];
         this.getTimeGroup(this.timeGroupId);
       }
     })
@@ -199,6 +201,8 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public getEmployees(type?: string, isLoadMore?: boolean) {
+    console.log("this.employeesList",this.employeesList);
+    
     if (isLoadMore && type != "search") {
       const nextPage = this.employeesPaginationData.next_page;
       this.employessParams.page = nextPage;
