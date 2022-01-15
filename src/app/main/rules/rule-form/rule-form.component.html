@@ -131,7 +131,7 @@
                           <label>{{'tr_lop' | translate}}</label>
                           <div class="input-with-icon bg-white width-100">
                             <ng-select class="s-control s-select" placeholder="{{'tr_select' | translate}}"
-                              bindValue="value" bilndLabel="name" #tardinessLop="ngModel" [(ngModel)]="tardinessRule.lop" name="tardinessRule_{{index}}"
+                              bindValue="value" bindLabel="name" [clearable]="false" #tardinessLop="ngModel" [(ngModel)]="tardinessRule.lop" name="tardinessRule_{{index}}"
                               [items]="lops" required>
                             </ng-select>
                             <i class="fa fa-caret-down input-icon"></i>
