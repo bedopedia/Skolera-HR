@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./rule-form.component.scss']
 })
 export class RuleFormComponent implements OnInit {
-  @ViewChild('ruleForm') announcementForm: NgForm;
+  @ViewChild('ruleForm') ruleForm: NgForm;
   isFormSubmitted: boolean = false;
   ruleLoading: boolean = true;
   leaveTypes: LeaveType[] = [];
@@ -60,6 +60,7 @@ export class RuleFormComponent implements OnInit {
 
   }
   public addTardinessRule() {
+    this.errorMessage = ''
     if (!this.rule.tardiness_rules_attributes!) {
       this.rule.tardiness_rules_attributes! = [new TardinessRule()]
     }
@@ -90,7 +91,7 @@ export class RuleFormComponent implements OnInit {
       this.rule.tardiness_rules_attributes = response.tardiness_rules;
       this.rule.deleted_tardiness_rules! = [];
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
-        tardinessRule.lop = tardinessRule.is_half_day ? 1 : 0.5
+        tardinessRule.lop = tardinessRule.is_half_day ? 0.5 : 1
       })
       this.rule.leave_type_id = response.absence_leave_type.id
     }, error => {
@@ -100,12 +101,13 @@ export class RuleFormComponent implements OnInit {
     }))
   }
   submitFrorm() {
+   
     this.isFormSubmitted = true;
     if (this.getIsInValidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
       this.isFormSubmitted = false;
       return
     }
-    this.rule.tardiness_rules_attributes?.forEach(tardinessRule => tardinessRule.is_half_day = tardinessRule.lop == 1 ? true : false)
+    this.rule.tardiness_rules_attributes?.forEach(tardinessRule => tardinessRule.is_half_day = tardinessRule.lop == 0.5 ? true : false)
     this.data.type == 'create' ? this.createRule() : this.updateRule();
   }
   updateRule() {
@@ -127,7 +129,7 @@ export class RuleFormComponent implements OnInit {
     if (this.rule.tardiness_rules_attributes!.length > 0) {
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
         this.validateStartAndEndTime(tardinessRule);
-        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime) {
+        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.lop || !tardinessRule.leave_type_id) {
           invalidRuleForm = true;
         }
         else invalidRuleForm = false;
@@ -223,6 +225,11 @@ export class RuleFormComponent implements OnInit {
       this.leaveTypesLoading = true;
       this.leaveTypesPaginationParams.page = this.leaveTypesPagination.next_page;
       this.getLeveTypes();
+    }
+  }
+  removeErrorMessageOfSelectionAtLeastOneRule(){
+    if(this.rule.leave_type_id){
+      this.errorMessage = '';
     }
   }
 

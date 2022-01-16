@@ -47,7 +47,7 @@
     <div>
 
 
-      <div class="plr-4" *ngIf="!timeGroupsLoading">
+      <div class="plr-4 mt-4" *ngIf="!timeGroupsLoading">
         <div class="alert ptb-2 plr-4 mt-2 bg-secondary size-tiny" *ngIf="checkedCells.length > 0">
           {{checkedCells.length}} selected. <span
             (click)="checkedCells = []; allChecked = false; partiallyChecked= false;"
@@ -55,7 +55,7 @@
             all</span>
         </div>
         <div class="table-container" id="table-container" *ngIf="timeGroupsList.length > 0">
-          <table class="s-table table layout-fixed">
+          <table class="s-table table layout-fixed time-groups-table">
             <thead>
               <th>{{'tr_name' | translate}}</th>
               <th>{{'tr_type' | translate}}</th>
@@ -65,20 +65,20 @@
             <tbody>
               <tr *ngFor="let timeGroup of timeGroupsList; let i=index">
                 <td>
-                  <ng-container> {{timeGroup.name}}</ng-container>
+                  {{timeGroup.name}}
                 </td>
                 <td>
-                  <ng-container> {{timeGroup.group_type}}</ng-container>
+                  {{timeGroup.group_type}}
                 </td>
                 <td>
-                  <ng-container>{{timeGroup.number_of_employees}}</ng-container>
+                  {{timeGroup.number_of_employees}}
                 </td>
                 <td>
                   <span class="options-menu">
                     <i class="text-small fa fa-ellipsis-v"></i>
                     <div class="options-menu-container">
                       <div class="single-option border-bottom width-100" [routerLink]="timeGroup.id + '/edit'">
-                          {{ 'tr_action.edit' | translate }}
+                        {{ 'tr_action.edit' | translate }}
                       </div>
                       <div class="single-option text-error" (click)="deleteTimeGroup(timeGroup)">
                         {{ 'tr_action.delete' | translate }}

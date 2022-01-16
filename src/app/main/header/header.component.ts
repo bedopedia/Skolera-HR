@@ -71,4 +71,7 @@ export class HeaderComponent implements OnInit {
         disableClose: true,
     });
 }
+  openSidebar() {
+    document.body.classList.add('sidebar-active');
+  }
 }
