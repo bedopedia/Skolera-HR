@@ -62,13 +62,10 @@
                     + {{sheet.national_holidays.length - 2}}
                   </div>
                   <div class="options-menu-container">
-                    <div class="national-holidays-container">
                       <div class="single-option"
                       *ngFor="let nationalHoliday of sheet.national_holidays | slice:2:sheet.national_holidays.length">
                       <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day}}</div>
                     </div>
-                    </div>
-                
                   </div>
                 </span>
 
