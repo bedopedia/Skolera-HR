@@ -120,10 +120,6 @@ export class CreateTimeGroupComponent implements OnInit {
 
   public createTimeGroup() {
     this.isFormSubmitted = true;
-    if (this.timeGroup.name == '') {
-      this.isFormSubmitted = false;
-      return
-    }
     let isValidDays: boolean[] = []
     if (this.timeGroup.group_type == 'fixed') {
 
@@ -142,7 +138,7 @@ export class CreateTimeGroupComponent implements OnInit {
     else {
       delete this.timeGroup.time_group_schedule_attributes
     }
-    if (isValidDays.includes(true)) {
+    if (this.timeGroup.name == '' || isValidDays.includes(true)) {
       this.isFormSubmitted = false;
       this.invalidAllDaysTime = isValidDays.includes(true)
       return

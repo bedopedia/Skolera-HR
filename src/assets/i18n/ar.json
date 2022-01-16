@@ -144,7 +144,7 @@
     "tr_actions": "الإجراءات",
     "tr_deleted_successfully":"تم حذف العملية بنجاح",
     "tr_time_group_confirmation_message":"هل تريد بالتأكيد حذف هذه المجموعة الزمنية ؟",
-    "tr_clock_validation_text": "يجب أن يكون وقت الخروج بعد بدء العمل",
+    "tr_clocl_validation_text": "يجب أن يكون وقت الخروج بعد بدء العمل",
     "tr_time_schedule":"جدول زمني",
     "tr_add_time_schedule": "إضافة جدول زمني",
     "tr_load_more": "تحميل المزيد",

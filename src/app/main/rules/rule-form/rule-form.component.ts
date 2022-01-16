@@ -74,7 +74,7 @@ export class RuleFormComponent implements OnInit {
     } else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
       return
     } else {
-      tardinessRule.invalidTime = (tardinessRule.start_time >= tardinessRule.end_time) ? true : false;
+      tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
     }
 

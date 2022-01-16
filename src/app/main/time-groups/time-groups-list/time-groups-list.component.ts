@@ -32,8 +32,6 @@ export class TimeGroupsListComponent implements OnInit {
     page: 1,
     per_page: this.paginationPerPage,
   };
-  searchTimeout: any;
-
   constructor(
     private TimeGroupsSerivce: TimeGroupsSerivce,
     private dialog: MatDialog,
@@ -116,20 +114,15 @@ export class TimeGroupsListComponent implements OnInit {
 }
 
   filterTimeGroups(event: any, searchKey: string) {
-    clearTimeout(this.searchTimeout);
-        this.searchTimeout = setTimeout(() => {
-            let term = (searchKey == 'by_type') ? event : event.target.value
-            if (event === null) {
-              delete this.params['by_type'];
-            }
-            else {
-              this.params[searchKey] = term;
-            }
-            this.params['page'] = 1
-            this.getTimeGroups();
-        }, 1000);
+    let term = (searchKey == 'by_type') ? event : event.target.value
+    if (event === null) {
+      delete this.params['by_type'];
+    }
+    else {
+      this.params[searchKey] = term;
+    }
+    this.getTimeGroups();
   }
-  
   paginationUpdate(page: number) {
     this.params.page = page;
     this.getTimeGroups();
