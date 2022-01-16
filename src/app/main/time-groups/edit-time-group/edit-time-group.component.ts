@@ -37,6 +37,7 @@ export class EditTimeGroupComponent implements OnInit {
     per_page: 10,
   };
   employessParams: any = {
+    include_time_group: true,
     page: 1,
     per_page: 10
   };
@@ -57,6 +58,7 @@ export class EditTimeGroupComponent implements OnInit {
   rules: Rule[] = []
   @ViewChild('timeGroupForm') announcementForm: NgForm;
   filteredTimeGroupEmployees: Employee[];
+  searchTimeOut: any;
 
   constructor(
     private timeGroupService: TimeGroupsSerivce,
@@ -150,7 +152,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.invalidAllDaysTime = isValidDays.includes(true)
       return
     }
-    this.timeGroup.rule_id = this.timeGroup.rule?.id
+    this.timeGroup.rule_id = this.timeGroup.rule?.id || null;
     this.timeGroupService.editTimeGroup(this.timeGroupId, { time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_updated_successfully'), 'success');
       this.isFormSubmitted = false;
@@ -260,15 +262,17 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public filterEmployees(term: any, searchKey: string) {
-
-    if (!term || (searchKey != 'by_department_id' && (term == '' || term.target.value == ''))) {
-      delete this.employessParams[searchKey]
-    } else {
-      const searchTerm = (searchKey == 'by_department_id') ? term.id : term.target.value
-      this.employessParams[searchKey] = searchTerm;
-    }
-    this.getEmployees('search');
-    this.filterTimeGroupEmployees()
+    clearTimeout(this.searchTimeOut);
+    this.searchTimeOut = setTimeout(() => {
+      if (!term || (searchKey != 'by_department_id' && (term == '' || term.target.value == ''))) {
+        delete this.employessParams[searchKey]
+      } else {
+        const searchTerm = (searchKey == 'by_department_id') ? term.id : term.target.value
+        this.employessParams[searchKey] = searchTerm;
+      }
+      this.getEmployees('search');
+      this.filterTimeGroupEmployees()
+    }, 1000);
   }
 
   filterTimeGroupEmployees() {

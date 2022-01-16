@@ -19,7 +19,7 @@ export class TimeGroup {
         schedule_days_attributes?: TimeGroupSchedule[],
     };
     rule?: Rule;
-    rule_id?: number;
+    rule_id?: number | null;
 
 }
 

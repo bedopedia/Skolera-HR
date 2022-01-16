@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       },
       error => {
         if (error.status != 403) {
-          this.appNotificationService.push(this.translate.instant('tr_unexpected_error_message"'), 'error');
+          this.appNotificationService.push(this.translate.instant('tr_unexpected_error_message'), 'error');
         }
 
       }
