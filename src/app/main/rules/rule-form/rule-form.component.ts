@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./rule-form.component.scss']
 })
 export class RuleFormComponent implements OnInit {
-  @ViewChild('ruleForm') announcementForm: NgForm;
+  @ViewChild('ruleForm') ruleForm: NgForm;
   isFormSubmitted: boolean = false;
   ruleLoading: boolean = true;
   leaveTypes: LeaveType[] = [];
@@ -100,6 +100,7 @@ export class RuleFormComponent implements OnInit {
     }))
   }
   submitFrorm() {
+   
     this.isFormSubmitted = true;
     if (this.getIsInValidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
       this.isFormSubmitted = false;
@@ -127,7 +128,7 @@ export class RuleFormComponent implements OnInit {
     if (this.rule.tardiness_rules_attributes!.length > 0) {
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
         this.validateStartAndEndTime(tardinessRule);
-        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.leave_type_id) {
+        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.leave_type_id || !tardinessRule.lop) {
           invalidRuleForm = true;
         }
         else invalidRuleForm = false;
