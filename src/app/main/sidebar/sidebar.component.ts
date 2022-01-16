@@ -28,8 +28,5 @@ export class SidebarComponent implements OnInit {
     event.stopPropagation();
     event.target.parentElement.classList.toggle('children-active');
 }
-  closeSidebar() {
-    document.body.classList.remove('sidebar-active');
-  }
 
 }
