@@ -152,7 +152,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.invalidAllDaysTime = isValidDays.includes(true)
       return
     }
-    this.timeGroup.rule_id = this.timeGroup.rule?.id
+    this.timeGroup.rule_id = this.timeGroup.rule?.id || null;
     this.timeGroupService.editTimeGroup(this.timeGroupId, { time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_updated_successfully'), 'success');
       this.isFormSubmitted = false;
