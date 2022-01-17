@@ -226,7 +226,7 @@ export class RuleFormComponent implements OnInit {
       this.getLeveTypes();
     }
   }
-  resetValidationOfSelectionAtLeastOneRule(){
+  removeErrorMessageOfSelectionAtLeastOneRule(){
     if(this.rule.leave_type_id){
       this.errorMessage = '';
     }
