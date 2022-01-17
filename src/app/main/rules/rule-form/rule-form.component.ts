@@ -69,14 +69,22 @@ export class RuleFormComponent implements OnInit {
     }
   }
   public validateStartAndEndTime(tardinessRule: TardinessRule) {
+    const isFindStartAndEndTime = this.rule.tardiness_rules_attributes?.filter((selectedTardinessRule,index) => (selectedTardinessRule.start_time == tardinessRule.start_time && selectedTardinessRule.end_time == tardinessRule.end_time) && index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule) ).length;
     if ((!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.invalidAllTardinessTime = true;
-      tardinessRule.invalidTime = true
-    } else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
+      tardinessRule.invalidTime = true;
+    } 
+    else if(isFindStartAndEndTime){
+      tardinessRule.invalidTime = true;
+      this.errorMessage = this.translate.instant('tr_unique_start_and_end')
+    }
+    else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
       return
-    } else {
+    } 
+    else {
       tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
+      this.errorMessage = ''
     }
 
   }
@@ -131,7 +139,7 @@ export class RuleFormComponent implements OnInit {
         this.validateStartAndEndTime(tardinessRule);
         if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.lop || !tardinessRule.leave_type_id) {
           invalidRuleForm = true;
-        }
+        }    
         else invalidRuleForm = false;
       })
     }
