@@ -244,7 +244,6 @@ export class EditTimeGroupComponent implements OnInit {
     return employee.isInsideCurrentTimeGroup
   }
   public assignEmployeeIngroup(event: any, timegroupEmployee: Employee) {
-
     if (event.target.checked) {
       if (timegroupEmployee.time_group && timegroupEmployee.time_group.id != this.timeGroup.id) {
         this.unassignEmployee(event, timegroupEmployee)
@@ -257,7 +256,8 @@ export class EditTimeGroupComponent implements OnInit {
     } else {
       this.removeEmployeeFromTimeGroupEmployees(timegroupEmployee)
     }
-    this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
+    this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees));
+    this.filterTimeGroupEmployees();
   }
 
   public filterEmployees(term: any, searchKey: string) {
