@@ -208,5 +208,6 @@
     "tr_syncing": "التزامن جارى",
     "tr_unexpected_error_message": "تم إلغاء تعيين الموظف من مجموعة الوقت بنجاح",
     "tr_hr_sync_started": "HR Sync Started*",
-    "tr_logs": "السجلات"
+    "tr_logs": "السجلات",
+    "tr_unique_start_and_end":"Start time and End time should be unique*"
 }
