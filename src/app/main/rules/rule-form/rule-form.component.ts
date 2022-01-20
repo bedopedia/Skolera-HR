@@ -126,7 +126,9 @@ export class RuleFormComponent implements OnInit {
       this.appNotificationService.push(this.translate.instant('tr_rule_updated_successfully'), 'success');
       this.dialogRef.close('update');
     }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
+      if (error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
       this.isFormSubmitted = false;
     }))
   }
@@ -213,7 +215,9 @@ export class RuleFormComponent implements OnInit {
       this.appNotificationService.push(this.translate.instant('tr_rule_created_successfully'), 'success');
       this.dialogRef.close('update');
     }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
+      if (error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
       this.isFormSubmitted = false;
     }))
 
