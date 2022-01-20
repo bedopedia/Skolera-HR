@@ -52,7 +52,6 @@
             </div>
             <div class="row" *ngIf="timeGroup.group_type == 'fixed'">
               <app-time-schedule-form (returnedScheduleDays)="updatetimeGroupScheduleDays($event)"
-                [invalidAllDaysTime]="invalidAllDaysTime"
                 [scheduleDays]="timeGroup.time_group_schedule_attributes!.schedule_days_attributes!"
                 [timeScheduleLoading]="timeGroupLoading">
               </app-time-schedule-form>

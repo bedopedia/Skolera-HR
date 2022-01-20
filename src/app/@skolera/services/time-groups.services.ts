@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class TimeGroupsSerivce {
+    onInvalidAllDaysTime: Subject<boolean> = new Subject<boolean>();
     constructor(
         private http: HttpClient) {
 
