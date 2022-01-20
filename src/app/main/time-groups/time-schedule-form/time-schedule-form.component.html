@@ -22,7 +22,7 @@
             <td>
               <div>
                 <span class="s-checkbox-slider size-small pr-5">
-                  <input type="checkbox" id="{{day.day}}_off" [(ngModel)]="day.is_off" name="dayOff_{{day.day}}">
+                  <input type="checkbox" id="{{day.day}}_off" (click)="resetDayDate(day,index)" [(ngModel)]="day.is_off" name="dayOff_{{day.day}}">
                   <label for="{{day.day}}_off">
                     <div class="slider">
                       <span class="slider-bg"></span>
