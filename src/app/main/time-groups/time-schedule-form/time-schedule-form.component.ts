@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { TimeGroupSchedule } from '@core/models/time-groups-interface.model';
 import * as moment from 'moment';
 import { EventEmitter } from '@angular/core';
+import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 
 @Component({
   selector: 'app-time-schedule-form',
@@ -9,13 +10,16 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./time-schedule-form.component.scss']
 })
 export class TimeScheduleFormComponent implements OnInit {
-  @Input() invalidAllDaysTime: boolean = false;
+  invalidAllDaysTime: boolean = false;
   @Input() scheduleDays: TimeGroupSchedule [];
   @Input() timeScheduleLoading: boolean = true;
   @Output() returnedScheduleDays: EventEmitter<TimeGroupSchedule []> = new EventEmitter<TimeGroupSchedule []>();
-  constructor() { }
+  constructor(
+    private timeGroupService: TimeGroupsSerivce
+  ) { }
 
   ngOnInit(): void {
+    this.timeGroupService.onInvalidAllDaysTime.subscribe(reveviedEntry => this.invalidAllDaysTime = reveviedEntry )
   }
   
   public validateClockInOut(day: any) {
