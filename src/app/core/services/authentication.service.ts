@@ -76,7 +76,10 @@ export class AuthenticationService {
         localStorage.setItem('sessionHeaders', JSON.stringify(this.sessionHeaders));
     }
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('currentUser') || '{}');
+        const currentUser = localStorage.getItem('currentUser')
+        if (currentUser) {
+            return JSON.parse(currentUser);
+        }
     }
 
     getSessionHeader() {
