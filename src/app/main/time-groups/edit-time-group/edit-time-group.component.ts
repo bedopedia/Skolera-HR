@@ -175,16 +175,15 @@ export class EditTimeGroupComponent implements OnInit {
   public getRules() {
     this.rulesLoading = true;
     this.subscriptions.push(this.rulesSerivce.getRules(this.rulesParams).subscribe((response: any) => {
-      this.rules = response.rules;
+      this.rules = this.rules.concat(response.rules);
       this.rulesPagination = response.meta;
       this.rulesLoading = false;
-
     }))
   }
   public nextRulesBatch() {
     if (this.rulesPagination.next_page) {
       this.rulesLoading = true;
-      this.rulesParams.page = this.departmentsPagination.next_page;
+      this.rulesParams.page = this.rulesPagination.next_page;
       this.getRules();
     }
   }
