@@ -91,7 +91,7 @@ export class RuleFormComponent implements OnInit {
       this.rule.tardiness_rules_attributes = response.tardiness_rules;
       this.rule.deleted_tardiness_rules! = [];
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
-        tardinessRule.lop = tardinessRule.is_half_day ? 1 : 0.5
+        tardinessRule.lop = tardinessRule.is_half_day ? 0.5 : 1
       })
       this.rule.leave_type_id = response.absence_leave_type.id
     }, error => {
@@ -107,7 +107,7 @@ export class RuleFormComponent implements OnInit {
       this.isFormSubmitted = false;
       return
     }
-    this.rule.tardiness_rules_attributes?.forEach(tardinessRule => tardinessRule.is_half_day = tardinessRule.lop == 1 ? true : false)
+    this.rule.tardiness_rules_attributes?.forEach(tardinessRule => tardinessRule.is_half_day = tardinessRule.lop == 0.5 ? true : false)
     this.data.type == 'create' ? this.createRule() : this.updateRule();
   }
   updateRule() {
