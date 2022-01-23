@@ -69,12 +69,14 @@ export class RuleFormComponent implements OnInit {
     }
   }
   public validateStartAndEndTime(tardinessRule: TardinessRule) {
-    const isFindStartAndEndTime = this.rule.tardiness_rules_attributes?.filter((selectedTardinessRule,index) => (selectedTardinessRule.start_time == tardinessRule.start_time && selectedTardinessRule.end_time == tardinessRule.end_time) && index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule) ).length;
+    const isExistingStartAndEndTimes = this.rule.tardiness_rules_attributes?.find((selectedTardinessRule,index) => (selectedTardinessRule.start_time == tardinessRule.start_time && 
+                                                                                                                    selectedTardinessRule.end_time == tardinessRule.end_time) && 
+                                                                                                                    index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule));
     if ((!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.invalidAllTardinessTime = true;
       tardinessRule.invalidTime = true;
     } 
-    else if(isFindStartAndEndTime){
+    else if(isExistingStartAndEndTimes){
       tardinessRule.invalidTime = true;
       this.errorMessage = this.translate.instant('tr_unique_start_and_end')
     }
@@ -84,6 +86,7 @@ export class RuleFormComponent implements OnInit {
       tardinessRule.invalidTime = (tardinessRule.start_time >= tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
       this.errorMessage = ''
+      this.getIsInvalidRule();
     }
 
   }
@@ -110,7 +113,7 @@ export class RuleFormComponent implements OnInit {
   submitFrorm() {
    
     this.isFormSubmitted = true;
-    if (this.getIsInValidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
+    if (this.getIsInvalidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
       this.isFormSubmitted = false;
       return
     }
@@ -132,7 +135,7 @@ export class RuleFormComponent implements OnInit {
       this.isFormSubmitted = false;
     }))
   }
-  private getIsInValidRule(): boolean {
+  private getIsInvalidRule(): boolean {
 
     let invalidRuleForm = false;
     if (this.rule.tardiness_rules_attributes!.length > 0) {
