@@ -100,8 +100,8 @@ export class SkoleraPagination implements OnChanges {
     }
 
     checkFastButtons() {
-        this.canGoForward = (this.remainingPages + this.activeCell) - (this.startCell + this.cellsNumber) > 0 ? true : false;
-        this.canGoBackward = this.startCell > 1 ? true : false;
+        this.canGoForward = (this.remainingPages + this.activeCell) - (this.startCell + this.cellsNumber) >= 0 ? true : false;
+        this.canGoBackward = this.startCell > 1 ? true : false;   
     }
 
     drawCells() {
