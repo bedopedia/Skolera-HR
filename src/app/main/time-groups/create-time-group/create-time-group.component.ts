@@ -143,7 +143,7 @@ export class CreateTimeGroupComponent implements OnInit {
     }
     if (isValidDays.includes(true)) {
       this.isFormSubmitted = false;
-      this.timeGroupService.onInvalidAllDaysTime.next(isValidDays.includes(true))
+      this.timeGroupService.onInvalidAllDaysTime.next(true)
       return
     }
 
