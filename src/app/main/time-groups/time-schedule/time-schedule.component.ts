@@ -102,7 +102,7 @@ export class TimeScheduleComponent implements OnInit {
     })
 
     if (isValidDays.includes(true)) {
-      this.timeGroupService.onInvalidAllDaysTime.next(isValidDays.includes(true))
+      this.timeGroupService.onInvalidAllDaysTime.next(true)
       this.isFormSubmitted = false;
       return
     }
