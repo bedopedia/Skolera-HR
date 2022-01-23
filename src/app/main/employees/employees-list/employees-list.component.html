@@ -62,9 +62,9 @@
   </div>
   <div>
 
-    <div class="plr-4" *ngIf="!employeesLoading">
+    <div class="plr-4 mt-4" *ngIf="!employeesLoading">
       <div class="table-container" id="table-container" *ngIf="employeesList.length > 0">
-        <table class="s-table table layout-fixed">
+        <table class="s-table table layout-fixed employees-list">
           <thead>
             <th>
               <div skolera-order-by (order)="onOrder($event,'name')" [current]="currentOrder['name']" [type]="'name'"
