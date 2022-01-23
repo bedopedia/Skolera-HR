@@ -60,6 +60,7 @@ export class RuleFormComponent implements OnInit {
 
   }
   public addTardinessRule() {
+    this.errorMessage = ''
     if (!this.rule.tardiness_rules_attributes!) {
       this.rule.tardiness_rules_attributes! = [new TardinessRule()]
     }
@@ -223,6 +224,11 @@ export class RuleFormComponent implements OnInit {
       this.leaveTypesLoading = true;
       this.leaveTypesPaginationParams.page = this.leaveTypesPagination.next_page;
       this.getLeveTypes();
+    }
+  }
+  removeErrorMessageOfSelectionAtLeastOneRule(){
+    if(this.rule.leave_type_id){
+      this.errorMessage = '';
     }
   }
 

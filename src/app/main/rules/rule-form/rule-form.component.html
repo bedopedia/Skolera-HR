@@ -35,7 +35,7 @@
                     <span>{{'tr_leave_types' | translate}} </span>
                   </label>
                   <div class="input-with-icon bg-white width-100">
-                    <ng-select class="s-control s-select" bindValue="id" (scrollToEnd)=nextBatch() bindLabel="name"
+                    <ng-select class="s-control s-select" bindValue="id" (change)="removeErrorMessageOfSelectionAtLeastOneRule()" (scrollToEnd)=nextBatch() bindLabel="name"
                       [loading]="leaveTypesLoading" placeholder="{{'tr_select' | translate}}"
                       notFoundText="{{'tr_no_items_found' | translate}}" autofocus [(ngModel)]="rule.leave_type_id"
                       [items]="leaveTypes" name="leaveType">
