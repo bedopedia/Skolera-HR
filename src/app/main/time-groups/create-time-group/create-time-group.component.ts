@@ -19,7 +19,6 @@ export class CreateTimeGroupComponent implements OnInit {
   isFormSubmitted: boolean = false;
   timeGroupLoading: boolean = true;
   timeGroup: TimeGroup ;
-  invalidAllDaysTime: boolean = false
   scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()];
   private subscriptions: Subscription[] = [];
 
@@ -132,7 +131,7 @@ export class CreateTimeGroupComponent implements OnInit {
           delete day.clock_in;
           delete day.clock_out;
         }
-        if ((day.clock_in == '' || day.clock_out == '') && !day.is_off) {
+        if ((!day.clock_in  || !day.clock_out ) && !day.is_off) {
           day.invalidTime = true;
           isValidDays.push(true)
         }
@@ -144,7 +143,7 @@ export class CreateTimeGroupComponent implements OnInit {
     }
     if (isValidDays.includes(true)) {
       this.isFormSubmitted = false;
-      this.invalidAllDaysTime = isValidDays.includes(true)
+      this.timeGroupService.onInvalidAllDaysTime.next(true)
       return
     }
 
