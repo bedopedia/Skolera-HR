@@ -147,7 +147,7 @@
                           </label>
                           <input [(ngModel)]="tardinessRule.start_time" placeholder="{{'tr_from' | translate}}"
                             name="startTime_{{index}}" #startTime="ngModel" type="number" class="s-control time-control"
-                            (change)="validateStartAndEndTime(tardinessRule)" required>
+                            (change)="getIsInvalidRule()" required>
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -156,7 +156,7 @@
                               class="size-tiny text-primary">/{{'tr_mins' | translate}}</span></label>
                           <input [(ngModel)]="tardinessRule.end_time" name="endTime_{{index}}"
                             placeholder="{{'tr_to' | translate}}" #endTime="ngModel" type="number"
-                            class="s-control time-control" (change)="validateStartAndEndTime(tardinessRule)" required>
+                            class="s-control time-control" (change)="getIsInvalidRule()" required>
                         </div>
                       </div>
                     </div>
