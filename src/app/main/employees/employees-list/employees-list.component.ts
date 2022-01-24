@@ -22,7 +22,7 @@ export class EmployeesListComponent implements OnInit {
   searchTerm: string;
   currentOrder: any = {
     number: '',
-    name: 'ascending',
+    name: '',
     department: '',
     biometric_id: ''
   }
@@ -45,7 +45,6 @@ export class EmployeesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.params['order_by_name'] = "asc"
     this.getEmployees();
     this.getDepartments();
   }
