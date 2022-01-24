@@ -94,6 +94,11 @@ export class TimeScheduleComponent implements OnInit {
     let isValidDays: boolean[] = []
 
     this.scheduleDays.forEach(day => {
+      if (day.is_off) {
+        day.clock_in = null;
+        day.clock_out = null;
+      }
+      
       if ((day.clock_in == '' || day.clock_out == '') && !day.is_off) {
         day.invalidTime = true;
         isValidDays.push(true)
