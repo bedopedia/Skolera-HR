@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TimeGroup, TimeGroupSchedule } from '@core/models/time-groups-interface.model';
-import { Department, Employee } from '@core/models/employees-interface.model';
+import { Department, Employee, EmployeesAttributes } from '@core/models/employees-interface.model';
 import { PaginationData } from '@core/models/skolera-interfaces.model';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
@@ -58,6 +58,7 @@ export class EditTimeGroupComponent implements OnInit {
   @ViewChild('timeGroupForm') announcementForm: NgForm;
   filteredTimeGroupEmployees: Employee[];
   searchTimeOut: any;
+  updatedEmployeesTimeScheduleAttributes: EmployeesAttributes[] = []
 
   constructor(
     private timeGroupService: TimeGroupsSerivce,
@@ -114,10 +115,14 @@ export class EditTimeGroupComponent implements OnInit {
         timeGroupEmployeesIds: this.timeGroup.employees?.map(employee => { return employee.id })
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'update') {
-        this.employeesList = [];
-        this.getTimeGroup(this.timeGroupId);
+    dialogRef.afterClosed().subscribe(employeeTimeScheduleParams => {
+      if (employeeTimeScheduleParams) {
+        const existingParamsIndex = this.updatedEmployeesTimeScheduleAttributes.findIndex(employeeAttributes => employeeAttributes.id == employee.id)
+        if(existingParamsIndex < 0){
+          this.updatedEmployeesTimeScheduleAttributes.push(employeeTimeScheduleParams)
+        }else{
+          this.updatedEmployeesTimeScheduleAttributes[existingParamsIndex] = employeeTimeScheduleParams
+        }
       }
     })
   }
@@ -229,8 +234,9 @@ export class EditTimeGroupComponent implements OnInit {
 
   public updateTimeGroupEmployees() {
     const updateParams = {
-      'time_group': {
-        "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
+      "time_group": {
+        "employee_ids": this.timeGroup.employees?.map(employee => employee.id ),
+        "employees_attributes": this.updatedEmployeesTimeScheduleAttributes
       }
     }
     this.subscriptions.push(

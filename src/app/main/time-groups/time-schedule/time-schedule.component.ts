@@ -103,25 +103,16 @@ export class TimeScheduleComponent implements OnInit {
       return
     }
 
-    const updateParams = {
-      "time_group": {
-        "employee_ids": this.data.timeGroupEmployeesIds,
-        "employees_attributes": {
-          "id": this.employeeId,
-          "time_group_schedule_attributes": {
-            id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
-            "schedule_days_attributes": this.scheduleDays
-          }
-        }
+    const employeeTimeScheduleParams = {
+      "id": this.employeeId,
+      "time_group_schedule_attributes": {
+        id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
+        "schedule_days_attributes": this.scheduleDays
       }
     }
-    this.subscriptions.push(this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
-      this.appNotificationService.push(this.translate.instant('tr_time_schedule_for_employee_updated_ssuccessfuly'), 'success');
-      this.dialogRef.close('update');
-    }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
-    }))
+    this.dialogRef.close(employeeTimeScheduleParams);
   }
+  
   ngOnDestroy() {
     this.subscriptions.forEach(s => s && s.unsubscribe())
   }
