@@ -124,7 +124,7 @@ export class TimeScheduleComponent implements OnInit {
     }
     this.subscriptions.push(this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_schedual_for_employee_updated_ssuccessfuly'), 'success');
-      this.dialogRef.close('update');
+      this.dialogRef.close({message: 'update', response});
     }, error => {
       this.appNotificationService.push(error.error.name, 'error');
     }))
