@@ -115,9 +115,9 @@ export class EditTimeGroupComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 'update') {
-        this.employeesList = [];
-        this.getTimeGroup(this.timeGroupId);
+      if (result.message == 'update') {
+        this.timeGroup.employees = result.response.employees
+        this.filterTimeGroupEmployees();
       }
     })
   }
