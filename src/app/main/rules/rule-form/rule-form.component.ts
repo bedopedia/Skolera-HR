@@ -69,9 +69,7 @@ export class RuleFormComponent implements OnInit {
     }
   }
   public validateStartAndEndTime(tardinessRule: TardinessRule) {
-    const isExistingStartAndEndTimes = this.rule.tardiness_rules_attributes?.find((selectedTardinessRule,index) => (selectedTardinessRule.start_time == tardinessRule.start_time && 
-                                                                                                                    selectedTardinessRule.end_time == tardinessRule.end_time) && 
-                                                                                                                    index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule));
+    const isExistingStartAndEndTimes = this.checkExistingTimes(tardinessRule);
     if ((!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.invalidAllTardinessTime = true;
       tardinessRule.invalidTime = true;
@@ -86,10 +84,22 @@ export class RuleFormComponent implements OnInit {
       tardinessRule.invalidTime = (tardinessRule.start_time >= tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
       this.errorMessage = ''
-      this.getIsInvalidRule();
     }
 
   }
+  checkExistingTimes(tardinessRule: TardinessRule) {
+    return this.rule.tardiness_rules_attributes?.find((selectedTardinessRule,index) => {
+      if(index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule)){
+        return this.checkSameStartAndEndTimes(selectedTardinessRule, tardinessRule)
+      }
+      return false
+    });
+  }
+
+  checkSameStartAndEndTimes(firstTardinessRule: TardinessRule, secondTardinessRule: TardinessRule): boolean {
+    return firstTardinessRule.start_time == secondTardinessRule.start_time && firstTardinessRule.end_time == secondTardinessRule.end_time
+  }
+
   public closeModal() {
     this.dialogRef.close();
   }
@@ -121,10 +131,10 @@ export class RuleFormComponent implements OnInit {
     this.data.type == 'create' ? this.createRule() : this.updateRule();
   }
   updateRule() {
-    this.rule.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.concat(this.rule.deleted_tardiness_rules!)
     let ruleParams = {
-      rules: this.rule
+      rules: JSON.parse(JSON.stringify(this.rule))
     }
+    ruleParams.rules.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.concat(this.rule.deleted_tardiness_rules!)
     this.subscriptions.push(this.ruleService.updateRule(ruleParams, this.rule.id!).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_rule_updated_successfully'), 'success');
       this.dialogRef.close('update');
@@ -135,7 +145,8 @@ export class RuleFormComponent implements OnInit {
       this.isFormSubmitted = false;
     }))
   }
-  private getIsInvalidRule(): boolean {
+  
+  getIsInvalidRule(): boolean {
 
     let invalidRuleForm = false;
     if (this.rule.tardiness_rules_attributes!.length > 0) {
