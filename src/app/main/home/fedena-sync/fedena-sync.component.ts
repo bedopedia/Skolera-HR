@@ -9,13 +9,13 @@ import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service
   styleUrls: ['./fedena-sync.component.scss']
 })
 export class FedenaSyncComponent implements OnInit {
-  syncButtonText = this.translateService.instant('tr_sync');
+  syncButtonTranslationKey = 'tr_sync';
   isSyncing = true;
   intervalTime = 0; 
   constructor(
     private fedenaSyncService: FedenaSyncService,
     private appNotificationService:AppNotificationService,
-    private translateService: TranslateService
+    public translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -32,17 +32,17 @@ getSyncStatus(initialCheck: boolean = false) {
            let syncStatus = response.status;
            this.isSyncing = syncStatus == 'started';
            if (syncStatus == 'succeeded' ){
-               this.syncButtonText = this.translateService.instant('tr_sync');
+               this.syncButtonTranslationKey = 'tr_sync';
                if (initialCheck == false)
                    this.appNotificationService.push(this.translateService.instant('tr_sync_succeeded'), 'success');
            }
            else if (syncStatus == 'failed' ){
-               this.syncButtonText = this.translateService.instant('tr_sync');
+               this.syncButtonTranslationKey = 'tr_sync';
                if (initialCheck == false)
                    this.appNotificationService.push(this.translateService.instant('tr_sync_failed'), 'error');
            }
            else if (syncStatus == 'started' ){
-               this.syncButtonText = this.translateService.instant('tr_syncing');
+               this.syncButtonTranslationKey = 'tr_syncing';
                this.intervalTime = 1000*60*5; // 5 minutes
                this.checkSyncStatus();
            }
@@ -57,7 +57,7 @@ getSyncStatus(initialCheck: boolean = false) {
       (response: any) => {
           this.intervalTime = 1000*60*10; // 10 minutes Initial time
           this.isSyncing = true;
-          this.syncButtonText = this.translateService.instant('tr_syncing');
+          this.syncButtonTranslationKey = 'tr_syncing';
           this.appNotificationService.push(this.translateService.instant('tr_start_sync'), 'success')
           this.checkSyncStatus();
       },

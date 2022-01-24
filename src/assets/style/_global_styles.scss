@@ -1851,10 +1851,6 @@ ngx-loading-bar {
     div .bar {
         height: 3px !important;
     }
-
-    div#loading-bar-spinner {
-        display: none !important;
-    }
 }
 
 @mixin actorStyles($primary, $secondary, $from, $to, $siteBackground) {
