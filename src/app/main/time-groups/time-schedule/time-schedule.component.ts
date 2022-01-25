@@ -28,13 +28,11 @@ export class TimeScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("this.data",this.data);
-    
     this.timeGroupId = this.data.timeGroupId;
     this.employeeId = this.data.employeeId;
     this.timeScheduleLoading = this.data.timeScheduleLoading
     if (this.data.employeeTimeSchedule) {
-      this.scheduleDays = this.data.employeeTimeSchedule.schedule_days;
+      this.scheduleDays = JSON.parse(JSON.stringify(this.data.employeeTimeSchedule.schedule_days)) 
     }
     else {
       this.scheduleDays = [
