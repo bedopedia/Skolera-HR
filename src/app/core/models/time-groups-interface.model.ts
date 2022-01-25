@@ -30,4 +30,5 @@ export class TimeGroupSchedule {
     is_off?: boolean;
     calculate_bridging?: boolean;
     invalidTime?: boolean;
+    isShowCountAsBridge?: boolean;
 }
