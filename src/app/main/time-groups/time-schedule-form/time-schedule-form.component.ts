@@ -40,7 +40,8 @@ export class TimeScheduleFormComponent implements OnInit {
     else {
       isShowCountAsBridge = index == 0 ?  (this.scheduleDays[index+1].is_off || this.scheduleDays[6].is_off) : (this.scheduleDays[index-1].is_off || this.scheduleDays[0].is_off);
     }
-    return  (!day.is_off) && isShowCountAsBridge
+    day.isShowCountAsBridge = (!day.is_off) && isShowCountAsBridge
+    return day.isShowCountAsBridge 
   }
   resetDayDate(day: TimeGroupSchedule, index: number){
     day.clock_in = '';
@@ -48,17 +49,17 @@ export class TimeScheduleFormComponent implements OnInit {
     day.calculate_bridging = false;
     day.invalidTime = false;
     if(index > 0 && index < 6){
-     this.scheduleDays[index-1].calculate_bridging = false;
-     this.scheduleDays[index+1].calculate_bridging = false;
+     this.scheduleDays[index-1].calculate_bridging = this.scheduleDays[index-1].isShowCountAsBridge ? this.scheduleDays[index-1].calculate_bridging : false;
+     this.scheduleDays[index+1].calculate_bridging = this.scheduleDays[index+1].isShowCountAsBridge ?  this.scheduleDays[index+1].calculate_bridging : false;
     }
     else {
-      if(index == 0 ){
-        this.scheduleDays[1].calculate_bridging = false;
-        this.scheduleDays[6].calculate_bridging = false;
+      if(index == 0 ){  
+        this.scheduleDays[1].calculate_bridging = this.scheduleDays[1].isShowCountAsBridge  ? this.scheduleDays[1].calculate_bridging: false;
+        this.scheduleDays[6].calculate_bridging = this.scheduleDays[6].isShowCountAsBridge  ?  this.scheduleDays[6].calculate_bridging : false;
       }
       else { 
-        this.scheduleDays[0].calculate_bridging = false;
-        this.scheduleDays[5].calculate_bridging = false;
+        this.scheduleDays[0].calculate_bridging = this.scheduleDays[0].isShowCountAsBridge ? this.scheduleDays[0].calculate_bridging : false;
+        this.scheduleDays[5].calculate_bridging = this.scheduleDays[5].isShowCountAsBridge ? this.scheduleDays[5].calculate_bridging  : false;
       }
     }
     this.invalidAllDaysTime = this.scheduleDays.filter(day => (day.invalidTime && !day.is_off)).length > 0;
