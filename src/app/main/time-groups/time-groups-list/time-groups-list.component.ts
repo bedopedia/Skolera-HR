@@ -118,7 +118,7 @@ export class TimeGroupsListComponent implements OnInit {
   filterTimeGroups(event: any, searchKey: string) {
     clearTimeout(this.searchTimeout);
         this.searchTimeout = setTimeout(() => {
-            let term = (searchKey == 'by_type') ? event : event.target.value
+            let term = (searchKey == 'by_type') ? event : event.target.value.trim()
             if (event === null) {
               delete this.params['by_type'];
             }
