@@ -103,7 +103,7 @@ export class RulesListComponent implements OnInit {
     
   }
   filterRules(term: any){
-    term =  term.target.value
+    term =  term.target.value.trim()
     this.params.page = 1;
     this.params['by_name'] = term;
     this.getRules();
