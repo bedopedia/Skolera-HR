@@ -31,7 +31,7 @@ export class TimeScheduleComponent implements OnInit {
     this.employeeId = this.data.employeeId;
     this.timeScheduleLoading = this.data.timeScheduleLoading
     if (this.data.employeeTimeSchedule) {
-      this.scheduleDays = JSON.parse(JSON.stringify(this.data.employeeTimeSchedule.schedule_days)) 
+      this.scheduleDays = this.data.employeeTimeSchedule.schedule_days;
     }
     else {
       this.scheduleDays = [
