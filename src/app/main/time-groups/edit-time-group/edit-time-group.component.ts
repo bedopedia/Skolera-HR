@@ -252,7 +252,7 @@ export class EditTimeGroupComponent implements OnInit {
       }
       else {
         timegroupEmployee.isInsideCurrentTimeGroup = true;
-        this.timeGroup.employees?.push(timegroupEmployee)
+        this.timeGroup.employees?.unshift(timegroupEmployee)
       }
 
     } else {
