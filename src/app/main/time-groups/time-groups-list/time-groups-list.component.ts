@@ -33,6 +33,7 @@ export class TimeGroupsListComponent implements OnInit {
     per_page: this.paginationPerPage,
   };
   searchTimeout: any;
+  nameSearchTerm: string;
 
   constructor(
     private TimeGroupsSerivce: TimeGroupsSerivce,

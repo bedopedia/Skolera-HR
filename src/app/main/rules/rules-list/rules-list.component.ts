@@ -24,6 +24,7 @@ export class RulesListComponent implements OnInit {
     per_page: this.paginationPerPage,
   };
   isFilterOpen: boolean = false;
+  nameSearchTerm: string;
   private subscriptions: Subscription[] = [];
   
   constructor(
