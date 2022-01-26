@@ -17,7 +17,6 @@ export class TimeScheduleComponent implements OnInit {
   employeeId: Number;
   isFormSubmitted: boolean;
   timeScheduleLoading: boolean = true ;
-  invalidAllDaysTime: boolean = false;
   private subscriptions: Subscription[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,8 +27,6 @@ export class TimeScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("this.data",this.data);
-    
     this.timeGroupId = this.data.timeGroupId;
     this.employeeId = this.data.employeeId;
     this.timeScheduleLoading = this.data.timeScheduleLoading
@@ -95,17 +92,17 @@ export class TimeScheduleComponent implements OnInit {
 
     this.scheduleDays.forEach(day => {
       if (day.is_off) {
-        delete day.clock_in;
-        delete day.clock_out;
+         day.clock_in = null
+         day.clock_out = null
       }
-      if ((day.clock_in == '' || day.clock_out == '') && !day.is_off) {
+      if ((!day.clock_in || !day.clock_out) && !day.is_off) {
         day.invalidTime = true;
         isValidDays.push(true)
       }
     })
 
     if (isValidDays.includes(true)) {
-      this.invalidAllDaysTime = isValidDays.includes(true)
+      this.timeGroupService.onInvalidAllDaysTime.next(true)
       this.isFormSubmitted = false;
       return
     }
