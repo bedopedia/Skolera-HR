@@ -78,7 +78,7 @@ export class EmployeesListComponent implements OnInit {
   filterEmployees(term: any, searchKey: string) {
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => {
-      term = (searchKey == 'by_department_id') ? term : term.target.value
+      term = (searchKey == 'by_department_id') ? term : term.target.value.trim()
       this.params[searchKey] = term;
       this.params.page = 1;
       this.getEmployees();
