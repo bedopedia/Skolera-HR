@@ -37,6 +37,9 @@ export class EmployeesListComponent implements OnInit {
   paginationData: PaginationData
   departmentsPagination: PaginationData
   searchTimeout: any;
+  nameSearchTerm: string
+  numberSearchTerm: string
+  biometricIdSearchTerm: string
 
   private subscriptions: Subscription[] = [];
 

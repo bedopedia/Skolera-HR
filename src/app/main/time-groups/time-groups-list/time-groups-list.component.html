@@ -19,7 +19,7 @@
             <label>{{'tr_name' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
               <input class="text" (keyup)="filterTimeGroups($event,'by_name')" class="s-control"
-                placeholder="{{'tr_search_by_name' | translate}}">
+                placeholder="{{'tr_search_by_name' | translate}}" [(ngModel)]="nameSearchTerm">
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@
             <label>{{'tr_name' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
               <input class="text" class="s-control" (keyup)="filterRules($event)"
-                placeholder="{{'tr_search_by_name' | translate}}">
+                placeholder="{{'tr_search_by_name' | translate}}" [(ngModel)]="nameSearchTerm">
             </div>
           </div>
         </div>
