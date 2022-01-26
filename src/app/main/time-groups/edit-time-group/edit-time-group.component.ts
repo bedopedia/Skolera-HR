@@ -208,12 +208,9 @@ export class EditTimeGroupComponent implements OnInit {
     } else {
       this.employessParams.page = 1
     }
-    if (type == "search") {
-      this.employeesList = []
-    }
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
-      this.employeesList = this.employeesList.concat(response.employees)
+      this.employeesList = (type == "search") ?  response.employees : this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
         employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroup.id
         if (this.timeGroup.employees && this.timeGroup.employees.length > 0) {
