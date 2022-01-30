@@ -21,10 +21,8 @@ export class EmployeesListComponent implements OnInit {
   fullscreenEnabled = false;
   searchTerm: string;
   currentOrder: any = {
-    number: '',
     name: '',
-    department: '',
-    biometric_id: ''
+    department: ''
   }
   params: any = {
     page: 1,
@@ -93,9 +91,7 @@ export class EmployeesListComponent implements OnInit {
     this.resetCurrentOrder();
     this.currentOrder[orderType] = event;
     delete this.params.order_by_name;
-    delete this.params.order_by_number;
     delete this.params.order_by_department;
-    delete this.params.order_biometric_id;
     orderType = 'order_by_' + orderType;
     this.params[orderType] = event == "ascending" ? 'asc' : 'desc';
     this.getEmployees();
@@ -103,10 +99,8 @@ export class EmployeesListComponent implements OnInit {
 
   resetCurrentOrder(){
     this.currentOrder = {
-      number: '',
       name: '',
-      department: '',
-      biometric_id: ''
+      department: ''
     }
   }
 
