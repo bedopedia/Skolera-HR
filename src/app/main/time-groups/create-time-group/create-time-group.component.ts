@@ -138,9 +138,6 @@ export class CreateTimeGroupComponent implements OnInit {
       })
 
     }
-    else {
-      delete this.timeGroup.time_group_schedule_attributes
-    }
     if (isValidDays.includes(true)) {
       this.isFormSubmitted = false;
       this.timeGroupService.onInvalidAllDaysTime.next(true)
