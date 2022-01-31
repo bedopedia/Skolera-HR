@@ -28,7 +28,4 @@ export class TimeGroupsSerivce {
     deleteTimeGroup(id: number){
         return this.http.delete(baseUrl + `api/hr/time_groups/${id}`);
     }
-    updateTimeGroupEmployees(timeGroupId:number,employees: any){
-        return this.http.put(baseUrl + `/api/hr/time_groups/${timeGroupId}/update_employees`,employees)
-    }
 }

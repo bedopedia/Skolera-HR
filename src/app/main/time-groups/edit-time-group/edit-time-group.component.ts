@@ -227,12 +227,11 @@ export class EditTimeGroupComponent implements OnInit {
 
   public updateTimeGroupEmployees() {
     const updateParams = {
-      'time_group': {
-        "employee_ids": this.timeGroup.employees?.map(employee => { return employee.id }),
-      }
+      // 'ids': this.addedEmployeesIds,
+      'time_group_id': this.timeGroupId
     }
     this.subscriptions.push(
-      this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
+      this.employeesService.bulkUpdateEmployeesTimeGroup(updateParams).subscribe(response => {
         this.appNotificationService.push(this.translate.instant('tr_time_group_employees_updated_successfully'), 'success');
         this.getEmployees('search')
       }, error => {
@@ -289,6 +288,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.filteredTimeGroupEmployees = filteredEmployees
   }
 
+  //TODO: remove
   unassignEmployee(event: any, timeGroupEmployee: Employee) {
     const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
       width: '400px',
@@ -302,18 +302,18 @@ export class EditTimeGroupComponent implements OnInit {
             "time_group_id": null
           }
         }
-        this.subscriptions.push(this.employeesService.updateEmployee(timeGroupEmployee.id, params).subscribe((response: any) => {
-          this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
-          timeGroupEmployee.isInsideCurrentTimeGroup = true
-          this.timeGroup.employees?.push(timeGroupEmployee)
-          this.filterTimeGroupEmployees()
-          this.updateTimeGroupEmployees()
-          this.getEmployees('search');
-        }, error => {
-          this.appNotificationService.push('There was an unexpected error, please reload', 'error');
-          timeGroupEmployee.isInsideCurrentTimeGroup = false
-          event.target.checked = false
-        }))
+        // this.subscriptions.push(this.employeesService.updateEmployee(timeGroupEmployee.id, params).subscribe((response: any) => {
+        //   this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
+        //   timeGroupEmployee.isInsideCurrentTimeGroup = true
+        //   this.timeGroup.employees?.push(timeGroupEmployee)
+        //   this.filterTimeGroupEmployees()
+        //   this.updateTimeGroupEmployees()
+        //   this.getEmployees('search');
+        // }, error => {
+        //   this.appNotificationService.push('There was an unexpected error, please reload', 'error');
+        //   timeGroupEmployee.isInsideCurrentTimeGroup = false
+        //   event.target.checked = false
+        // }))
 
       }
       else {
@@ -322,6 +322,7 @@ export class EditTimeGroupComponent implements OnInit {
       }
     })
   }
+  // TODO: remove
   unassignEmployeeDialogData(): any {
     return {
       title: this.translate.instant("tr_unassign_message"),
@@ -340,6 +341,7 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
 
+  // TODO: remove
   removeEmployeeFromTimeGroupEmployees(timeGroupEmployee: Employee) {
     timeGroupEmployee.isInsideCurrentTimeGroup = false
     this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timeGroupEmployee.name)
