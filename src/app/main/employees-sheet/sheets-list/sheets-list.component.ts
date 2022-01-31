@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AttendanceSheet } from '@core/models/attendance-sheets-interface.model';
@@ -7,6 +8,7 @@ import { AppNotificationService } from '@skolera/services/app-notification.servi
 import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { FedenaSyncService } from '@skolera/services/fedena-sync-service.service';
 import { SheetFormComponent } from '../sheet-form/sheet-form.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-sheets-list',
@@ -22,13 +24,14 @@ export class SheetsListComponent implements OnInit {
   paginationData: PaginationData;
   sheetsLoading: boolean = true;
   sheets: AttendanceSheet[] = [];
-  isSyncing:boolean = false;
+  isSyncing: boolean = false;
   constructor(
     private dialog: MatDialog,
     private employeesSerivce: EmployeesSerivce,
     private appNotificationService: AppNotificationService,
     private fedenaSyncService: FedenaSyncService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -76,5 +79,11 @@ export class SheetsListComponent implements OnInit {
         this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
       }
     })
+  }
+
+  downloadLogs(fedena_log_file_url: string) {
+    this.http.get(fedena_log_file_url, { responseType: 'blob' }).subscribe((response: any) => {
+      saveAs(response, `fedena_logs_${new Date()}.pdf`);
+    });
   }
 }

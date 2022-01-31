@@ -46,6 +46,8 @@
         "lock": "غلق",
         "unlock": "فتح",
         "download": "تحميل",
+        "download_fedena_logs": "Download Fedena Logs*",
+        "download_uploaded_sheet": "Download the uploaded sheet*",
         "clear": "محو",
         "clear_all": "محو الكل",
         "discard": "إلغاء",
@@ -209,5 +211,6 @@
     "tr_hr_sync_started": "HR Sync Started*",
     "tr_logs": "السجلات",
     "tr_unique_start_and_end":"Start time and End time should be unique*",
-    "tr_permission_error_message": "يرجى الاتصال بمسؤول مدرستك لطلب الإذن"
+    "tr_permission_error_message": "يرجى الاتصال بمسؤول مدرستك لطلب الإذن",
+    "tr_sync_succeeded_with_warnings": "Sync Succeeded with warnings*"
 }
