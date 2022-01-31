@@ -46,6 +46,8 @@
       "lock": "LOCK",
       "unlock": "UNLOCK",
       "download": "DOWNLOAD",
+      "download_fedena_logs": "Download Fedena Logs",
+      "download_uploaded_sheet": "Download the uploaded sheet",
       "clear": "CLEAR",
       "clear_all": "Clear All",
       "discard": "DISCARD",
@@ -209,6 +211,10 @@
     "tr_syncing": "Syncing",
     "tr_unexpected_error_message": "An unexpected error happened, please reload.",
     "tr_hr_sync_started": "HR Sync Started",
-    "tr_logs": "Logs"
+    "tr_logs": "Logs",
+    "tr_unique_start_and_end":"Start time and End time should be unique*",
+    "tr_permission_error_message": "Please contact your school administrator to request permission",
+    "tr_sync_succeeded_with_warnings": "Sync Succeeded with warnings"
+
     
 }

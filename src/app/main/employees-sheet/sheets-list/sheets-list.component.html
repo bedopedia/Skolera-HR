@@ -76,13 +76,13 @@
 
 
 
-              <span [ngClass]="{'options-menu': (sheet.state == 'validation_failed' || sheet.state == 'sync_failed' || sheet.state == 'sync_succeeded')}">
+              <span [ngClass]="{'options-menu': (sheet.state == 'validation_failed')}">
 
                 <div
-                  [ngClass]="{'text-error hover-link open-modal': (sheet.state == 'validation_failed' || sheet.state == 'sync_failed') ,'text-success': (sheet.state == 'validation_succeeded' || sheet.state == 'sync_succeeded')}">
+                  [ngClass]="{'hover-link open-modal': (sheet.state == 'validation_failed'), 'text-error': (sheet.state == 'validation_failed' || sheet.state == 'sync_failed'), 'text-warning': (sheet.state == 'sync_succeeded_with_warnings') ,'text-success': (sheet.state == 'validation_succeeded' || sheet.state == 'sync_succeeded')}">
                   {{"tr_"+sheet.state | translate}}
                 </div>
-                <div class="options-menu-container" *ngIf="(sheet.state == 'validation_failed' || sheet.state == 'sync_failed' || sheet.state == 'sync_succeeded')">
+                <div class="options-menu-container" *ngIf="(sheet.state == 'validation_failed')">
                   <div class="ptb-3 plr-2 options-menu-wrapper">
                     <span class="weight-bold text-primary mb-1">{{ 'tr_logs' | translate }}</span>
                     <p *ngFor="let sheetLog of sheet.logs" class="mb-1 weight-normal size-small">
@@ -102,9 +102,14 @@
               <span class="options-menu">
                 <i class="fa fa-ellipsis-v"></i>
                 <div class="options-menu-container">
-                  <a class="single-option text-success width-100" href="{{sheet.uploaded_file.download_url}}">
-                    {{ 'tr_action.download' | translate }}
-                  </a>
+                  <div class="single-option text-success width-100">
+                    <a href="{{sheet.uploaded_file.download_url}}">
+                      {{ 'tr_action.download_uploaded_sheet' | translate }}
+                    </a>
+                  </div>
+                  <div class="single-option text-success width-100" *ngIf="sheet.fedena_log_file!.fedena_log_file!.url" (click)="downloadLogs(sheet.fedena_log_file!.fedena_log_file!.url)">
+                      {{ 'tr_action.download_fedena_logs' | translate }}
+                  </div>
                 </div>
               </span>
             </td>

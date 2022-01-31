@@ -45,6 +45,8 @@
     "lock": "lock*",
     "unlock": "unlock*",
     "download": "Télécharger",
+    "download_fedena_logs": "Download Fedena Logs*",
+    "download_uploaded_sheet": "Download the uploaded sheet*",
     "clear": "éclaircir",
     "clear_all": "éclaircir tout",
     "discard": "Jeter",
@@ -169,5 +171,6 @@
     "tr_syncing": "Syncing*",
     "tr_unexpected_error_message": "An unexpected error happened, please reload.*",
     "tr_hr_sync_started": "HR Sync Started*",
-    "tr_logs": "Logs*"
+    "tr_logs": "Logs*",
+    "tr_sync_succeeded_with_warnings": "Sync Succeeded with warnings*"
 }
