@@ -55,7 +55,7 @@
               <div class="flex flex-middle flex-wrap">
                 <span class="selected-item-no-border ml-1 plr-1 bg-secondary"
                   *ngFor="let nationalHoliday of sheet.national_holidays | slice:0:2">
-                  {{nationalHoliday.day}}
+                  {{nationalHoliday.day | date: 'dd/MM/yyyy' }}
                 </span>
                 <span class="options-menu ml-2">
                   <div *ngIf="sheet.national_holidays.length > 2">
@@ -64,7 +64,7 @@
                   <div class="options-menu-container">
                       <div class="single-option"
                       *ngFor="let nationalHoliday of sheet.national_holidays | slice:2:sheet.national_holidays.length">
-                      <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day}}</div>
+                      <div class="selected-item-no-border mb-1 bg-secondary"> {{nationalHoliday.day | date: 'dd/MM/yyyy' }}</div>
                     </div>
                   </div>
                 </span>
