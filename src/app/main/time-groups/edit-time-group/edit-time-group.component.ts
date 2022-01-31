@@ -45,9 +45,11 @@ export class EditTimeGroupComponent implements OnInit {
     per_page: 10,
   }
 
-  employeesPaginationData: PaginationData
-  departmentsPagination: PaginationData
+  employeesPaginationData: PaginationData;
+  departmentsPagination: PaginationData;
+  assignedEmployeesPaginationData: PaginationData;
   rulesPagination: PaginationData
+  paginationPerPage = 10;
   employeesLoading: boolean = true;
   departmentsLoading: boolean = true;
   employeesList: Employee[] = [];
@@ -197,23 +199,22 @@ export class EditTimeGroupComponent implements OnInit {
       this.getDepartments();
     }
   }
-  public nextpage() {
-    this.getEmployees("loadMore", true)
+
+  paginationUpdateEmployees(page: number) {
+    this.employessParams.page = page;
+    this.getEmployees();
+  }
+  paginationUpdateAssignedEmployees(page: number)
+  {
+    // her we call the get assigned employees func
+
   }
 
-  public getEmployees(type?: string, isLoadMore?: boolean) {
-    if (isLoadMore && type != "search") {
-      const nextPage = this.employeesPaginationData.next_page;
-      this.employessParams.page = nextPage;
-    } else {
-      this.employessParams.page = 1
-    }
-    if (type == "search") {
-      this.employeesList = []
-    }
+  public getEmployees() {
+   
     this.employeesLoading = true;
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
-      this.employeesList = this.employeesList.concat(response.employees)
+      this.employeesList = response.employees
       this.employeesList.forEach(employee => {
         employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroupId
         if (this.timeGroup.employees && this.timeGroup.employees.length > 0) {
@@ -284,7 +285,7 @@ export class EditTimeGroupComponent implements OnInit {
         const searchTerm = (searchKey == 'by_department_id') ? term.id : term.target.value
         this.employessParams[searchKey] = searchTerm;
       }
-      this.getEmployees('search');
+      this.getEmployees();
       this.filterTimeGroupEmployees()
     }, 1000);
   }
