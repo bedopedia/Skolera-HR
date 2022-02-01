@@ -25,6 +25,7 @@ export class RuleFormComponent implements OnInit {
   selectedLeaveType: number;
   invalidAllTardinessTime: boolean = false;
   errorMessage: string;
+  isNotAuthorized: boolean = false;
   leaveTypesPaginationParams = {
     page: 1,
     per_page: 10
@@ -218,6 +219,11 @@ export class RuleFormComponent implements OnInit {
       this.leaveTypes = this.leaveTypes.concat(response.leave_types);
       this.leaveTypesPagination = response.meta;
       this.leaveTypesLoading = false;
+    }, error=> {
+      if(error.status == 403) {
+        this.leaveTypesLoading = false;
+        this.isNotAuthorized = true;
+      }
     }))
   }
   nextBatch() {

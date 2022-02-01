@@ -169,5 +169,8 @@
     "tr_syncing": "Syncing*",
     "tr_unexpected_error_message": "An unexpected error happened, please reload.*",
     "tr_hr_sync_started": "HR Sync Started*",
-    "tr_logs": "Logs*"
+    "tr_logs": "Logs*",
+    "tr_go_back": "Go Back*",
+    "tr_not_authorized": "Sorry ,  but You aren’t authorized to this page*",
+    "tr_permission_error_message": "Please contact your school administrator to request permission*"
 }
