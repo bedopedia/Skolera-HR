@@ -21,14 +21,9 @@ export class RuleFormComponent implements OnInit {
   leaveTypes: LeaveType[] = [];
   rule: Rule;
   leaveTypesLoading: boolean = true;
-  leaveTypesPagination: PaginationData;
   selectedLeaveType: number;
   invalidAllTardinessTime: boolean = false;
   errorMessage: string;
-  leaveTypesPaginationParams = {
-    page: 1,
-    per_page: 10
-  }
   lops = [1, 0.5]
 
   private subscriptions: Subscription[] = [];
@@ -56,7 +51,7 @@ export class RuleFormComponent implements OnInit {
       this.ruleId = this.data.rule.id
       this.getRule()
     }
-    this.getLeveTypes()
+    this.getLeaveTypes()
 
   }
   public addTardinessRule() {
@@ -237,21 +232,14 @@ export class RuleFormComponent implements OnInit {
 
 
   }
-  getLeveTypes() {
+  getLeaveTypes() {
     this.leaveTypesLoading = true
-    this.subscriptions.push(this.ruleService.getLeaveTypes(this.leaveTypesPaginationParams).subscribe((response: any) => {
-      this.leaveTypes = this.leaveTypes.concat(response.leave_types);
-      this.leaveTypesPagination = response.meta;
+    this.subscriptions.push(this.ruleService.getLeaveTypes().subscribe((response: any) => {
+      this.leaveTypes = this.leaveTypes.concat(response);
       this.leaveTypesLoading = false;
     }))
   }
-  nextBatch() {
-    if (this.leaveTypesPagination.next_page) {
-      this.leaveTypesLoading = true;
-      this.leaveTypesPaginationParams.page = this.leaveTypesPagination.next_page;
-      this.getLeveTypes();
-    }
-  }
+ 
   removeErrorMessageOfSelectionAtLeastOneRule(){
     if(this.rule.leave_type_id){
       this.errorMessage = '';
