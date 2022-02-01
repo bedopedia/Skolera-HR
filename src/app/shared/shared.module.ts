@@ -16,11 +16,12 @@ import { SkoleraOrderByComponent } from './components/skolera-order-by/skolera-o
 import { ImagePreloadDirective } from './components/image/image.directive';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
 
 
 
 @NgModule({
-  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent,SkoleraMultiCheckboxComponent,SkoleraOrderByComponent,ImagePreloadDirective],
+  declarations: [GhostLineComponent,SkoleraPagination,SkoleraConfirmationComponent,SkoleraMultiCheckboxComponent,SkoleraOrderByComponent,ImagePreloadDirective,NotAuthorizedComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -42,7 +43,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     SkoleraOrderByComponent,
     ImagePreloadDirective,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NotAuthorizedComponent
   ],
   providers: [VersionCheckService,UpdateService]
 })

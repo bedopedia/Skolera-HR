@@ -24,6 +24,11 @@ export class RuleFormComponent implements OnInit {
   selectedLeaveType: number;
   invalidAllTardinessTime: boolean = false;
   errorMessage: string;
+  isNotAuthorized: boolean = false;
+  leaveTypesPaginationParams = {
+    page: 1,
+    per_page: 10
+  }
   lops = [1, 0.5]
 
   private subscriptions: Subscription[] = [];
@@ -237,6 +242,11 @@ export class RuleFormComponent implements OnInit {
     this.subscriptions.push(this.ruleService.getLeaveTypes().subscribe((response: any) => {
       this.leaveTypes = this.leaveTypes.concat(response);
       this.leaveTypesLoading = false;
+    }, error=> {
+      if(error.status == 403) {
+        this.leaveTypesLoading = false;
+        this.isNotAuthorized = true;
+      }
     }))
   }
  

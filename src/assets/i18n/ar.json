@@ -212,5 +212,7 @@
     "tr_logs": "السجلات",
     "tr_unique_start_and_end":"Start time and End time should be unique*",
     "tr_permission_error_message": "يرجى الاتصال بمسؤول مدرستك لطلب الإذن",
-    "tr_sync_succeeded_with_warnings": "Sync Succeeded with warnings*"
+    "tr_sync_succeeded_with_warnings": "Sync Succeeded with warnings*",
+    "tr_go_back": "عودة",
+    "tr_not_authorized": "عذرًا ، لكن غير مصرح لك لعرض هذه الصفحة"
 }
