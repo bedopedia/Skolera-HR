@@ -58,6 +58,8 @@ export class EditTimeGroupComponent implements OnInit {
   @ViewChild('timeGroupForm') announcementForm: NgForm;
   filteredTimeGroupEmployees: Employee[];
   searchTimeOut: any;
+  addedEmployees: Employee[] = [];
+  removedEmployees: Employee[] = [];
 
   constructor(
     private timeGroupService: TimeGroupsSerivce,
@@ -85,7 +87,7 @@ export class EditTimeGroupComponent implements OnInit {
 
   private getTimeGroup(id: number) {
     this.TimeGroupsSerivce.showTimeGroup(id).subscribe((response: any) => {
-      this.timeGroup = response;
+      this.timeGroup = response.time_group;
       this.filteredTimeGroupEmployees = this.timeGroup.employees || []
       this.getEmployees();
       this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
@@ -213,7 +215,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.employeesService.getEmployees(this.employessParams).subscribe((response: any) => {
       this.employeesList = this.employeesList.concat(response.employees)
       this.employeesList.forEach(employee => {
-        employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroup.id
+        employee.isInsideCurrentTimeGroup = employee.time_group?.id == this.timeGroupId
         if (this.timeGroup.employees && this.timeGroup.employees.length > 0) {
           employee.isInsideCurrentTimeGroup = this.timeGroup.employees.find(time_group_employee => time_group_employee.id == employee.id) ? true : false
         }
@@ -226,14 +228,30 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public updateTimeGroupEmployees() {
+    const addedEmployeesIds = this.addedEmployees.map(employee => employee.id);
+    const removedEmployeesIds = this.removedEmployees.map(employee => employee.id);
     const updateParams = {
-      // 'ids': this.addedEmployeesIds,
-      'time_group_id': this.timeGroupId
+      "employees": {
+        'added_employees_ids': addedEmployeesIds,
+        'removed_employees_ids': removedEmployeesIds,
+        'time_group_id': this.timeGroupId
+      }
     }
     this.subscriptions.push(
       this.employeesService.bulkUpdateEmployeesTimeGroup(updateParams).subscribe(response => {
         this.appNotificationService.push(this.translate.instant('tr_time_group_employees_updated_successfully'), 'success');
-        this.getEmployees('search')
+        
+        this.employeesList.map(employee => {
+          if(addedEmployeesIds.includes(employee.id)){
+            employee.time_group = this.timeGroup
+          } else if(removedEmployeesIds.includes(employee.id)){
+            delete employee.time_group;
+          }
+        })
+        this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees.concat(this.addedEmployees)
+        this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees.filter(employee => !removedEmployeesIds.includes(employee.id))
+        this.addedEmployees = []
+        this.removedEmployees = []
       }, error => {
         this.appNotificationService.push(error.error.name, 'error');
         this.isFormSubmitted = false;
@@ -243,20 +261,18 @@ export class EditTimeGroupComponent implements OnInit {
     return employee.isInsideCurrentTimeGroup
   }
   public assignEmployeeIngroup(event: any, timegroupEmployee: Employee) {
-
-    if (event.target.checked) {
-      if (timegroupEmployee.time_group && timegroupEmployee.time_group.id != this.timeGroup.id) {
-        this.unassignEmployee(event, timegroupEmployee)
-      }
-      else {
-        timegroupEmployee.isInsideCurrentTimeGroup = true;
+    if(timegroupEmployee.id){
+      if (event.target.checked) {
+        timegroupEmployee.isInsideCurrentTimeGroup = true
         this.timeGroup.employees?.push(timegroupEmployee)
+        this.addedEmployees.push(timegroupEmployee)
+        this.removedEmployees = this.removedEmployees.filter(employee => employee.id != timegroupEmployee.id)
+      } else {
+        timegroupEmployee.isInsideCurrentTimeGroup = false
+        this.removedEmployees.push(timegroupEmployee)
+        this.addedEmployees = this.addedEmployees.filter(employee => employee.id != timegroupEmployee.id)
       }
-
-    } else {
-      this.removeEmployeeFromTimeGroupEmployees(timegroupEmployee)
     }
-    this.timeGroupEmployees = JSON.parse(JSON.stringify(this.timeGroup.employees))
   }
 
   public filterEmployees(term: any, searchKey: string) {
@@ -273,6 +289,7 @@ export class EditTimeGroupComponent implements OnInit {
     }, 1000);
   }
 
+  // TODO: replace with backend search
   filterTimeGroupEmployees() {
     var filteredEmployees: Employee[] = this.timeGroup.employees || []
     if (this.employessParams['by_name']) {
@@ -288,41 +305,7 @@ export class EditTimeGroupComponent implements OnInit {
     this.filteredTimeGroupEmployees = filteredEmployees
   }
 
-  //TODO: remove
-  unassignEmployee(event: any, timeGroupEmployee: Employee) {
-    const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
-      width: '400px',
-      data: this.unassignEmployeeDialogData(),
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'ok') {
-        const params = {
-          "employee": {
-            "time_group_id": null
-          }
-        }
-        // this.subscriptions.push(this.employeesService.updateEmployee(timeGroupEmployee.id, params).subscribe((response: any) => {
-        //   this.appNotificationService.push(this.translate.instant('tr_unassign_time_group_successfully'), 'success');
-        //   timeGroupEmployee.isInsideCurrentTimeGroup = true
-        //   this.timeGroup.employees?.push(timeGroupEmployee)
-        //   this.filterTimeGroupEmployees()
-        //   this.updateTimeGroupEmployees()
-        //   this.getEmployees('search');
-        // }, error => {
-        //   this.appNotificationService.push('There was an unexpected error, please reload', 'error');
-        //   timeGroupEmployee.isInsideCurrentTimeGroup = false
-        //   event.target.checked = false
-        // }))
-
-      }
-      else {
-        timeGroupEmployee.isInsideCurrentTimeGroup = false;
-        event.target.checked = false
-      }
-    })
-  }
-  // TODO: remove
+  // TODO: generalize for update
   unassignEmployeeDialogData(): any {
     return {
       title: this.translate.instant("tr_unassign_message"),
@@ -339,13 +322,6 @@ export class EditTimeGroupComponent implements OnInit {
         }
       ]
     }
-  }
-
-  // TODO: remove
-  removeEmployeeFromTimeGroupEmployees(timeGroupEmployee: Employee) {
-    timeGroupEmployee.isInsideCurrentTimeGroup = false
-    this.timeGroup.employees = this.timeGroup.employees!.filter(employee => employee.name != timeGroupEmployee.name)
-    this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees!.filter(employee => employee.name != timeGroupEmployee.name)
   }
 
   ngOnDestroy() {

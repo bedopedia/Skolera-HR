@@ -110,9 +110,11 @@ export class TimeScheduleComponent implements OnInit {
     }
 
     const updateParams = {
-      "time_group_schedule_attributes": {
-        id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
-        "schedule_days_attributes": this.scheduleDays
+      employee: {
+        "time_group_schedule_attributes": {
+          id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
+          "schedule_days_attributes": this.scheduleDays
+        }
       }
     }
 
