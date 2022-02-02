@@ -218,7 +218,8 @@
             </div>
 
           </div>
-          <div class="col-md-5 time-group-employees" *ngIf="!timeGroupLoading">
+          <div class="col-md-5" *ngIf="!timeGroupLoading">
+            <div class="time-group-employees">
             <table class="table s-table employees-table layout-fixed">
               <thead>
                 <th>
@@ -238,8 +239,12 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [perPage]="paginationPerPage"
-              (paginationUpdate)=paginationUpdateAssignedEmployees($event)></skolera-pagination> -->
+            </div>
+            <div class="plr-4 ptb-4">
+              <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [perPage]="paginationPerPage"
+                (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
+              </skolera-pagination>
+            </div>
               <div class="text-center flex flex-middle flex-center"
               *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
               <div class="ptb-2 plr-2">
