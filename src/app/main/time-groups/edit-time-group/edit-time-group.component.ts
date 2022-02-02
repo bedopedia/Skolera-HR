@@ -105,13 +105,13 @@ export class EditTimeGroupComponent implements OnInit {
         delete this.timeGroup.time_group_schedule;
       }
       this.timeGroupLoading = false;
+      this.timeGroupEmployeesLoading = false
 
     }, error=> {
       this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
      })
   }
 
-  //TODO: return employee time schedule
   public openTimeScheduleModal(employee: Employee) {
     let dialogRef = this.dialog.open(TimeScheduleComponent, {
       width: '750px',
@@ -126,7 +126,7 @@ export class EditTimeGroupComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.message == 'update') {
-        this.timeGroup.employees = result.response.employees
+        employee.time_group_schedule = result.response.time_group_schedule
       }
     })
   }
@@ -250,6 +250,24 @@ export class EditTimeGroupComponent implements OnInit {
      })
   }
 
+  public checkEmployeesAssignedToAnotherTimeGroup(){
+
+    const assignedEmployees = this.addedEmployees.filter(employee => employee.time_group && employee.time_group.id && employee.time_group.id != this.timeGroupId)
+    if(assignedEmployees.length > 0){
+      const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
+        width: '400px',
+        data: this.unassignEmployeeDialogData(),
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == 'ok') {
+          this.updateTimeGroupEmployees();
+        }
+      })
+    }else{
+      this.updateTimeGroupEmployees();
+    }
+  }
   public updateTimeGroupEmployees() {
     const addedEmployeesIds = this.addedEmployees.map(employee => employee.id);
     const removedEmployeesIds = this.removedEmployees.map(employee => employee.id);
@@ -315,8 +333,7 @@ export class EditTimeGroupComponent implements OnInit {
     }, 1000);
   }
 
-  // TODO: generalize for update
-  unassignEmployeeDialogData(): any {
+  unassignEmployeesDialogData(): any {
     return {
       title: this.translate.instant("tr_unassign_message"),
       buttons: [
@@ -326,7 +343,7 @@ export class EditTimeGroupComponent implements OnInit {
           type: 'btn-secondary'
         },
         {
-          label: this.translate.instant("tr_action.ok"),
+          label: this.translate.instant("tr_action.yes"),
           actionCallback: 'ok',
           type: 'btn-primary'
         }

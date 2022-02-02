@@ -100,7 +100,7 @@
         <h3 class="steel weight-bold size-default title-with-btn mb-4">{{'tr_assign_employees' | translate}}
 
           <div>
-            <button class="s-btn btn-primary btn-sm mr-3" type="button" (click)="updateTimeGroupEmployees()">
+            <button class="s-btn btn-primary btn-sm mr-3" type="button" (click)="checkEmployeesAssignedToAnotherTimeGroup()">
               {{'tr_action.update' | translate}}
             </button>
           </div>
@@ -183,7 +183,10 @@
                           (change)="assignEmployeeIngroup($event,employee)">
                         <label for="employee-id-{{i}}"></label>
                       </span>
+                      <div>
                       <h1 class="size-small ml-1">{{employee.name}}</h1>
+                      <h1 class="size-small ml-1">( {{ employee.number }} )</h1>
+                    </div>
                     </div>
                   </td>
                   <td>
@@ -213,13 +216,13 @@
               </div>
             </div>
 
-            <div class="mtb-4" *ngIf="employeesLoading">
-              <app-ghost-line [height]="10" [length]="20" [width]="300" [type]="'list'"></app-ghost-line>
-            </div>
-
           </div>
-          <div class="col-md-5" *ngIf="!timeGroupLoading">
-            <div class="time-group-employees">
+          <div class="col-md-5 mb-2" *ngIf="timeGroupEmployeesLoading">
+            <div>
+              <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
+            </div>
+          </div>
+          <div class="col-md-5" *ngIf="!timeGroupEmployeesLoading">
             <table class="table s-table employees-table layout-fixed">
               <thead>
                 <th>
@@ -239,7 +242,6 @@
                 </tr>
               </tbody>
             </table>
-            </div>
             <div class="plr-4 ptb-4">
               <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [perPage]="paginationPerPage"
                 (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
