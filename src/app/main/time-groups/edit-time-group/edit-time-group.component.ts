@@ -256,7 +256,7 @@ export class EditTimeGroupComponent implements OnInit {
     if(assignedEmployees.length > 0){
       const dialogRef = this.dialog.open(SkoleraConfirmationComponent, {
         width: '400px',
-        data: this.unassignEmployeeDialogData(),
+        data: this.unassignEmployeesDialogData(),
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
