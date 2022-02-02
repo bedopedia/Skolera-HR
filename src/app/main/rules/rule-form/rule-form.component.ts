@@ -25,10 +25,6 @@ export class RuleFormComponent implements OnInit {
   invalidAllTardinessTime: boolean = false;
   errorMessage: string;
   isNotAuthorized: boolean = false;
-  leaveTypesPaginationParams = {
-    page: 1,
-    per_page: 10
-  }
   lops = [1, 0.5]
 
   private subscriptions: Subscription[] = [];
