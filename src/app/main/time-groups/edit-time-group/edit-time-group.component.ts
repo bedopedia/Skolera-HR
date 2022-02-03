@@ -67,6 +67,7 @@ export class EditTimeGroupComponent implements OnInit {
   addedEmployees: Employee[] = [];
   removedEmployees: Employee[] = [];
   timeGroupEmployeesLoading: boolean = true;
+  isUpdating: boolean = false;
 
   constructor(
     private timeGroupService: TimeGroupsSerivce,
@@ -269,6 +270,7 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
   public updateTimeGroupEmployees() {
+    this.isUpdating = true;
     const addedEmployeesIds = this.addedEmployees.map(employee => employee.id);
     const removedEmployeesIds = this.removedEmployees.map(employee => employee.id);
     const updateParams = {
@@ -291,13 +293,14 @@ export class EditTimeGroupComponent implements OnInit {
             this.timeGroup.employees = this.timeGroup.employees?.filter(timeGroupEmployee => timeGroupEmployee.id != employee.id)
           }
         })
-        this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees.concat(this.addedEmployees)
-        this.filteredTimeGroupEmployees = this.filteredTimeGroupEmployees.filter(employee => !removedEmployeesIds.includes(employee.id))
         this.addedEmployees = []
         this.removedEmployees = []
+        this.getTimeGroupEmployees();
+        this.isUpdating = false;
       }, error => {
         this.appNotificationService.push(error.error.name, 'error');
         this.isFormSubmitted = false;
+        this.isUpdating = false;
       }))
   }
   checkIsInsideCurrentTimeGroup(employee: Employee) {
@@ -318,6 +321,8 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public filterEmployees(term: any, searchKey: string) {
+    this.employeesParams.page = 1;
+    this.timeGroupEmployeesParams.page = 1;
     clearTimeout(this.searchTimeOut);
     this.searchTimeOut = setTimeout(() => {
       if (!term || (searchKey != 'by_department_id' && (term == '' || term.target.value == ''))) {

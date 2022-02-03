@@ -100,7 +100,8 @@
         <h3 class="steel weight-bold size-default title-with-btn mb-4">{{'tr_assign_employees' | translate}}
 
           <div>
-            <button class="s-btn btn-primary btn-sm mr-3" type="button" (click)="checkEmployeesAssignedToAnotherTimeGroup()">
+            <button class="s-btn btn-primary btn-sm mr-3" type="button" 
+                    (click)="checkEmployeesAssignedToAnotherTimeGroup()" [disabled]="isUpdating">
               {{'tr_action.update' | translate}}
             </button>
           </div>
@@ -258,12 +259,6 @@
             </div>
           </div>
          
-
-        </div>
-        <div class="col-md-5 mb-2" *ngIf="timeGroupLoading">
-          <div>
-            <app-ghost-line [length]="2" [type]="'table'"></app-ghost-line>
-          </div>
 
         </div>
       </div>
