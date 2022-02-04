@@ -137,6 +137,7 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public updateTimeGroup() {
+  
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
     if (this.timeGroup.group_type == 'fixed') {
@@ -171,6 +172,8 @@ export class EditTimeGroupComponent implements OnInit {
         this.appNotificationService.push(error.error.name, 'error');
       }
       this.isFormSubmitted = false;
+      this.appNotificationService.push(error.error.name, 'error');
+     
     })
   }
 
@@ -288,7 +291,7 @@ export class EditTimeGroupComponent implements OnInit {
         
         this.employeesList.map(employee => {
           if(addedEmployeesIds.includes(employee.id)){
-            employee.time_group = this.timeGroup
+            employee.time_group!.name = this.timeGroup.name
             this.timeGroup.employees?.push(employee)
           } else if(removedEmployeesIds.includes(employee.id)){
             delete employee.time_group;

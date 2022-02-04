@@ -39,14 +39,24 @@
     height: 1.7rem !important;
 }
 
+.primary-border{
+    border-right: 3px solid #39066e73;
+}
+
 .employees-table{
-    &.border-right {
-        border-right: 3px solid #39066e73;
-    }
+   
     th,td {
-        padding: 0.3rem 1rem !important;
-        border-bottom: none !important;
+        &:nth-child(1){
+            width: 12rem;
+        }
+        &:nth-child(2){
+            width: 6rem;
+        }
+        &:nth-child(3){
+            width: 7rem;
+        }
     } 
+
 }
 
 .employees-container{
@@ -58,4 +68,10 @@
 .time-group-employees {
     max-height: 380px;
     overflow-y: auto; 
+}
+.assigned-employees-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    height: 100%;
 }
