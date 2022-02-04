@@ -169,8 +169,7 @@ export class EditTimeGroupComponent implements OnInit {
       this.isFormSubmitted = false;
     }, error => {
       this.isFormSubmitted = false;
-      this.appNotificationService.push( this.translate.instant('tr_unexpected_error_message'), 'error');
-      // this.appNotificationService.push(error.error.name, 'error');
+      this.appNotificationService.push(error.error.name, 'error');
      
     })
   }
