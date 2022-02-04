@@ -164,8 +164,6 @@ export class EditTimeGroupComponent implements OnInit {
       return
     }
     this.timeGroup.rule_id = this.timeGroup.rule?.id
-    console.log({ time_group: this.timeGroup });
-    
     this.timeGroupService.editTimeGroup(this.timeGroupId, { time_group: this.timeGroup }).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_time_group_updated_successfully'), 'success');
       this.isFormSubmitted = false;
