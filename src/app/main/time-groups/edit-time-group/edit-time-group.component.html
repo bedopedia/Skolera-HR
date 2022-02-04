@@ -160,7 +160,7 @@
         <div class="row border-bottom mt-4">
           <div class="col-md-7">
             <div class="mb-2" *ngIf="employeesLoading">
-              <app-ghost-line [length]="10" [type]="'table'"></app-ghost-line>
+              <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
             </div>
             <div *ngIf="!employeesLoading">
               <div class="primary-border pr-4">
@@ -221,7 +221,7 @@
           <div class="col-md-5 plr-0">
             
               <div class="mb-2" *ngIf="timeGroupEmployeesLoading">
-                <app-ghost-line [length]="10" [type]="'table'"></app-ghost-line>
+                <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
               </div>
               <div class="assigned-employees-container"  *ngIf="!timeGroupEmployeesLoading">
                 <table class="table s-table assigned-employees-table layout-fixed">
