@@ -137,7 +137,6 @@ export class EditTimeGroupComponent implements OnInit {
   }
 
   public updateTimeGroup() {
-  
     this.isFormSubmitted = true;
     let isValidDays: boolean[] = []
     if (this.timeGroup.group_type == 'fixed') {
@@ -146,7 +145,6 @@ export class EditTimeGroupComponent implements OnInit {
           day.clock_in = null;
           day.clock_out = null;
         }
-
         if ((!day.clock_in  || !day.clock_out ) && !day.is_off) {
           day.invalidTime = true;
           isValidDays.push(true)
@@ -169,8 +167,9 @@ export class EditTimeGroupComponent implements OnInit {
       this.isFormSubmitted = false;
     }, error => {
       this.isFormSubmitted = false;
-      this.appNotificationService.push(error.error.name, 'error');
-     
+      if(error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
     })
   }
 
@@ -300,7 +299,9 @@ export class EditTimeGroupComponent implements OnInit {
         this.getTimeGroupEmployees();
         this.isUpdating = false;
       }, error => {
-        this.appNotificationService.push(error.error.name, 'error');
+        if(error.status != 403) {
+          this.appNotificationService.push(error.error.name, 'error');
+        }
         this.isFormSubmitted = false;
         this.isUpdating = false;
       }))
