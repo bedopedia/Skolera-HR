@@ -17,6 +17,7 @@ import { saveAs } from 'file-saver';
 })
 export class SheetsListComponent implements OnInit {
   paginationPerPage: number = 10
+  isNotAuthorized: boolean = false;
   params: any = {
     page: 1,
     per_page: this.paginationPerPage,
@@ -45,8 +46,14 @@ export class SheetsListComponent implements OnInit {
       this.paginationData = response.meta;
       this.sheetsLoading = false;
     }, error => {
-      this.sheetsLoading = false;
-      this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
+        if(error.status == 403) {
+          this.isNotAuthorized = true;
+        }
+        else {
+          this.sheetsLoading = false;
+          this.appNotificationService.push(this.translateService.instant('tr_unexpected_error_message'), 'error');
+        }
+   
     })
   }
   paginationUpdate(page: number) {

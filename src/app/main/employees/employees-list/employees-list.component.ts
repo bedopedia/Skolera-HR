@@ -3,6 +3,9 @@ import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { PaginationData } from '@core/models/skolera-interfaces.model'
 import { Department, Employee } from '@core/models/employees-interface.model'
 import { Subscription } from 'rxjs';
+import { AppNotificationService } from '@skolera/services/app-notification.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Globals } from '@core/globals';
 
 @Component({
   selector: 'app-employees-list',
@@ -13,13 +16,14 @@ export class EmployeesListComponent implements OnInit {
   employeesLoading: boolean = true;
   isFilterOpen: boolean = false;
   paginationPerPage = 10;
-  notAuthorized: boolean;
   departments: Department[] = [];
   selectedDepartment: string;
   employeesList: Employee[];
   departmentsLoading: boolean = false;
   fullscreenEnabled = false;
   searchTerm: string;
+  isNotAuthorized: boolean = false;
+  isDepartmentNotAuthorized: boolean = false;
   currentOrder: any = {
     name: '',
     department: ''
@@ -42,7 +46,10 @@ export class EmployeesListComponent implements OnInit {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private employeesService: EmployeesSerivce
+    private employeesService: EmployeesSerivce,
+    private appNotificationService: AppNotificationService,
+    private translateService: TranslateService,
+    private globals: Globals
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +62,13 @@ export class EmployeesListComponent implements OnInit {
       this.employeesList = response.employees
       this.paginationData = response.meta;
       this.employeesLoading = false
+    },error=> {
+      if(error.status == 403) {
+        this.isNotAuthorized = true;
+      }
+      else {
+        this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+      }
     }))
   }
   getDepartments() {
@@ -63,6 +77,11 @@ export class EmployeesListComponent implements OnInit {
       this.departmentsPagination = response.meta;
       this.departments = this.departments.concat(response.employee_departments);
       this.departmentsLoading = false
+    },error=> {
+      if(error.status == 403) {
+       this.isDepartmentNotAuthorized = true;
+       this.departmentsLoading = false
+      }
     }))
   }
   nextBatch() {
