@@ -19,6 +19,7 @@ export class CreateTimeGroupComponent implements OnInit {
   isFormSubmitted: boolean = false;
   timeGroupLoading: boolean = true;
   timeGroup: TimeGroup ;
+  isNotAuthorized: boolean = false;
   scheduleDaysAttributes: TimeGroupSchedule[] = [new TimeGroupSchedule()];
   private subscriptions: Subscription[] = [];
 
@@ -148,8 +149,10 @@ export class CreateTimeGroupComponent implements OnInit {
       this.appNotificationService.push(this.translate.instant('tr_time_group_created_successfully'), 'success');
       this.dialogRef.close('update');
     }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
       this.isFormSubmitted = false;
+      if(error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
     })) 
     
   }
