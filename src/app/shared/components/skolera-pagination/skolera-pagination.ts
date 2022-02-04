@@ -44,7 +44,7 @@ export class SkoleraPagination implements OnChanges {
     @Input() perPage: number = 0;
     @Output() paginationUpdate = new EventEmitter();
     startCell: number = 1;
-    step: number = 10;
+    @Input() step: number = 10;
     cellsNumber: number = 0;
     activeCell: number = 1;
     canGoBackward: boolean = false;
