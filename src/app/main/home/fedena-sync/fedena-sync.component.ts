@@ -48,9 +48,7 @@ getSyncStatus(initialCheck: boolean = false) {
            }
        },
        error => {
-            if (error.status != 422) {
-              this.isSyncing = false;
-            }
+           this.isSyncing = false;
            this.appNotificationService.push(error.statusText, 'error');
        }); 
 }
