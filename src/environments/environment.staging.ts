@@ -12,5 +12,5 @@ export const environment = {
     }
 };
 
-export const baseUrl = "https://api-v2.skolera.com/";
+export const baseUrl = window.location.protocol + '//' +  window.location.hostname.replace('-hr.','.')  + '/';
 export const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
