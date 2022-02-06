@@ -1686,6 +1686,9 @@ body,
             margin-#{$start}: auto;
         }
     }
+  .mat-calendar-previous-button, .mat-calendar-next-button {
+        transform: rotate(360deg) !important;
+  }    
 }
 
 @import 'directions/decide';
