@@ -48,13 +48,12 @@ getSyncStatus(initialCheck: boolean = false) {
            }
        },
        error => {
-            if (error.status != 422) {
-              this.isSyncing = false;
-            }
+           this.isSyncing = false;
            this.appNotificationService.push(error.statusText, 'error');
        }); 
 }
   syncFedena() {
+    this.isSyncing = true;
     this.fedenaSyncService.hrSync().subscribe(
       (response: any) => {
           this.intervalTime = 1000*60*10; // 10 minutes Initial time
