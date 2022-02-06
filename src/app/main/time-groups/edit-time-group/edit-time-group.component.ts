@@ -274,6 +274,7 @@ export class EditTimeGroupComponent implements OnInit {
     }
   }
   public updateTimeGroupEmployees() {
+  
     this.isUpdating = true;
     const addedEmployeesIds = this.addedEmployees.map(employee => employee.id);
     const removedEmployeesIds = this.removedEmployees.map(employee => employee.id);
@@ -287,16 +288,16 @@ export class EditTimeGroupComponent implements OnInit {
     this.subscriptions.push(
       this.employeesService.bulkUpdateEmployeesTimeGroup(updateParams).subscribe(response => {
         this.appNotificationService.push(this.translate.instant('tr_time_group_employees_updated_successfully'), 'success');
-        
         this.employeesList.map(employee => {
           if(addedEmployeesIds.includes(employee.id)){
-            employee.time_group!.name = this.timeGroup.name
+            employee.time_group ?  employee.time_group!.name = this.timeGroup.name :  employee.time_group! = { name: this.timeGroup.name, group_type: this.timeGroup.group_type } 
             this.timeGroup.employees?.push(employee)
           } else if(removedEmployeesIds.includes(employee.id)){
             delete employee.time_group;
             this.timeGroup.employees = this.timeGroup.employees?.filter(timeGroupEmployee => timeGroupEmployee.id != employee.id)
           }
         })
+     
         this.addedEmployees = []
         this.removedEmployees = []
         this.getTimeGroupEmployees();
