@@ -213,7 +213,7 @@
                 </div>
               </div>
               <div class="plr-4 ptb-2">
-                <skolera-pagination [paginationData]="employeesPaginationData" [step]="5" [perPage]="paginationPerPage"
+                <skolera-pagination [paginationData]="employeesPaginationData" [paginationNumber]= 1 [step]="5" [perPage]="paginationPerPage"
                   (paginationUpdate)=paginationUpdateEmployees($event)></skolera-pagination>
               </div>
             </div>
@@ -255,7 +255,7 @@
                 </div>
   
                 <div class="ptb-2">
-                  <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [step]="5"
+                  <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [paginationNumber]= 2 [step]="5"
                     [perPage]="paginationPerPage" (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
                   </skolera-pagination>
                 </div>
