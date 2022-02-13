@@ -8,8 +8,8 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class UpdateService {
 
     orderUpdate: Subject<any> = new Subject<any>();
-    paginationStartCell: Subject<number> = new Subject<number>();
-    paginationStartCellNumber: number  = 1;
+    paginationStartCell: Subject<number[]> = new Subject<number[]>();
+    paginationStartCellNumber: number[]  = [];
 
 
     constructor() {
@@ -19,10 +19,10 @@ export class UpdateService {
     updateOrder(event:any) {
         this.orderUpdate.next(event);
     }
-    updatePaginationStartCell(event:number) {
+    updatePaginationStartCell(event:number[]) {
         this.paginationStartCell.next(event);
     }
-    getPaginationStartCell(): number{
+    getPaginationStartCell(): number[]{
         this.paginationStartCell.subscribe (
             res => {
               this.paginationStartCellNumber = res  
