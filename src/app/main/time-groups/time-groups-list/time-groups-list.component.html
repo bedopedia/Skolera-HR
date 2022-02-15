@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label>{{'tr_types' | translate}}</label>
+            <label>{{'tr_type' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
               <ng-select (change)="filterTimeGroups(selectedtype,'by_type')"
                 class="s-control s-select black-placeholder" [clearable]="true"
@@ -68,7 +68,7 @@
                   {{timeGroup.name}}
                 </td>
                 <td>
-                  {{timeGroup.group_type}}
+                  {{'tr_' + timeGroup.group_type | translate}}
                 </td>
                 <td>
                   {{timeGroup.number_of_employees}}
