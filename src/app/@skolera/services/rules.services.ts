@@ -21,8 +21,8 @@ export class RulesSerivce {
     updateRule(params:any, ruleId: number){
         return this.http.put(baseUrl + `api/hr/rules/${ruleId}`,params);
     }
-    getLeaveTypes(params: any){
-        return  this.http.get(baseUrl + `api/hr/leave_types`,{ params: params });
+    getLeaveTypes(){
+        return  this.http.get(baseUrl + `api/hr/leave_types`);
     }
     deleteRule(ruleId: number){
         return  this.http.delete(baseUrl + `api/hr/rules/${ruleId}`);

@@ -34,6 +34,7 @@ export class TimeGroupsListComponent implements OnInit {
   };
   searchTimeout: any;
   nameSearchTerm: string;
+  isNotAuthorized: boolean = false;
 
   constructor(
     private TimeGroupsSerivce: TimeGroupsSerivce,
@@ -55,7 +56,10 @@ export class TimeGroupsListComponent implements OnInit {
       this.cells = response.time_groups.map((timeGroup: TimeGroup) => timeGroup.id);
       this.paginationData = response.meta
       this.timeGroupsLoading = false;
-
+    },error=> {
+      if(error.status == 403) {
+        this.isNotAuthorized = true;
+      }
     })
   }
 

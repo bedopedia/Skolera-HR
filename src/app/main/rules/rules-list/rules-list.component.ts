@@ -25,6 +25,7 @@ export class RulesListComponent implements OnInit {
   };
   isFilterOpen: boolean = false;
   nameSearchTerm: string;
+  isNotAuthorized: boolean
   private subscriptions: Subscription[] = [];
   
   constructor(
@@ -45,7 +46,13 @@ export class RulesListComponent implements OnInit {
       this.paginationData = response.meta;
       this.rulesLoading = false;
     }, error=> {
-      this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+      if(error.status == 403) {
+        this.isNotAuthorized = true;
+      }
+      else {
+        this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+
+      }  
      }))
   }
   openRuleForm(type: string, rule?:Rule){
@@ -92,7 +99,9 @@ export class RulesListComponent implements OnInit {
           this.appNotificationService.push(this.translateService.instant('tr_deleted_successfully'), 'success');
           this.getRules();
          }, error=> {
-          this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+          if (error.status != 403) {
+            this.appNotificationService.push( this.translateService.instant('tr_unexpected_error_message'), 'error');
+          }
          }))
 
       }

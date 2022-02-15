@@ -127,7 +127,10 @@ export class SheetFormComponent implements OnInit {
       this.isFileUploading = false;
     }, error => {
       this.isFileUploading = false;
-      this.appNotificationService.push(this.translate.instant('tr_something_went_wrong'), 'error');
+      if(error.status != 403) {
+        this.appNotificationService.push(this.translate.instant('tr_something_went_wrong'), 'error');
+      }
+   
     })
   }
   ngOnDestroy() {

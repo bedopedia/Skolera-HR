@@ -1686,6 +1686,9 @@ body,
             margin-#{$start}: auto;
         }
     }
+  .mat-calendar-previous-button, .mat-calendar-next-button {
+        transform: rotate(360deg) !important;
+  }    
 }
 
 @import 'directions/decide';
@@ -1850,10 +1853,6 @@ body,
 ngx-loading-bar {
     div .bar {
         height: 3px !important;
-    }
-
-    div#loading-bar-spinner {
-        display: none !important;
     }
 }
 

@@ -21,14 +21,10 @@ export class RuleFormComponent implements OnInit {
   leaveTypes: LeaveType[] = [];
   rule: Rule;
   leaveTypesLoading: boolean = true;
-  leaveTypesPagination: PaginationData;
   selectedLeaveType: number;
   invalidAllTardinessTime: boolean = false;
   errorMessage: string;
-  leaveTypesPaginationParams = {
-    page: 1,
-    per_page: 10
-  }
+  isNotAuthorized: boolean = false;
   lops = [1, 0.5]
 
   private subscriptions: Subscription[] = [];
@@ -56,7 +52,7 @@ export class RuleFormComponent implements OnInit {
       this.ruleId = this.data.rule.id
       this.getRule()
     }
-    this.getLeveTypes()
+    this.getLeaveTypes()
 
   }
   public addTardinessRule() {
@@ -69,17 +65,37 @@ export class RuleFormComponent implements OnInit {
     }
   }
   public validateStartAndEndTime(tardinessRule: TardinessRule) {
+    const isExistingStartAndEndTimes = this.checkExistingTimes(tardinessRule);
     if ((!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '') && this.isFormSubmitted) {
       this.invalidAllTardinessTime = true;
-      tardinessRule.invalidTime = true
-    } else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
+      tardinessRule.invalidTime = true;
+    } 
+    else if(isExistingStartAndEndTimes){
+      tardinessRule.invalidTime = true;
+      this.errorMessage = this.translate.instant('tr_unique_start_and_end')
+    }
+    else if (!this.isFormSubmitted && (!tardinessRule.start_time || !tardinessRule.end_time || tardinessRule.start_time == '' || tardinessRule.end_time == '')) {
       return
     } else {
-      tardinessRule.invalidTime = (tardinessRule.start_time > tardinessRule.end_time) ? true : false;
+      tardinessRule.invalidTime = (tardinessRule.start_time >= tardinessRule.end_time) ? true : false;
       this.invalidAllTardinessTime = this.rule.tardiness_rules_attributes!.filter(tardinessRule => (tardinessRule.invalidTime)).length > 0;
+      this.errorMessage = ''
     }
 
   }
+  checkExistingTimes(tardinessRule: TardinessRule) {
+    return this.rule.tardiness_rules_attributes?.find((selectedTardinessRule,index) => {
+      if(index != this.rule.tardiness_rules_attributes?.indexOf(tardinessRule)){
+        return this.checkSameStartAndEndTimes(selectedTardinessRule, tardinessRule)
+      }
+      return false
+    });
+  }
+
+  checkSameStartAndEndTimes(firstTardinessRule: TardinessRule, secondTardinessRule: TardinessRule): boolean {
+    return firstTardinessRule.start_time == secondTardinessRule.start_time && firstTardinessRule.end_time == secondTardinessRule.end_time
+  }
+
   public closeModal() {
     this.dialogRef.close();
   }
@@ -103,7 +119,7 @@ export class RuleFormComponent implements OnInit {
   submitFrorm() {
    
     this.isFormSubmitted = true;
-    if (this.getIsInValidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
+    if (this.getIsInvalidRule() || this.rule.name == '' || this.invalidAllTardinessTime) {
       this.isFormSubmitted = false;
       return
     }
@@ -111,27 +127,30 @@ export class RuleFormComponent implements OnInit {
     this.data.type == 'create' ? this.createRule() : this.updateRule();
   }
   updateRule() {
-    this.rule.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.concat(this.rule.deleted_tardiness_rules!)
     let ruleParams = {
-      rules: this.rule
+      rules: JSON.parse(JSON.stringify(this.rule))
     }
+    ruleParams.rules.tardiness_rules_attributes = this.rule.tardiness_rules_attributes?.concat(this.rule.deleted_tardiness_rules!)
     this.subscriptions.push(this.ruleService.updateRule(ruleParams, this.rule.id!).subscribe(response => {
       this.appNotificationService.push(this.translate.instant('tr_rule_updated_successfully'), 'success');
       this.dialogRef.close('update');
     }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
+      if (error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
       this.isFormSubmitted = false;
     }))
   }
-  private getIsInValidRule(): boolean {
+  
+  getIsInvalidRule(): boolean {
 
     let invalidRuleForm = false;
     if (this.rule.tardiness_rules_attributes!.length > 0) {
       this.rule.tardiness_rules_attributes?.forEach(tardinessRule => {
         this.validateStartAndEndTime(tardinessRule);
-        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.lop || !tardinessRule.leave_type_id) {
+        if (tardinessRule.end_time == '' || tardinessRule.start_time == '' || tardinessRule.invalidTime || !tardinessRule.leave_type_id || !tardinessRule.lop) {
           invalidRuleForm = true;
-        }
+        }    
         else invalidRuleForm = false;
       })
     }
@@ -206,27 +225,27 @@ export class RuleFormComponent implements OnInit {
       this.appNotificationService.push(this.translate.instant('tr_rule_created_successfully'), 'success');
       this.dialogRef.close('update');
     }, error => {
-      this.appNotificationService.push(error.error.name, 'error');
+      if (error.status != 403) {
+        this.appNotificationService.push(error.error.name, 'error');
+      }
       this.isFormSubmitted = false;
     }))
 
 
   }
-  getLeveTypes() {
+  getLeaveTypes() {
     this.leaveTypesLoading = true
-    this.subscriptions.push(this.ruleService.getLeaveTypes(this.leaveTypesPaginationParams).subscribe((response: any) => {
-      this.leaveTypes = this.leaveTypes.concat(response.leave_types);
-      this.leaveTypesPagination = response.meta;
+    this.subscriptions.push(this.ruleService.getLeaveTypes().subscribe((response: any) => {
+      this.leaveTypes = this.leaveTypes.concat(response);
       this.leaveTypesLoading = false;
+    }, error=> {
+      if(error.status == 403) {
+        this.leaveTypesLoading = false;
+        this.isNotAuthorized = true;
+      }
     }))
   }
-  nextBatch() {
-    if (this.leaveTypesPagination.next_page) {
-      this.leaveTypesLoading = true;
-      this.leaveTypesPaginationParams.page = this.leaveTypesPagination.next_page;
-      this.getLeveTypes();
-    }
-  }
+ 
   removeErrorMessageOfSelectionAtLeastOneRule(){
     if(this.rule.leave_type_id){
       this.errorMessage = '';

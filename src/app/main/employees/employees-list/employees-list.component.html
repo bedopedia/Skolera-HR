@@ -1,4 +1,4 @@
-<div class="content-shadow bg-white mb-5">
+<div class="content-shadow bg-white mb-5" not-authorized [notAuthorized]="isNotAuthorized">
   <h2 class="size-body title-with-btn plr-4 ptb-4">
     <span class="page-title">{{'tr_employees' | translate }}</span>
     <button class="s-btn btn-secondary size-body" (click)="isFilterOpen=!isFilterOpen">
@@ -34,14 +34,12 @@
               placeholder="{{'tr_select' | translate}}" notFoundText="{{'tr_no_items_found' | translate}}"
               (clear)="filterEmployees('','by_department_id')" autofocus [(ngModel)]="selectedDepartment"
               [items]="departments" name="department">
-              <ng-template ng-header-tmp>
-                <div class="pt-2 text-center" *ngIf="!departmentsLoading && !departments.length">
-                  {{'tr_there_are_no_departments' | translate}}
-                </div>
-              </ng-template>
               <ng-template ng-footer-tmp>
-                <div class="mb-2" *ngIf="departmentsLoading">
+                <div class="mb-2 bg-white" *ngIf="departmentsLoading">
                   <app-ghost-line [height]="10" [length]="3" [width]="100" [type]="'list'"></app-ghost-line>
+                </div>
+                <div class="text-error size-tiny bg-white plr-2" *ngIf="isDepartmentNotAuthorized">
+                  {{'tr_permission_error_message' | translate}}
                 </div>
               </ng-template>
             </ng-select>

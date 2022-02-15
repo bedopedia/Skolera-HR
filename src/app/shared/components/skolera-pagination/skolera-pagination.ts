@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Injectable, Input, Output, EventEmitter, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import {PaginationData} from '@core/models/skolera-interfaces.model'
 import { UpdateService } from '@skolera/services/update.service';
 
@@ -22,8 +22,7 @@ import { UpdateService } from '@skolera/services/update.service';
                         *ngFor="let cell of currentCells" 
                         class="pagination-cell" 
                         [class.active]="cell == activeCell"
-                        (click)="cellClicked(cell)"
-                    >
+                        (click)="cellClicked(cell)">
                         {{cell}}
                     </span>
                     <span *ngIf="canGoForward" class="pagination-cell" (click)="fastForward()"><i class="fa fa-angle-double-right"></i></span>
@@ -43,8 +42,9 @@ export class SkoleraPagination implements OnChanges {
     @Input() paginationData: PaginationData;
     @Input() perPage: number = 0;
     @Output() paginationUpdate = new EventEmitter();
-    startCell: number = 1;
-    step: number = 10;
+    paginationsStartCell: number[] = []
+    @Input() step: number = 10;
+    @Input() paginationNumber: number = 0;
     cellsNumber: number = 0;
     activeCell: number = 1;
     canGoBackward: boolean = false;
@@ -81,11 +81,11 @@ export class SkoleraPagination implements OnChanges {
     }
 
     fastForward() {
-        this.cellClicked(this.startCell + this.cellsNumber);
+        this.cellClicked(this.paginationsStartCell[this.paginationNumber]  + this.cellsNumber);
     }
 
     fastBackward() {
-        this.cellClicked(this.startCell - this.step);
+        this.cellClicked(this.paginationsStartCell[this.paginationNumber]  - this.step);
     }
 
     emitValue() {
@@ -100,35 +100,35 @@ export class SkoleraPagination implements OnChanges {
     }
 
     checkFastButtons() {
-        this.canGoForward = (this.remainingPages + this.activeCell) - (this.startCell + this.cellsNumber) >= 0 ? true : false;
-        this.canGoBackward = this.startCell > 1 ? true : false;   
+        this.canGoForward = (this.remainingPages + this.activeCell) - (this.paginationsStartCell[this.paginationNumber]  + this.cellsNumber) >= 0 ? true : false;
+        this.canGoBackward = this.paginationsStartCell[this.paginationNumber]  > 1 ? true : false;   
     }
 
     drawCells() {
         this.currentCells = [];
         for (let i = 0; i < this.cellsNumber; i++) {
-            this.currentCells.push(this.startCell + i);
+            this.currentCells.push(this.paginationsStartCell[this.paginationNumber]  + i);
         }
     }
 
     updateStartingCell() {
-        this.startCell = this.updateService.getPaginationStartCell();
+        this.paginationsStartCell = this.updateService.getPaginationStartCell();
         if (this.activeCell == 1){
-            this.startCell = 1;
-        }else{
-            if (this.activeCell < this.startCell) {
-                this.startCell -= this.step;
+            this.paginationsStartCell[this.paginationNumber]  = 1;
+        } else{
+            if (this.activeCell < this.paginationsStartCell[this.paginationNumber] ) {
+                this.paginationsStartCell[this.paginationNumber]  -= this.step;
             }
-            if (this.activeCell > this.startCell - 1 + this.step  ) {
-                this.startCell = this.startCell + this.step;
+            if (this.activeCell > this.paginationsStartCell[this.paginationNumber]  - 1 + this.step  ) {
+                this.paginationsStartCell[this.paginationNumber]  = this.paginationsStartCell[this.paginationNumber]  + this.step;
             }
         }
-        this.updateService.updatePaginationStartCell(this.startCell)  
+        this.updateService.updatePaginationStartCell(this.paginationsStartCell)       
     }
 
     updateRemaining() {
         this.remainingPages = this.paginationData.total_pages - this.activeCell;
-        let remainingBlock = this.paginationData.total_pages + 1 - this.startCell;
+        let remainingBlock = this.paginationData.total_pages + 1 - this.paginationsStartCell[this.paginationNumber] ;
         this.cellsNumber = remainingBlock >= this.step ? this.step : remainingBlock;
     }
 }

@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TimeGroupSchedule } from '@core/models/time-groups-interface.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AppNotificationService } from '@skolera/services/app-notification.service';
+import { EmployeesSerivce } from '@skolera/services/employees.services';
 import { TimeGroupsSerivce } from '@skolera/services/time-groups.services';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class TimeScheduleComponent implements OnInit {
   scheduleDays: TimeGroupSchedule[];
   timeGroupId: number;
-  employeeId: Number;
+  employeeId: number;
   isFormSubmitted: boolean;
   timeScheduleLoading: boolean = true ;
   private subscriptions: Subscription[] = [];
@@ -22,6 +23,7 @@ export class TimeScheduleComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<TimeScheduleComponent>,
     private timeGroupService: TimeGroupsSerivce,
+    private employeesService: EmployeesSerivce,
     private appNotificationService: AppNotificationService,
     private translate: TranslateService
   ) { }
@@ -31,7 +33,7 @@ export class TimeScheduleComponent implements OnInit {
     this.employeeId = this.data.employeeId;
     this.timeScheduleLoading = this.data.timeScheduleLoading
     if (this.data.employeeTimeSchedule) {
-      this.scheduleDays = this.data.employeeTimeSchedule.schedule_days;
+      this.scheduleDays = JSON.parse(JSON.stringify(this.data.employeeTimeSchedule.schedule_days)) 
     }
     else {
       this.scheduleDays = [
@@ -108,19 +110,16 @@ export class TimeScheduleComponent implements OnInit {
     }
 
     const updateParams = {
-      "time_group": {
-        "employee_ids": this.data.timeGroupEmployeesIds,
-        "employees_attributes": {
-          "id": this.employeeId,
-          "time_group_schedule_attributes": {
-            id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
-            "schedule_days_attributes": this.scheduleDays
-          }
+      employee: {
+        "time_group_schedule_attributes": {
+          id:  this.data.employeeTimeSchedule? this.data.employeeTimeSchedule.id: null,
+          "schedule_days_attributes": this.scheduleDays
         }
       }
     }
-    this.subscriptions.push(this.timeGroupService.updateTimeGroupEmployees(this.timeGroupId, updateParams).subscribe(response => {
-      this.appNotificationService.push(this.translate.instant('tr_time_schedual_for_employee_updated_ssuccessfuly'), 'success');
+
+    this.subscriptions.push(this.employeesService.updateEmployeeTimeSchedule(this.employeeId, updateParams).subscribe(response => {
+      this.appNotificationService.push(this.translate.instant('tr_time_schedule_for_employee_updated_ssuccessfuly'), 'success');
       this.dialogRef.close({message: 'update', response});
     }, error => {
       this.appNotificationService.push(error.error.name, 'error');
