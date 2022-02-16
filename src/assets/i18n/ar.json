@@ -46,7 +46,7 @@
         "lock": "غلق",
         "unlock": "فتح",
         "download": "تحميل",
-        "download_fedena_logs": "Download Fedena Logs*",
+        "download_sync_logs": "عرض / تنزيل نتيجة المزامنة",
         "download_uploaded_sheet": "Download the uploaded sheet*",
         "clear": "محو",
         "clear_all": "محو الكل",

@@ -102,16 +102,11 @@
                 *ngIf="sheet.state=='validation_succeeded'">{{"tr_start_sync" | translate}}</button>
             </td>
             <td>
-              <span class="options-menu">
+              <span class="options-menu"*ngIf="sheet.fedena_log_file!.fedena_log_file!.url"> 
                 <i class="fa fa-ellipsis-v"></i>
                 <div class="options-menu-container">
-                  <div class="single-option text-success width-100">
-                    <a href="{{sheet.uploaded_file.download_url}}">
-                      {{ 'tr_action.download_uploaded_sheet' | translate }}
-                    </a>
-                  </div>
-                  <div class="single-option text-success width-100" *ngIf="sheet.fedena_log_file!.fedena_log_file!.url" (click)="downloadLogs(sheet.fedena_log_file!.fedena_log_file!.url)">
-                      {{ 'tr_action.download_fedena_logs' | translate }}
+                  <div class="single-option text-success width-100" (click)="downloadLogs(sheet.fedena_log_file!.fedena_log_file!.url)">
+                      {{ 'tr_action.download_sync_logs' | translate }}
                   </div>
                 </div>
               </span>

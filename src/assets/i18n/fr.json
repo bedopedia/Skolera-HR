@@ -45,7 +45,7 @@
     "lock": "lock*",
     "unlock": "unlock*",
     "download": "Télécharger",
-    "download_fedena_logs": "Download Fedena Logs*",
+    "download_sync_logs": "Download Sync Logs*",
     "download_uploaded_sheet": "Download the uploaded sheet*",
     "clear": "éclaircir",
     "clear_all": "éclaircir tout",

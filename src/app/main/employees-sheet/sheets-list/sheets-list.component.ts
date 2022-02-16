@@ -90,7 +90,7 @@ export class SheetsListComponent implements OnInit {
 
   downloadLogs(fedena_log_file_url: string) {
     this.http.get(fedena_log_file_url, { responseType: 'blob' }).subscribe((response: any) => {
-      saveAs(response, `fedena_logs_${new Date()}.pdf`);
+      saveAs(response, `Sync Logs ${new Date()}.pdf`);
     });
   }
 }
