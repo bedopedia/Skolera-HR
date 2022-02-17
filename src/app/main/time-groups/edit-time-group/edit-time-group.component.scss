@@ -47,13 +47,13 @@
    
     th,td {
         &:nth-child(1){
-            width: 12rem;
+            width: 13rem;
         }
         &:nth-child(2){
-            width: 6rem;
+            width: 7rem;
         }
         &:nth-child(3){
-            width: 7rem;
+            width: 8rem;
         }
     } 
 
@@ -74,6 +74,14 @@
     flex-flow: column;
     justify-content: space-between;
     height: 100%;
+    th,td {
+        &:nth-child(1){
+            width: 11rem;
+        }
+        &:nth-child(2){
+            width: 8rem;
+        }
+    } 
 }
 
 .overflow-x-auto {
