@@ -16,6 +16,6 @@ export const environment = {
     }
 };
 
-export const baseUrl = ' https://testing1.skoleralms.com/';
+export const baseUrl = ' https://testing1-api.skoleralms.com/';
 export const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 
