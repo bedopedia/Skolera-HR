@@ -95,7 +95,7 @@
 
     </div>
 
-    <div class="bg-white plr-4 ptb-4 mb-4 content-shadow">
+    <div class="bg-white plr-4 ptb-4 mb-4 plr-2-mob content-shadow">
       <div class="assign-employees-section">
         <h3 class="steel weight-bold size-default title-with-btn mb-4">{{'tr_assign_employees' | translate}}
 
@@ -158,7 +158,7 @@
         </div>
         <div class="container">
           <div class="row border-bottom mt-4">
-            <div class="col-7">
+            <div class="col-7 plr-0-mob">
               <div class="mb-2" *ngIf="employeesLoading">
                 <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
               </div>
@@ -212,7 +212,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="plr-4 ptb-2 overflow-x-auto">
+                <div class="plr-4 ptb-2 plr-0-mob overflow-x-auto">
                   <skolera-pagination [paginationData]="employeesPaginationData" [paginationNumber]= 1 [step]="5" [perPage]="paginationPerPage"
                     (paginationUpdate)=paginationUpdateEmployees($event)></skolera-pagination>
                 </div>
@@ -224,25 +224,28 @@
                   <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
                 </div>
                 <div class="assigned-employees-container"  *ngIf="!timeGroupEmployeesLoading">
-                  <table class="table s-table assigned-employees-table layout-fixed">
-                    <thead>
-                      <th>
-                        {{'tr_assigned_employees' | translate}}
-                      </th>
-                      <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
-                        {{'tr_time_schedule' | translate}}
-                      </th>
-                    </thead>
-                    <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
-                      <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
-                        <td>{{timegroupEmployee.name}}</td>
-                        <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
-                          <span class="text-primary pointer-link hover-link"
-                            (click)="openTimeScheduleModal(timegroupEmployee)"> {{'tr_time_schedule' | translate}} </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="table-container">
+                    <table class="table s-table assigned-employees-table layout-fixed">
+                      <thead>
+                        <th>
+                          {{'tr_assigned_employees' | translate}}
+                        </th>
+                        <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
+                          {{'tr_time_schedule' | translate}}
+                        </th>
+                      </thead>
+                      <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
+                        <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
+                          <td>{{timegroupEmployee.name}}</td>
+                          <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
+                            <span class="text-primary pointer-link hover-link"
+                              (click)="openTimeScheduleModal(timegroupEmployee)"> {{'tr_time_schedule' | translate}} </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+               
     
                   <div class="text-center flex flex-middle flex-center"
                     *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
@@ -254,7 +257,7 @@
                     </div>
                   </div>
     
-                  <div class="ptb-2 overflow-x-auto">
+                  <div class="ptb-2 plr-0-mob overflow-x-auto">
                     <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [paginationNumber]= 2 [step]="5"
                       [perPage]="paginationPerPage" (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
                     </skolera-pagination>
