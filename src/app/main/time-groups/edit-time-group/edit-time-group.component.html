@@ -156,96 +156,55 @@
             </div>
           </div>
         </div>
-
-        <div class="row border-bottom mt-4">
-          <div class="col-md-7">
-            <div class="mb-2" *ngIf="employeesLoading">
-              <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
-            </div>
-            <div *ngIf="!employeesLoading">
-              <div class="primary-border pr-4">
-                <table class="table s-table employees-table  layout-fixed">
-                  <thead>
-                    <th>
-                      <div class="weight-bold">{{'tr_employees' | translate}}</div>
-                    </th>
-                    <th>
-                      {{'tr_time_group' | translate}}
-                    </th>
-                    <th>{{'tr_department' | translate}}</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let employee of employeesList; let i=index">
-                      <td>
-                        <div class="flex flex-middle">
-                          <span class="s-checkbox">
-                            <input type="checkbox" id="employee-id-{{i}}" name="employee"
-                              [checked]="employee.isInsideCurrentTimeGroup"
-                              (change)="assignEmployeeIngroup($event,employee)">
-                            <label for="employee-id-{{i}}"></label>
-                          </span>
-                          <div>
-                            <h1 class="size-small ml-1">{{employee.name}} ({{ employee.number }})</h1>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div *ngIf="employee.time_group">
-                          {{employee.time_group.name}}
-                        </div>
-  
-                      </td>
-                      <td>
-                        {{employee.department_name}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-           
-              <div class="text-center flex flex-middle flex-center"
-                *ngIf="!employeesLoading && employeesList.length <= 0">
-                <div class="ptb-2 plr-2">
-                  <img src="assets/images/placeholders/zones.svg" width="80" alt="">
-                  <p class="size-tiny weight-bold mt-3">
-                    {{'tr_empty_state' | translate}}
-                  </p>
-                </div>
-              </div>
-              <div class="plr-4 ptb-2">
-                <skolera-pagination [paginationData]="employeesPaginationData" [paginationNumber]= 1 [step]="5" [perPage]="paginationPerPage"
-                  (paginationUpdate)=paginationUpdateEmployees($event)></skolera-pagination>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-5 plr-0">
-            
-              <div class="mb-2" *ngIf="timeGroupEmployeesLoading">
+        <div class="container">
+          <div class="row border-bottom mt-4">
+            <div class="col-7">
+              <div class="mb-2" *ngIf="employeesLoading">
                 <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
               </div>
-              <div class="assigned-employees-container"  *ngIf="!timeGroupEmployeesLoading">
-                <table class="table s-table assigned-employees-table layout-fixed">
-                  <thead>
-                    <th>
-                      {{'tr_assigned_employees' | translate}}
-                    </th>
-                    <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
-                      {{'tr_time_schedule' | translate}}
-                    </th>
-                  </thead>
-                  <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
-                    <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
-                      <td>{{timegroupEmployee.name}}</td>
-                      <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
-                        <span class="text-primary pointer-link hover-link"
-                          (click)="openTimeScheduleModal(timegroupEmployee)"> {{'tr_time_schedule' | translate}} </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-  
+              <div *ngIf="!employeesLoading">
+                <div class="primary-border pr-4 overflow-x-auto">
+                  <table class="table s-table employees-table layout-fixed">
+                    <thead>
+                      <th>
+                        <div class="weight-bold">{{'tr_employees' | translate}}</div>
+                      </th>
+                      <th>
+                        {{'tr_time_group' | translate}}
+                      </th>
+                      <th>{{'tr_department' | translate}}</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let employee of employeesList; let i=index">
+                        <td>
+                          <div class="flex flex-middle">
+                            <span class="s-checkbox">
+                              <input type="checkbox" id="employee-id-{{i}}" name="employee"
+                                [checked]="employee.isInsideCurrentTimeGroup"
+                                (change)="assignEmployeeIngroup($event,employee)">
+                              <label for="employee-id-{{i}}"></label>
+                            </span>
+                            <div>
+                              <h1 class="size-small ml-1">{{employee.name}} ({{ employee.number }})</h1>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div *ngIf="employee.time_group">
+                            {{employee.time_group.name}}
+                          </div>
+    
+                        </td>
+                        <td>
+                          {{employee.department_name}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+             
                 <div class="text-center flex flex-middle flex-center"
-                  *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
+                  *ngIf="!employeesLoading && employeesList.length <= 0">
                   <div class="ptb-2 plr-2">
                     <img src="assets/images/placeholders/zones.svg" width="80" alt="">
                     <p class="size-tiny weight-bold mt-3">
@@ -253,16 +212,58 @@
                     </p>
                   </div>
                 </div>
-  
-                <div class="ptb-2">
-                  <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [paginationNumber]= 2 [step]="5"
-                    [perPage]="paginationPerPage" (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
-                  </skolera-pagination>
+                <div class="plr-4 ptb-2 overflow-x-auto">
+                  <skolera-pagination [paginationData]="employeesPaginationData" [paginationNumber]= 1 [step]="5" [perPage]="paginationPerPage"
+                    (paginationUpdate)=paginationUpdateEmployees($event)></skolera-pagination>
                 </div>
-           
+              </div>
             </div>
-           
+            <div class="col-5 plr-0">
+              
+                <div class="mb-2" *ngIf="timeGroupEmployeesLoading">
+                  <app-ghost-line [length]="6" [type]="'table'"></app-ghost-line>
+                </div>
+                <div class="assigned-employees-container"  *ngIf="!timeGroupEmployeesLoading">
+                  <table class="table s-table assigned-employees-table layout-fixed">
+                    <thead>
+                      <th>
+                        {{'tr_assigned_employees' | translate}}
+                      </th>
+                      <th class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
+                        {{'tr_time_schedule' | translate}}
+                      </th>
+                    </thead>
+                    <tbody *ngIf="filteredTimeGroupEmployees!.length > 0">
+                      <tr *ngFor="let timegroupEmployee of filteredTimeGroupEmployees!; let i=index">
+                        <td>{{timegroupEmployee.name}}</td>
+                        <td class="text-center" *ngIf="timeGroup.group_type == 'shifts'">
+                          <span class="text-primary pointer-link hover-link"
+                            (click)="openTimeScheduleModal(timegroupEmployee)"> {{'tr_time_schedule' | translate}} </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+    
+                  <div class="text-center flex flex-middle flex-center"
+                    *ngIf="!timeGroupLoading && filteredTimeGroupEmployees?.length ==0">
+                    <div class="ptb-2 plr-2">
+                      <img src="assets/images/placeholders/zones.svg" width="80" alt="">
+                      <p class="size-tiny weight-bold mt-3">
+                        {{'tr_empty_state' | translate}}
+                      </p>
+                    </div>
+                  </div>
+    
+                  <div class="ptb-2 overflow-x-auto">
+                    <skolera-pagination [paginationData]="assignedEmployeesPaginationData" [paginationNumber]= 2 [step]="5"
+                      [perPage]="paginationPerPage" (paginationUpdate)=paginationUpdateAssignedEmployees($event)>
+                    </skolera-pagination>
+                  </div>
+             
+              </div>
+             
 
+            </div>
           </div>
         </div>
       </div>
