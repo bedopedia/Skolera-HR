@@ -44,6 +44,7 @@ export class LanguageSwitcherComponent implements OnInit {
             this.globals.currentUser = response;
             localStorage.setItem('currentUser', JSON.stringify(this.globals.currentUser));
             document.querySelector('body')?.setAttribute('dir', this.selectedLanguage == 'ar' ? 'rtl' : 'ltr');
+            location.reload();
         })
         
         this.closeModal(this.selectedLanguage);

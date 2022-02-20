@@ -30,11 +30,11 @@
               <ng-select (change)="filterTimeGroups(selectedtype,'by_type')"
                 class="s-control s-select black-placeholder" [clearable]="true"
                 notFoundText="{{'tr_no_items_found' | translate}}" placeholder="{{'tr_all' | translate}}"
-                [markFirst]="true" bindLabel="label" autofocus [items]="timeGroupsType" name="type"
+                [markFirst]="true" bindLabel="text"  autofocus [items]="timeGroupsType" name="type"
                 [(ngModel)]="selectedtype">
                 <ng-template ng-option-tmp let-item="item">
                   <div class="single-option bg-white">
-                    {{'tr_'+item | translate}}
+                    {{item.text | translate}} 
                   </div>
                 </ng-template>
               </ng-select>
@@ -94,7 +94,7 @@
               (paginationUpdate)=paginationUpdate($event)></skolera-pagination>
           </div>
         </div>
-        <div class="empty-state-here text-center mtb-8" *ngIf="timeGroupsList.length == 0">
+        <div class="empty-state-here text-center ptb-8" *ngIf="timeGroupsList.length == 0">
           <img class="placeholder-icon" src="assets/images/placeholders/announcments.svg" alt="">
           <p> {{'tr_empty_state' | translate}}</p>
         </div>
