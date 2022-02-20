@@ -27,7 +27,7 @@
           <div class="form-group">
             <label>{{'tr_type' | translate}}</label>
             <div class="input-with-icon bg-white width-100">
-              <ng-select (change)="filterTimeGroups(selectedtype.value,'by_type')"
+              <ng-select (change)="filterTimeGroups(selectedtype,'by_type')"
                 class="s-control s-select black-placeholder" [clearable]="true"
                 notFoundText="{{'tr_no_items_found' | translate}}" placeholder="{{'tr_all' | translate}}"
                 [markFirst]="true" bindLabel="text"  autofocus [items]="timeGroupsType" name="type"
