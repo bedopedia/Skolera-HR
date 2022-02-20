@@ -19,9 +19,12 @@ export class TimeGroupsListComponent implements OnInit {
   timeGroupsLoading: boolean = true;
   timeGroupsList: TimeGroup[] = [];
   paginationPerPage = 10;
-  selectedtype: string;
+  selectedtype:{
+    value: string,
+    text: string
+  };
   paginationData: PaginationData;
-  timeGroupsType = ['fixed', 'shifts']
+  timeGroupsType = [{text:this.translateService.instant('tr_fixed'), value: 'fixed'}, {text:this.translateService.instant('tr_shifts'), value: "shifts"}]
   isFilterOpen: boolean = false;
   checkedCells: number[] = [];
   allChecked: boolean = false;
