@@ -12,5 +12,5 @@ export const environment = {
     }
 };
 
-export let baseUrl = window.location.protocol + '//' + window.location.hostname + '/';
+export const baseUrl = window.location.protocol + '//' +  window.location.hostname.replace('-hr.','-api.')  + '/';
 export const siteKey = '6LfXLoYUAAAAAJbj5-8k1hi_JTUnhobi3gNB5ob6';
